@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owl Carousel Example</title>
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/owl.carousel.min.css">
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/owl.theme.green.min.css">
+</head>
+<body>
+    <div class="owl-carousel owl-theme">
+        <div class="item"><img src="/RamitaPrincipal/img/martillo.jpg" alt="Image 1"></div>
+        <div class="item"><img src="/RamitaPrincipal/img/martillo.jpg" alt="Image 2"></div>
+        <div class="item"><img src="/RamitaPrincipal/img/martillo.jpg" alt="Image 3"></div>
+    </div>
+    <div class="owl-carousel owl-theme owl-loaded">
+        <div class="owl-stage-outer">
+            <div class="owl-stage">
+                <div class="owl-item">...</div>
+                <div class="owl-item">...</div>
+                <div class="owl-item">...</div>
+            </div>
+        </div>
+        <div class="owl-nav">
+            <div class="owl-prev">prev</div>
+            <div class="owl-next">next</div>
+        </div>
+        <div class="owl-dots">
+            <div class="owl-dot active"><span></span></div>
+            <div class="owl-dot"><span></span></div>
+            <div class="owl-dot"><span></span></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/RamitaPrincipal/js/owl.carousel.min.js"></script>
+  
+    <script>
+        $(document).ready(function(){
+            $(".owl-carousel").owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true
+            });
+        });
+    </script>
+</body>
+</html>
