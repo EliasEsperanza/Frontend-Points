@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Establece una conexión anticipada a Google Fonts para mejorar el rendimiento -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Establece una conexión anticipada al dominio de Google Fonts para cargar las fuentes -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Enlace a Google Fonts para cargar la fuente 'Montserrat' con varios pesos (300, 400, 500, 600, 700) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/Perfil_Usuario/estilos/navbar.css">
+    <link rel="stylesheet" href="/Perfil_Usuario/estilos/style.css">
+    <link rel="stylesheet" href="/Perfil_Usuario/estilos/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="/Perfil_Usuario/JS/navbar.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <!--Parte del navbar-->
+    <header>
+        <div class="logo-container">
+            <img src="/Perfil_Usuario/Logo.jpg" class="imgLogo" alt="">
+            <a href="#" class="Nombre">Ferreteria El Roble</a>
+        </div>
+        <ul class="links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Iniciar Sesion</a></li>
+            <li><a href="#">Politicas</a></li>
+            <li><a href="#">Como Funciona</a></li>
+            <li><a href="#">Ejemplo</a></li>
+            <li><a href="#">Nose</a></li>
+        </ul>
+        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+        <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+    </header>
+
+    <!--Contenido del perfil de usuario-->
+    <div class="Contenido">
+        <div class="Content-perfil">
+            <div class="titulo">
+                <div class="datos">
+                    <p>Nombre completo del cliente</p>
+                    <p>Numero de membresia</p>
+                </div>
+                <div class="valores">
+                    <p>Angel Medrano</p>
+                    <p>134546-434-4224</p>
+                </div>
+            </div>
+            <div class="parrafos">
+                <div class="izq">
+                    <p>Numero de telefono</p>
+                    <p>Correo electronico</p>
+                    <p>Fecha de nacimiento</p>
+                    <p>DUI</p>
+                    <p>Activo(a) desde</p>
+                    <p>Departamento</p>
+                </div>
+
+                <div class="der">
+                    <p>+503 75548239</p>
+                    <p>cliente@gmail.com</p>
+                    <p>02/06/2024</p>
+                    <p>06516167-4</p>
+                    <p>01/06/2024</p>
+                    <p>San miguel</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <div class="btn-agregar">
+                    <input type="submit" value="Agregar">
+                </div>
+
+                <div class="btn-editar">
+                    <input type="submit" value="Editar">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Esta seria la parte del Footer-->
+    <footer>
+        <div class="row">
+            <div class="col">
+                <img src="/Inicio/Logo.jpg" class="logo">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem rerum vel ipsa mollitia reprehenderit velit! Aspernatur quibusdam exercitationem delectus iure id cum laboriosam aliquid eveniet! Architecto laborum optio voluptate temporibus.</p>
+            </div>
+            <div class="col">
+                <h3>Contactos <div class="underline"><span></span></div></h3>
+                <p>Tel: 4555555</p>
+                <p>Correo: nose@gmail.com</p>
+                <p class="email-id">direccion: nose tampoco</p>
+                <p>mas datos para poner</p>
+                <p>quiero dormir</p>
+            </div>
+            <div class="col">
+                <h3>Links<div class="underline"><span></span></div></h3>
+                <ul>
+                    <li>Inicio</li>
+                    <li>Iniciar Sesion</li>
+                    <li>Politicas</li>
+                    <li>Beneficios</li>
+                    <li>NOSE</li>
+                    <li>NOSEX2</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h3>Comentarios <div class="underline"><span></span></div></h3>
+                <form >
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" placeholder="Escriba su comentario" required>
+                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+
+                </form>
+                <div class="social-icons">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+            </div>
+        </div>
+            <hr>
+            <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
+       
+    </footer>
+</body>
+</html>

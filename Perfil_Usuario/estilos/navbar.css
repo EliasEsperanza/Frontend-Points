@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+body{
+    margin: 0;
+    padding: 0;
+    background: #F5F7FF;
+    min-height: 200vh;
+}
+
 /*CSS HEADER*/
 header{
     position: fixed;
@@ -197,7 +204,12 @@ header .close_btn:hover {
     header.sticky .imgLogo{
         margin-left: 5px;
     }
+
+
 }
+
+
+
 
 /*IMAGEN OPCIONAL*/
 .banner{
