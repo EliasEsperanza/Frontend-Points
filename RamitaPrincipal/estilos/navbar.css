@@ -15,6 +15,8 @@ body{
 
 }
 
+
+
 /*CSS HEADER*/
 header{
     position: fixed;
@@ -84,12 +86,13 @@ header ul li a{
     font-weight: 500px;
     padding: 0.625rem 0.9375rem; /*  Padding ajustado para uniformidad */
     border-radius: 0.3125rem;
-    transition:  0.3s ease-in-out; /* Transición suave para el fondo */
+    transition:  0.3s ease-in-out; 
     white-space: nowrap;
 }
 
 header ul li a:hover {
-    background: #136335; /* Color al pasar el mouse por encima */
+    background: #136335; 
+    color: #fff;
 }
 
 header.sticky .Nombre{
@@ -103,14 +106,17 @@ header.sticky ul li a{
 /*MENU  RESPONSIVE*/
 
 header .toggle_btn{
-    color: #fff;
     font-size: 1.5rem;
     cursor: pointer;
     display: none;
-    margin-left: auto;
+    position: absolute;
+    right: 20px; 
+    top: 15px;
+    z-index: 10000;
+   
 }
 header .toggle_btn:hover {
-color: #19683b; 
+color: #239B56; 
 }
 
 header .close_btn{
@@ -155,7 +161,7 @@ header .close_btn:hover {
         margin-top: 20px;
     }
     header ul li a:hover {
-        background: #239B56; /* Color al pasar el mouse por encima */
+        background: #239B56; 
     }
     header .links li a {
         font-size: 18px;
@@ -164,8 +170,17 @@ header .close_btn:hover {
     header .toggle_btn {
         display: block; 
     margin-left: 40px;
+    top: 20px;
     }
-   
+    header .toggle_btn{
+        color: black;
+        display: flex;
+        justify-content: flex-end;
+        justify-items: flex-end;
+    }
+    header.sticky .toggle_btn{
+        color: #fff;
+    }
     header .close_btn {
 
         position: fixed;
@@ -208,14 +223,76 @@ header .close_btn:hover {
     header.sticky .imgLogo{
         margin-left: 5px;
     }
+    header .toggle_btn{
+        top: 20px;
+    }
+
 }
+
+/*CSS PARA PANTALLAS DE TELEFONO (max-width: 500px)*/
+@media (max-width: 500px) {
+    header {
+        padding: 1rem; 
+    }
+    header.sticky {
+        padding-top: 1.5rem; 
+    }
+
+    header .Nombre {
+        font-size: 1.1em; 
+        line-height: 1.5rem;
+    }
+    
+    header ul {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header ul li a {
+        padding: 0.3125rem 0.625rem; 
+        font-size: 0.8em; 
+        margin: 0.2rem 0;
+    }
+
+    header .imgLogo {
+        height: 1.5rem; 
+        width: auto;
+        margin-right: 0.5rem;
+        margin-left: 80px;
+    }
+
+    header.sticky .imgLogo {
+        margin-left: 5px;
+    }
+
+    header .toggle_btn {
+        display: block;
+        font-size: 1.25rem;
+        color: #000;
+        margin-left: 10px; 
+        line-height: 1rem;
+    }
+    header.sticky  .toggle_btn {
+        line-height: 2.0rem;
+    }
+    
+}
+
+
+
+
 
 /*IMAGEN OPCIONAL*/
 .banner{
     position: relative;
-    width: 100%;
+   width: 100%;
     height: 100vh;
-    background: url(/RamitaPrincipal/img/fondoe.jpg);
+    background: url(/RamitaPrincipal/img/Fondo5.jpg);
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+   
 }
 

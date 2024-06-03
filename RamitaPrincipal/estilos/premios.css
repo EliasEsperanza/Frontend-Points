@@ -1,0 +1,221 @@
+/* Configuración general del premio */
+#premio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    width: 100vw;
+}
+
+.heading {
+    color: #239B56;
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 5rem;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.heading::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    height: .3rem;
+    width: 60%;
+    background: #FFBC0F;
+}
+
+.premios-container {
+    width: 90%;
+}
+
+/* Estilos para las flechas de navegación */
+
+#premio .premios-container .owl-nav .owl-next, 
+ #premio .premios-container .owl-nav .owl-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-70%);
+    padding: 5px 5px;
+    color: #239B56;
+    font-size: 6rem;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+#premio .premios-container .owl-nav .owl-next:hover, 
+ #premio .premios-container .owl-nav .owl-prev:hover {
+   color: #136336; 
+ }
+.owl-next {
+    right: -1.9rem;
+}
+
+.owl-prev {
+    left: -1.9rem;
+}
+
+/* Personalizar los botones de navegación (círculos) */
+#premio .premios-container .owl-dots {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+ 
+  
+
+/* Títulos de los niveles y la imagen del trofeo */
+.premio-nivel-bronce, .premio-nivel-plata,
+ .premio-nivel-oro, .premio-nivel-premiun  {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.textos-C{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.imgBronce {
+    width: auto; 
+    height: auto;
+    margin-right: 1rem;
+}
+
+.titulo_premio {
+    font-size: 2.2rem;
+    margin-left: 0;
+}
+
+/*COLORES D ETITULOS DE CADA NIVEL*/
+.bronce {
+    color: #E4624C;
+}
+.plata{
+    color: #a6a4a4;;
+}
+.oro{
+    color: #FDC54E;
+}
+.premiun{
+  color: #64c7f5;
+}
+
+.subtitulo_premio {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+/* Estilos de las tarjetas de los premios */
+.premios-slider .premio-card {
+    height: 16rem;
+    width: 15rem;
+    margin: 2rem auto;
+    box-shadow: 0 0 .3rem rgba(0, 0, 0, 0.5);
+    border-radius: .5rem;
+    position: relative;
+    overflow: hidden; 
+    transition: transform 0.3s ease-in-out; 
+}
+
+.premios-slider .premio-card .image {
+    height: 75%;
+    width: 100%;
+}
+
+.premios-slider .premio-card .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.content {
+    height: 25%;
+    width: 100%;
+    text-align: center;
+}
+
+.content h3 {
+    font-size: 1.3rem;
+    color: black;
+}
+.content h3.Color_bronce{
+    color: #E4624C;
+}
+
+.content h3.Color_plata{
+    color: #a6a4a4;
+}
+.content h3.Color_oro{
+    color: #FDC54E;
+}
+.content h3.Color_premiun{
+  color: #64c7f5;
+}
+
+
+.content .puntos {
+    font-size: 1.0rem;
+    color: black;
+}
+
+/* Estilos para la información adicional */
+.info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(51, 51, 51, 0.9); /* Fondo con transparencia */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    transform: scale(0);
+    transition: transform 0.3s ease-in-out; /* Añadir transición */
+    z-index: 1; /* Asegura que se muestre por encima */
+}
+
+.info h4 {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.info p {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    color: #ccc;
+    text-align: center;
+}
+
+.info button {
+    outline: none;
+    border: none;
+    height: 2rem;
+    width: 6rem;
+    background: #239B56;
+    color: #fff;
+    font-size: .9rem;
+    cursor: pointer;
+    margin: .5rem 0;
+    border-radius: 5rem;
+    text-transform: capitalize;
+    margin-top: 1rem;
+    letter-spacing: .1rem;
+}
+
+.info button:hover {
+    background: #136336;
+    letter-spacing: .1rem;
+}
+
+.premio-card:hover .info {
+    transform: scale(1);
+}
