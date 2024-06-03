@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     flex-flow: column;
-    width: 100vw;
+    width: 98.8vw;
 }
 
 .heading {
@@ -218,4 +218,93 @@
 
 .premio-card:hover .info {
     transform: scale(1);
+}
+@media (max-width: 992px) {
+    .heading {
+        font-size: 2.5rem;
+        padding-top: 3rem;
+        margin: 1.5rem 0;
+    }
+
+    .titulo_premio {
+        font-size: 2rem;
+    }
+
+    .subtitulo_premio {
+        font-size: 1.4rem;
+    }
+
+    .content h3 {
+        font-size: 1.2rem;
+    }
+
+    .content .puntos {
+        font-size: 1.0rem;
+    }
+
+    .info h4 {
+        font-size: 1.1rem;
+    }
+
+    .info p {
+        font-size: 0.9rem;
+    }
+
+    #premio .premios-container .owl-nav .owl-next,
+    #premio .premios-container .owl-nav .owl-prev {
+        font-size: 4rem;
+    }
+
+    .owl-next {
+        right: -1.3rem;
+    }
+
+    .owl-prev {
+        left: -1.3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .heading {
+        font-size: 1.8rem;
+        padding-top: 2rem;
+        margin: 1rem 0;
+    }
+
+    .titulo_premio {
+        font-size: 1.7rem;
+    }
+
+    .subtitulo_premio {
+        font-size: 0.9rem;
+    }
+
+    .content h3 {
+        font-size: 1.3rem;
+    }
+
+    .content .puntos {
+        font-size: 1.145rem;
+    }
+
+    .info h4 {
+        font-size: 1.0rem;
+    }
+
+    .info p {
+        font-size: 0.9rem;
+    }
+    #premio .premios-container .owl-nav .owl-next,
+    #premio .premios-container .owl-nav .owl-prev {
+        font-size: 2.5rem; 
+        padding: 2px; 
+    }
+
+    .owl-next {
+        right: -0.5rem; 
+    }
+
+    .owl-prev {
+        left: -0.5rem; 
+    }
 }

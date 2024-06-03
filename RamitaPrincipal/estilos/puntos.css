@@ -1,0 +1,203 @@
+.title {
+    padding-top: 8rem;
+    text-align: center;
+    margin: 0 6rem;
+    font-size: 4rem;
+    border-bottom: .1rem solid #FFBC0F;
+    color: #239B56;
+}
+.title span {
+    color: #136335;
+}
+.puntos .row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+}
+.puntos .row .infoP {
+    flex: 1 1 48rem;
+    padding: 2rem 1rem;
+    padding-left: 6rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.puntos .row .infoP div {
+    display: flex;
+    width: 100%;
+}
+.puntos .row .infoP span,
+.puntos .row .infoP h3 {
+    font-size: 1.5rem;
+    color: #136335;
+    padding: 0.5rem 0;
+}
+.puntos .row .infoP span {
+    color: black;
+    padding-right: 0.5rem;
+    white-space: nowrap;
+}
+.puntos .row .infoP h3 {
+    margin: 0;
+}
+.puntos .row .Informacion {
+    flex: 1 1 48rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.puntos .row .Informacion .box {
+    flex: 1 1 20rem;
+    /*background: linear-gradient(to top, #00010e,#035702);*/
+    background: #222;
+    text-align: center;
+    padding: 1rem;
+    margin: 1.5rem;
+    box-sizing: border-box;
+}
+.puntos .row .Informacion .box span {
+    font-size: 2.5rem;
+    color: #FFBC0F;
+}
+.puntos .row .Informacion .box h3 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+.puntos .row .Informacion .box p {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/************************RESPONSIVE*****************************/
+@media (min-width: 1200px) {
+    .puntos, main{
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+    .puntos .row .infoP {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .puntos .row .infoP > div {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1190px) {
+    .puntos, main{
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+    .puntos .row .infoP {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .puntos .row .infoP > div {
+        width: 100%;
+        text-align: left;
+        justify-content: center;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .title {
+        margin: 0 3rem;
+        font-size: 3rem;
+        padding-top: 6rem;
+    }
+    .puntos .row .infoP {
+        padding-left: 3rem;
+    }
+    .puntos .row .infoP span,
+    .puntos .row .infoP h3 {
+        font-size: 1.2rem;
+    }
+    .puntos .row .Informacion .box {
+        flex: 1 1 45%;
+        margin: 1rem;
+    }
+    .puntos .row .Informacion .box span {
+        font-size: 2rem;
+    }
+    .puntos .row .Informacion .box h3 {
+        font-size: 1.2rem;
+    }
+    .puntos .row .Informacion .box p {
+        font-size: 1rem;
+    }
+}
+@media (max-width:400px) {
+    .title{
+       margin:0 3rem;
+    }
+    .puntos .row .Informacion .box{
+       width: 100%;
+    }
+   
+   }
+   @media (max-width: 500px) {
+    .title {
+        margin: 0 3rem;
+        font-size: 3rem;
+        padding-top: 5rem;
+    }
+    .puntos .row .infoP {
+        padding-left: 1rem;
+    }
+    .puntos .row .infoP div {
+        display: block;
+    }
+    .puntos .row .infoP span,
+    .puntos .row .infoP h3 {
+        font-size: 1.2rem;
+        display: block;
+    }
+    .puntos .row .Informacion .box {
+        flex: 1 1 100%;
+        margin: 0.5rem 0;
+    }
+    .puntos .row .Informacion .box span {
+        font-size: 1.7rem;
+    }
+    .puntos .row .Informacion .box h3 {
+        font-size: 1.4rem;
+    }
+    .puntos .row .Informacion .box p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 350px) {
+    .title {
+        font-size: 2.5rem;
+        margin: 0 1rem;
+    }
+    .puntos .row .infoP {
+        padding-left: 0.5rem;
+    }
+    .puntos .row .infoP span {
+        font-size: 1.2rem;
+        white-space: nowrap;
+        display: block;
+    }
+    .puntos .row .infoP h3 {
+        font-size: 1.2rem;
+        display: block;
+    }
+    .puntos .row .Informacion .box span {
+        font-size: 1.6rem;
+    }
+    .puntos .row .Informacion .box h3 {
+        font-size: 1.3rem;
+    }
+    .puntos .row .Informacion .box p {
+        font-size: 1rem;
+    }
+}
