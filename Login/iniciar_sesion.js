@@ -39,5 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Si todas las validaciones pasan, enviar el formulario
         formu.submit();
+        window.location.href = "/Inicio/html/index.html";
     });
 });

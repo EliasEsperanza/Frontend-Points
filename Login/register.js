@@ -67,4 +67,5 @@ btnRegistrar.addEventListener("click", function(event){
 
     // Si todas las validaciones pasan, enviar el formulario
     Formu.submit();
+    window.location.href = "/Inicio/html/index.html";
 });
