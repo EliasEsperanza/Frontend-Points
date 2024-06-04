@@ -1,9 +1,5 @@
-*{
-    font-family: 'Montserrat', sans-serif;
-}
-
 .Contenido{
-    height: 900px;
+   
 }
 
 .Content-perfil{
@@ -66,4 +62,95 @@
 .btn-editar input {
     background-color: brown;
     color: white;
+}
+
+/*Media Querys*/
+
+/* Pantallas móviles (hasta 599px) */
+@media (max-width: 599px) {
+    .Content-perfil {
+        width: 90%;
+        height: 450px;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .Content-perfil .titulo p {
+        font-size: 2.5vh;
+    }
+    .Content-perfil .parrafos {
+        display: flex;
+        gap: 20px;
+        height: auto;
+    }
+    .Content-perfil .parrafos p {
+        margin: 10px;
+    }
+    .Content-perfil .botones {
+        display: flex;
+        gap: 20px;
+    }
+    .Content-perfil .botones input {
+        width: 100px;
+        margin: 0;
+    }
+}
+
+/* Pantallas tablet (600px a 899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+    .Content-perfil {
+        width: 80%;
+        height: 600px;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .Content-perfil .titulo p {
+        font-size: 2.8vh;
+    }
+    .Content-perfil .parrafos {
+        display: flex;
+        gap: 20px;
+    }
+    .Content-perfil .parrafos p {
+        margin: 15px;
+    }
+    .Content-perfil .botones {
+        display: flex;
+        gap: 30px;
+    }
+    .Content-perfil .botones input {
+        width: 150px;
+    }
+}
+
+/* Pantallas de escritorio (900px a 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+    .Content-perfil {
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+    .Content-perfil .titulo p {
+        font-size: 3vh;
+    }
+    .Content-perfil .parrafos {
+        gap: 50px;
+        height: auto;
+    }
+    .Content-perfil .parrafos p {
+        margin: 20px;
+    }
+    .Content-perfil .botones {
+        gap: 40px;
+    }
+    .Content-perfil .botones input {
+        width: 150px;
+    }
+}
+
+/* Pantallas grandes (1200px en adelante) */
+@media (min-width: 1200px) {
+    .Content-perfil {
+        width: 700px;
+        height: 470px;
+    }
 }
