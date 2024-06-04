@@ -173,6 +173,7 @@ body
 /*Estilo para la tabla*/
 .tbl-niveles-usuario {
     padding: 20px;
+
 }
 .tbl-niveles-usuario table {
     width: 80%;
@@ -275,7 +276,6 @@ body
 .Promociones {
     justify-content: center;
     text-align: center;
-    background-color: white;
 }
 
 .Promociones .titulo
@@ -317,7 +317,6 @@ body
 }
 .slider img {
     width: 100%;
-    height: 50vh;
     display: block;
 }
 .buttons {
@@ -382,7 +381,7 @@ body
     }
 
     .slider img {
-        height: 40vh;
+        height: 30vh;
     }
 
     .buttons button {
@@ -408,7 +407,7 @@ body
     }
 
     .slider img {
-        height: 45vh;
+        height: 30vh;
     }
 
     .buttons button {
@@ -434,7 +433,7 @@ body
     }
 
     .slider img {
-        height: 50vh;
+        height: 35vh;
     }
 
     .buttons button {
@@ -445,7 +444,6 @@ body
 /*Apartado para la ubicacion de las distintas ferreterias*/
 .ubicacion {
     width: 100%;
-    margin: 20px;
     display: grid;
     justify-content: center;
     align-content: center;
@@ -491,10 +489,6 @@ iframe{
 
 /* Móvil */
 @media (max-width: 599px) {
-    .ubicacion {
-        margin: 10px;
-    }
-
     .ubicacion .titulo{
         padding: 5px;
         font-size: 10px;
@@ -508,14 +502,12 @@ iframe{
     iframe {
         width: 100%;
         height: 200px;
+        margin-bottom: 10px;
     }
 }
 
 /* Tableta */
 @media (min-width: 600px) and (max-width: 899px) {
-    .ubicacion {
-        margin: 15px;
-    }
 
     .btn {
         width: 150px;
@@ -525,15 +517,12 @@ iframe{
     iframe {
         width: 100%;
         height: 300px;
+        margin-bottom: 10px;
     }
 }
 
 /* Escritorio */
 @media (min-width: 900px) and (max-width: 1199px) {
-    .ubicacion {
-        margin: 20px;
-    }
-
     .btn {
         width: 200px;
         padding: 10px;
@@ -542,14 +531,12 @@ iframe{
     iframe {
         width: 100%;
         height: 400px;
+        margin-bottom: 10px;
     }
 }
 
 /* Pantallas grandes */
 @media (min-width: 1200px) {
-    .ubicacion {
-        margin: 20px;
-    }
 
     .btn {
         width: 250px;
@@ -559,5 +546,6 @@ iframe{
     iframe {
         width: 100%;
         height: 500px;
+        margin-bottom: 10px;
     }
 }
