@@ -192,8 +192,9 @@ body {
   }
 
   .container-form {
-    height: auto;
+    height: 500px;
     flex-direction: column;
+    margin-bottom: 150px;
   }
 
   .information {
