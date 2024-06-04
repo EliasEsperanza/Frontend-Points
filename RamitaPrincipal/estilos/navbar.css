@@ -15,7 +15,7 @@ body{
     display: flex;
     flex-direction: column;
     background: #F5F7FF;
-    min-height: 200vh;
+    min-height: 100vh;
 }
 main {
     flex: 1;
