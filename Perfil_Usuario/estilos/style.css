@@ -1,0 +1,171 @@
+
+.Content-perfil{
+    border: 1px solid black;
+    width: 700px;
+    margin: 10px;
+    margin-top: 100px;
+    position: relative;
+    margin-left: 25%;
+}
+
+.Content-perfil .titulo{
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 10px;
+   
+    color: white;
+    width: 100%;
+    background-color: #239b56;
+}
+
+.Content-perfil .titulo p {
+    margin: 10px;
+    font-size: 3vh;
+}
+
+.Content-perfil .parrafos{
+    display: flex;
+    justify-content: space-around;
+    gap: 70px;
+    background-color: rgb(167, 156, 156);
+    height: 300px;
+}
+
+.Content-perfil .parrafos p {
+    margin: 20px;
+}
+
+.Content-perfil .botones {
+    display: flex;
+    justify-content: space-around;
+    gap: 40px;
+    padding: 10px;
+}
+
+.Content-perfil .botones input {
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn-agregar input{
+    background-color: #239b56;
+    color: white;
+}
+
+.btn-editar input {
+    background-color: brown;
+    color: white;
+}
+
+/*Media Querys*/
+
+/* Pantallas móviles (hasta 599px) */
+@media (max-width: 599px) {
+    .Content-perfil {
+        width: 90%;
+        height: auto;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .Content-perfil .titulo p {
+        font-size: 2.5vh;
+    }
+    .Content-perfil .parrafos {
+        display: flex;
+        gap: 20px;
+        height: auto;
+    }
+    .Content-perfil .parrafos p {
+        margin: 10px;
+    }
+    .Content-perfil .botones {
+        display: flex;
+        gap: 20px;
+    }
+    .Content-perfil .botones input {
+        width: 100px;
+        margin: 0;
+    }
+}
+
+/* Pantallas tablet (600px a 899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+    .Contenido{
+       height: 120vh;
+    }
+
+    .Content-perfil {
+        width: 80%;
+        height: auto;
+        margin-left: 10%;
+        margin-right: 10%;
+        position: relative;
+        top: 25vh;
+    }
+    .Content-perfil .titulo p {
+        font-size: 2.8vh;
+    }
+    .Content-perfil .parrafos {
+        display: flex;
+        gap: 20px;
+    }
+    .Content-perfil .parrafos p {
+        margin: 15px;
+    }
+    .Content-perfil .botones {
+        display: flex;
+        gap: 30px;
+    }
+    .Content-perfil .botones input {
+        width: 150px;
+    }
+}
+
+/* Pantallas de escritorio (900px a 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+    .Contenido{
+        height: 120vh;
+    }
+
+    .Content-perfil {
+        width: 70%;
+        height: auto;
+        margin-left: 15%;
+        margin-right: 15%;
+        position: relative;
+        top: 25vh;
+    }
+    .Content-perfil .titulo p {
+        font-size: 3vh;
+    }
+    .Content-perfil .parrafos {
+        gap: 50px;
+        height: auto;
+    }
+    .Content-perfil .parrafos p {
+        margin: 20px;
+    }
+    .Content-perfil .botones {
+        gap: 40px;
+    }
+    .Content-perfil .botones input {
+        width: 150px;
+    }
+}
+
+/* Pantallas grandes (1200px en adelante) */
+@media (min-width: 1200px) {
+    .Contenido{
+        height: 120vh;
+    }
+
+    .Content-perfil {
+        width: 700px;
+        height: auto;
+        position: relative;
+        top: 25vh;
+    }
+}
