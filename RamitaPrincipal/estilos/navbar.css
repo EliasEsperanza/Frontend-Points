@@ -6,13 +6,19 @@
     box-sizing: border-box;
     font: 'Popins', sans-serif;
 }
-
-body{
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+}
+body{
+    display: flex;
+    flex-direction: column;
     background: #F5F7FF;
     min-height: 200vh;
-
+}
+main {
+    flex: 1;
 }
 
 
@@ -235,7 +241,7 @@ header .close_btn:hover {
         padding: 1rem; 
     }
     header.sticky {
-        padding-top: 1.5rem; 
+        padding-top: 1.2rem; 
     }
 
     header .Nombre {
@@ -274,9 +280,74 @@ header .close_btn:hover {
         line-height: 1rem;
     }
     header.sticky  .toggle_btn {
-        line-height: 2.0rem;
+        line-height: 1.2rem;
+    }
+    header .links li a {
+        font-size: 16px; 
+    }
+
+    header.sticky .links li a {
+        font-size: 14px;
     }
     
+}
+
+/*CSS PARA PANTALLAS MENORES DE 250PX*/
+@media (max-width: 350px) {
+    header {
+        padding: 1.1rem;
+    }
+    
+    header .Nombre {
+        font-size: 0.9em;
+        line-height: 1.2rem;
+    }
+    
+    header ul {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header ul li a {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7em;
+        margin: 0.1rem 0;
+    }
+
+    header .imgLogo {
+        height: 1.2rem;
+        width: auto;
+        margin-right: 0.3rem;
+        margin-left: 85px;
+    }
+
+    header.sticky .imgLogo {
+        margin-left: 0px;
+    }
+    header.sticky .Nombre {
+        margin-right: 1rem;
+    }
+
+    header .toggle_btn {
+        display: block;
+        font-size: 1rem;
+        color: #000;
+        margin-left: 5px;
+        line-height: 0rem;
+    }
+
+    header.sticky .toggle_btn {
+        line-height: 1.5rem;
+    }
+
+    header .links li a {
+        font-size: 14px; 
+    }
+
+    header.sticky .links li a {
+        font-size: 12px; 
+    }
 }
 
 
