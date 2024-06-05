@@ -202,3 +202,152 @@
     }
 }
 
+/********************HISTORIAL CSS***************************/
+
+.historial .Box-Container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.historial .Box-Container .box{
+   flex:  1 1 25rem;
+   text-align: start;
+   margin: 1rem;
+   padding: 2rem 0;
+   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+   border: .1rem solid rgba(0,0,0,.3);
+}
+
+
+.historial .Box-Container .box .Titulo-Historial{
+    font-size: 2rem;
+    color: black;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.historial .Box-Container .box .box-color{
+    color: #fff;
+    background: linear-gradient(90deg, #136335, #239B56);
+    font-size: 1.5rem;
+    padding-left: 1rem ;
+    margin: 1rem 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.historial .Box-Container .box .box-color .fecha{
+    padding-left: 1.5rem ;
+}
+.historial .Box-Container .box i{
+    position: relative;
+    border-radius: 50%;
+    text-align: start;
+    font-size: 1.4rem;
+    color: #f5f5f5;
+    margin: 0;
+    padding-right: 0.5rem;
+}
+.historial .Box-Container .box ul{
+    list-style: none ;
+    padding: 0.5rem 0;
+    border-bottom: .1rem solid #FFBC0F;
+}
+.historial .Box-Container .box ul li{
+    padding-left: 0.9rem;
+    font-weight: bolder;
+}
+.historial .Box-Container .box ul li span{
+
+    font-weight: normal;
+}
+
+
+/******************* RESPONSIVE DE HISTORIAL**************************/
+
+
+
+@media (max-width: 992px) {
+    .historial .Box-Container .box {
+        flex: 1 1 100%;
+    }
+
+    .historial .Box-Container .box .Titulo-Historial {
+        font-size: 1.7rem;
+    }
+
+    .historial .Box-Container .box .box-color {
+        font-size: 1.5rem;
+    }
+    .historial .Box-Container .box i {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .historial .Box-Container .box {
+        flex: 1 1 100%;
+    }
+
+    .historial .Box-Container .box .Titulo-Historial {
+        font-size: 1.5rem;
+    }
+
+    .historial .Box-Container .box .box-color {
+        font-size: 1.5rem;
+    }
+
+    .historial .Box-Container .box ul li {
+        font-size: 1rem;
+    }
+    .historial .Box-Container .box i {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .historial .Box-Container .box {
+        padding: 1.5rem 1rem;
+    }
+
+    .historial .Box-Container .box .Titulo-Historial {
+        font-size: 1.4rem;
+    }
+
+    .historial .Box-Container .box .box-color {
+        font-size: 1.4rem;
+  
+    }
+
+    .historial .Box-Container .box ul li {
+        font-size: 0.9rem;
+    }
+    .historial .Box-Container .box i {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .historial .Box-Container .box {
+        padding: 1rem 0.5rem;
+    }
+
+    .historial .Box-Container .box .Titulo-Historial {
+        font-size: 1.3rem;
+    }
+
+    .historial .Box-Container .box .box-color {
+        font-size: 1.3rem;
+    }
+
+    .historial .Box-Container .box ul li {
+        font-size: 0.8rem;
+    }
+    .historial .Box-Container .box i {
+        font-size: 1rem;
+    }
+}
+
+
+
