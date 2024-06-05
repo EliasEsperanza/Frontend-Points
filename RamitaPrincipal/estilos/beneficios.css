@@ -1,0 +1,229 @@
+/**************CSS DE SECCION BENEFICIOS****************************************/
+.title {
+    padding-top: 8rem;
+    text-align: center;
+    margin: 0 6rem;
+    font-size: 4rem;
+    border-bottom: .1rem solid #FFBC0F;
+    color: #239B56;
+}
+.title span {
+    color: #136335;
+}
+
+.Beneficios .boxB-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+    padding-left: 3rem;
+    margin-right: 1rem;
+    text-align: justify;
+}
+
+.Beneficios .boxB-container .box{
+    width: 27rem;
+    margin: 2.5rem 1rem;
+    padding-left: 2rem;
+    border-left: .2rem solid #FFBC0F;
+    position: relative;
+}
+
+.Beneficios .boxB-container .box span{
+    font-size: 1.3rem;
+    background: #222;
+    color: white;
+    border-radius: 5rem;
+    padding: .5rem 1.5rem;
+}
+
+
+.Beneficios .boxB-container .box h3{
+    font-size: 1.3rem;
+    color: black;
+    padding-top: 1.2rem;
+}
+
+.Beneficios .boxB-container .box p{
+    font-size: 1.1rem;
+    color: black;
+    padding-top: 0.9rem 0;
+}
+
+.Beneficios .boxB-container .box i{
+    position: relative;
+    top: -2rem;
+    left: -3.2rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    line-height: 2.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #f5f5f5;
+    background: #136335;
+    margin: 0;
+}
+.Beneficios .boxB-container .box i:hover{
+    color: #239B56;
+    background: #f5f5f5;
+}
+
+
+
+
+@media (min-width: 1200px) {
+    .Beneficios .boxB-container {
+        padding-left: 3rem;
+    }
+    .Beneficios .boxB-container .box {
+        width: 22rem;
+        margin: 2rem;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .title {
+        margin: 0 3rem;
+        font-size: 3rem;
+        padding-top: 6rem;
+    }
+    .Beneficios .boxB-container {
+        margin-right: 1.5rem;
+        margin-left: 1rem;
+        margin-top: 1.5rem;
+    }
+    .Beneficios .boxB-container .box {
+        width: 100%;
+        margin: 1rem;
+        margin-bottom: 3rem;
+        padding-left: 1rem;
+    }
+    .Beneficios .boxB-container .box i{
+        position: relative;
+        top: -2rem;
+        left: -2.2rem;
+    }
+    .Beneficios .boxB-container .box span,
+    .Beneficios .boxB-container .box h3 {
+        font-size: 1.2rem;
+    }
+    .Beneficios .boxB-container .box p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .title {
+        margin: 0 2rem;
+        font-size: 2.5rem;
+        padding-top: 5rem;
+    }
+    .Beneficios .boxB-container {
+        padding-left: 1rem;
+        margin-right: 0;
+    }
+    .Beneficios .boxB-container .box {
+        width: 100%;
+        margin: 0.5rem 0;
+        margin-bottom: 2rem;
+        margin-left: 0.5rem;
+        margin-right: 1rem;
+    }
+    .Beneficios .boxB-container .box span {
+        font-size: 1.1rem;
+    }
+    .Beneficios .boxB-container .box h3 {
+        font-size: 1.2rem;
+    }
+    .Beneficios .boxB-container .box p {
+        font-size: 0.9rem;
+    }
+    .Beneficios .boxB-container .box i {
+        top: -1.5rem;
+        left: -2.2rem;
+        height: 2rem;
+        width: 2rem;
+        line-height: 2rem;
+        font-size: 1rem;
+    }
+}
+
+   
+@media (max-width: 400px) {
+    .title {
+        margin: 0 1rem;
+        font-size: 2.2rem;
+        padding-top: 4rem;
+    }
+    .Beneficios .boxB-container {
+        padding-left: 0.5rem;
+    }
+    .Beneficios .boxB-container .box {
+        width: 100%;
+        margin: 0.5rem 0;
+        margin-right: 0.9rem;
+        margin-left: 0.2rem;
+        margin-bottom: 2rem;
+    }
+    .Beneficios .boxB-container .box i{
+        position: relative;
+        top: -2rem;
+        left: -0.9rem;
+    }
+    .Beneficios .boxB-container .box span {
+        font-size: 1rem;
+    }
+    .Beneficios .boxB-container .box h3 {
+        font-size: 1rem;
+    }
+    .Beneficios .boxB-container .box p {
+        font-size: 0.8rem;
+    }
+    .Beneficios .boxB-container .box i {
+        top: -1rem;
+        left: -1.8rem;
+        height: 1.5rem;
+        width: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 350px) {
+    .title {
+        margin: 0 0.5rem;
+        font-size: 2rem;
+        padding-top: 3rem;
+    }
+    .Beneficios .boxB-container {
+        padding-left: 0.5rem;
+    }
+    .Beneficios .boxB-container .box {
+        width: 100%;
+        margin: 0.5rem 0;
+       margin-right: 0.9rem;
+       margin-left: 0.1rem;
+       margin-bottom: 2rem;
+    }
+    .Beneficios .boxB-container .box span {
+        font-size: 0.9rem;
+    }
+    .Beneficios .boxB-container .box h3 {
+        font-size: 0.9rem;
+    }
+    .Beneficios .boxB-container .box p {
+        font-size: 0.7rem;
+    }
+    .Beneficios .boxB-container .box i {
+        top: -1rem;
+        left: -1.7rem;
+        height: 1.2rem;
+        width: 1.2rem;
+        line-height: 1.2rem;
+        font-size: 0.7rem;
+    }
+}
