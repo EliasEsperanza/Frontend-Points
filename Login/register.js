@@ -9,6 +9,10 @@ const direccionINP = document.getElementById("inp-Direccion");
 const Formu = document.getElementById("form-register");
 const btnRegistrar = document.getElementById("btn-registrar");
 
+const navbar = document.getElementById("navbar-links");
+const listaNav = document.getElementById("lista-link");
+
+
 btnRegistrar.addEventListener("click", function(event){
     event.preventDefault();
 
@@ -64,8 +68,10 @@ btnRegistrar.addEventListener("click", function(event){
         });
         return; // Detener la ejecución si la contraseña es demasiado corta
     }
-
+    
+    localStorage.setItem("Usuario","true");
+    
     // Si todas las validaciones pasan, enviar el formulario
     Formu.submit();
-    window.location.href = "/Inicio/html/index.html";
+    window.location.href = "/Inicio/html/index.html";    
 });
