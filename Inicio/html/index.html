@@ -28,17 +28,29 @@
             <img src="/Inicio/Logo.jpg" class="imgLogo" alt="">
             <a href="#" class="Nombre">Ferreteria El Roble</a>
         </div>
-        <ul class="links">
+        <ul class="links" id="navbar-links">
             <li><a href="#inicioP">Inicio</a></li>
-            <li><a href="/Login/index.html">Iniciar Sesion</a></li>
-            <li><a href="#Pasos">Como Funciona</a></li>
-            <li><a href="#Niveles">Niveles</a></li>
-            <li><a href="#Promociones">Promociones</a></li>
-            <li><a href="#Ubicacion">Ubicaciones</a></li>
+            <li id="lista"><a href="/Login/index.html">Iniciar Sesion</a></li>
         </ul>
         <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-         <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+        <div class="close_btn"><i class="fa-solid fa-x"></i></div>
     </header>
+
+    <!--Aqui esta esto-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const nav = document.getElementById("navbar-links");
+            const li = document.getElementById("lista");
+
+            if (localStorage.getItem("Usuario") === "true") {
+                li.remove();
+                nav.innerHTML = `
+                    <li><a href="/Inicio/html/index.html">Inicio</a></li>
+                    <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
+                `;
+            }
+        });
+    </script>
     
 
     <div class="content" id="inicioP">
