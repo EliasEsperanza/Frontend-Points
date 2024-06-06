@@ -1,126 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Establece una conexión anticipada a Google Fonts para mejorar el rendimiento -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <!-- Establece una conexión anticipada al dominio de Google Fonts para cargar las fuentes -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Enlace a Google Fonts para cargar la fuente 'Montserrat' con varios pesos (300, 400, 500, 600, 700) -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Enlace a la biblioteca de iconos Boxicons para usar iconos SVG en la página web -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
     <script src="register.js" defer></script>
     <script src="iniciar_sesion.js" defer></script>
     <!-- SweetAlert2 Para mejorar la presentacion de las alertas -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>INICIO SESIÓN</title>
-</head>
-<body>
+  </head>
+  <body>
     <!--Esta seria la parte del codigo para cuando el usuario es nuevo y desea crear una nueva cuenta-->
     <div class="container-form register">
-        <div class="information">
-            <div class="info-childs">
-                <h2>Bienvenido</h2>
-                <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
-                <input type="button" value="Iniciar Sesión" id="sign-in">
-            </div>
+      <div class="information">
+        <div class="info-childs">
+          <h2>Bienvenido</h2>
+          <p>
+            Para unirte a nuestra comunidad por favor Inicia Sesión con tus
+            datos
+          </p>
+          <input type="button" value="Iniciar Sesión" id="sign-in" />
         </div>
-        <div class="form-information">
-            <div class="form-information-childs">
-                <h2>Crear una Cuenta</h2>
-                <p>Usa tu email para registrarte</p>
-                <form id="form-register" class="form form-register" novalidate>
-                    <div>
-                        <label>
-                            <i class='bx bx-user' ></i>
-                            <input id="inp-nombre" type="text" placeholder="Nombre Usuario" name="userName" >
-                        </label>
-                    </div>
-                
-                    <div>
-                        <label >
-                            <i class='bx bx-envelope' ></i>
-                            <input id="inp-email" type="email" placeholder="Correo Electronico" name="userEmail" >
-                        </label>
-                    </div>
-                   <div>
-                        <label>
-                            <i class='bx bx-lock-alt' ></i>
-                            <input id="inp-contra" type="password" placeholder="Contraseña" name="userPassword">
-                        </label>
-                   </div>
-
-                   <div>
-                        <label>
-                            <i class='bx bx-id-card'></i>
-                            <input id="inp-dui" type="text" placeholder="DUI" name="userDUI">
-                        </label>
-                    </div>
-
-                    <div>
-                        <label>
-                            <i class='bx bx-file'></i>
-                            <input id="inp-nrc" type="text" placeholder="NRC" name="userNRC">
-                        </label>
-                    </div>                    
-
-                    <div>
-                        <label>
-                            <i class='bx bx-phone'></i>
-                            <input id="inp-telefono" type="text" placeholder="Telefono" name="userTelefono">
-                        </label>
-                    </div>
-
-                    <div>
-                        <label>
-                            <i class='bx bx-map'></i>
-                            <input id="inp-Direccion" type="text" placeholder="Direccion" name="userDireccion">
-                        </label>
-                    </div>
-                   
-                    <input type="submit" value="Registrarse" id="btn-registrar">
-                </form>
+      </div>
+      <div class="form-information">
+        <div class="form-information-childs">
+          <h2>Crear una Cuenta</h2>
+          <p>Usa tu email para registrarte</p>
+          <form id="form-register" class="form form-register" novalidate>
+            <div>
+              <label>
+                <i class="bx bx-user"></i>
+                <input
+                  id="inp-nombre"
+                  type="text"
+                  placeholder="Nombre Usuario"
+                  name="userName"
+                />
+              </label>
             </div>
+
+            <div>
+              <label>
+                <i class="bx bx-envelope"></i>
+                <input
+                  id="inp-email"
+                  type="email"
+                  placeholder="Correo Electronico"
+                  name="userEmail"
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                <i class="bx bx-lock-alt"></i>
+                <input
+                  id="inp-contra"
+                  type="password"
+                  placeholder="Contraseña"
+                  name="userPassword"
+                />
+              </label>
+            </div>
+
+            <div>
+              <label>
+                <i class="bx bx-id-card"></i>
+                <input
+                  id="inp-dui"
+                  type="text"
+                  placeholder="DUI"
+                  name="userDUI"
+                />
+              </label>
+            </div>
+
+            <div>
+              <label>
+                <i class="bx bx-file"></i>
+                <input
+                  id="inp-nrc"
+                  type="text"
+                  placeholder="NRC"
+                  name="userNRC"
+                />
+              </label>
+            </div>
+            <div>
+                <label>
+                  <i class="bx bx-file"></i>
+                  <input
+                    id="inp-nit"
+                    type="text"
+                    placeholder="NIT"
+                    name="userNIT"
+                  />
+                </label>
+              </div>
+
+            <div>
+              <label>
+                <i class="bx bx-phone"></i>
+                <input
+                  id="inp-telefono"
+                  type="text"
+                  placeholder="Telefono"
+                  name="userTelefono"
+                />
+              </label>
+            </div>
+
+            <div>
+              <label>
+                <i class="bx bx-map"></i>
+                <input
+                  id="inp-Direccion"
+                  type="text"
+                  placeholder="Direccion"
+                  name="userDireccion"
+                />
+              </label>
+            </div>
+
+            <input type="submit" value="Registrarse" id="btn-registrar" />
+          </form>
         </div>
+      </div>
     </div>
 
     <!--Esta seria la parte de codigo para cuando el usuario ya este registrado y solo quiera iniciar sesion-->
     <div class="container-form login hide">
-        <div class="information">
-            <div class="info-childs">
-                <h2>¡¡Bienvenido nuevamente!!</h2>
-                <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
-                <input type="button" value="Registrarse" id="sign-up">
-            </div>
+      <div class="information">
+        <div class="info-childs">
+          <h2>¡¡Bienvenido nuevamente!!</h2>
+          <p>
+            Para unirte a nuestra comunidad por favor Inicia Sesión con tus
+            datos
+          </p>
+          <input type="button" value="Registrarse" id="sign-up" />
         </div>
-        <div class="form-information">
-            <div class="form-information-childs">
-                <h2>Iniciar Sesión</h2>
-                <p>o Iniciar Sesión con una cuenta</p>
-                <form id="Formu-login" class="form form-login"novalidate>
-                    <div>
-                        <label >
-                            <i class='bx bx-envelope' ></i>
-                            <input id="inp-correo" type="email" placeholder="Correo Electronico" name="userPassword">
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                            <i class='bx bx-lock-alt' ></i>
-                            <input id="inp-password" type="password" placeholder="Contraseña" name="userPassword">
-                        </label>
-                    </div>
-                    <input id="btn-init" type="submit" value="Iniciar Sesión">
-                </form>
+      </div>
+      <div class="form-information">
+        <div class="form-information-childs">
+          <h2>Iniciar Sesión</h2>
+          <p>o Iniciar Sesión con una cuenta</p>
+          <form id="Formu-login" class="form form-login" novalidate>
+            <div>
+              <label>
+                <i class="bx bx-envelope"></i>
+                <input
+                  id="inp-correo"
+                  type="email"
+                  placeholder="Correo Electronico"
+                  name="userPassword"
+                />
+              </label>
             </div>
+            <div>
+              <label>
+                <i class="bx bx-lock-alt"></i>
+                <input
+                  id="inp-password"
+                  type="password"
+                  placeholder="Contraseña"
+                  name="userPassword"
+                />
+              </label>
+            </div>
+            <input id="btn-init" type="submit" value="Iniciar Sesión" />
+          </form>
         </div>
+      </div>
     </div>
-
-</body>
+  </body>
 </html>
