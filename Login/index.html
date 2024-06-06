@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INICIO SESIÓN</title>
     <!-- Establece una conexión anticipada a Google Fonts para mejorar el rendimiento -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <!-- Establece una conexión anticipada al dominio de Google Fonts para cargar las fuentes -->
@@ -19,25 +20,15 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
-    <script src="register.js" defer></script>
-    <script src="iniciar_sesion.js" defer></script>
-    <!-- SweetAlert2 Para mejorar la presentacion de las alertas -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>INICIO SESIÓN</title>
   </head>
   <body>
-    <!--Esta seria la parte del codigo para cuando el usuario es nuevo y desea crear una nueva cuenta-->
+    <!-- Esta sería la parte del código para cuando el usuario es nuevo y desea crear una nueva cuenta -->
     <div class="container-form register">
       <div class="information">
         <div class="info-childs">
           <h2>Bienvenido</h2>
           <p>
-            Para unirte a nuestra comunidad por favor Inicia Sesión con tus
+            Para unirte a nuestra comunidad por favor inicia sesión con tus
             datos
           </p>
           <input type="button" value="Iniciar Sesión" id="sign-in" />
@@ -59,14 +50,13 @@
                 />
               </label>
             </div>
-
             <div>
               <label>
                 <i class="bx bx-envelope"></i>
                 <input
                   id="inp-email"
                   type="email"
-                  placeholder="Correo Electronico"
+                  placeholder="Correo Electrónico"
                   name="userEmail"
                 />
               </label>
@@ -82,68 +72,19 @@
                 />
               </label>
             </div>
-
-            <div>
-              <label>
-                <i class="bx bx-id-card"></i>
-                <input
-                  id="inp-dui"
-                  type="text"
-                  placeholder="DUI"
-                  name="userDUI"
-                />
-              </label>
-            </div>
-
-            <div>
-              <label>
-                <i class="bx bx-file"></i>
-                <input
-                  id="inp-nrc"
-                  type="text"
-                  placeholder="NRC"
-                  name="userNRC"
-                />
-              </label>
-            </div>
-
-            <div>
-              <label>
-                <i class="bx bx-phone"></i>
-                <input
-                  id="inp-telefono"
-                  type="text"
-                  placeholder="Telefono"
-                  name="userTelefono"
-                />
-              </label>
-            </div>
-
-            <div>
-              <label>
-                <i class="bx bx-map"></i>
-                <input
-                  id="inp-Direccion"
-                  type="text"
-                  placeholder="Direccion"
-                  name="userDireccion"
-                />
-              </label>
-            </div>
-
             <input type="submit" value="Registrarse" id="btn-registrar" />
           </form>
         </div>
       </div>
     </div>
 
-    <!--Esta seria la parte de codigo para cuando el usuario ya este registrado y solo quiera iniciar sesion-->
+    <!-- Esta sería la parte de código para cuando el usuario ya esté registrado y solo quiera iniciar sesión -->
     <div class="container-form login hide">
       <div class="information">
         <div class="info-childs">
           <h2>¡¡Bienvenido nuevamente!!</h2>
           <p>
-            Para unirte a nuestra comunidad por favor Inicia Sesión con tus
+            Para unirte a nuestra comunidad por favor inicia sesión con tus
             datos
           </p>
           <input type="button" value="Registrarse" id="sign-up" />
@@ -152,16 +93,16 @@
       <div class="form-information">
         <div class="form-information-childs">
           <h2>Iniciar Sesión</h2>
-          <p>o Iniciar Sesión con una cuenta</p>
-          <form id="Formu-login" class="form form-login" novalidate>
+          <p>O inicia sesión con una cuenta</p>
+          <form id="form-login" class="form form-login" novalidate>
             <div>
               <label>
                 <i class="bx bx-envelope"></i>
                 <input
                   id="inp-correo"
                   type="email"
-                  placeholder="Correo Electronico"
-                  name="userPassword"
+                  placeholder="Correo Electrónico"
+                  name="userEmail"
                 />
               </label>
             </div>
@@ -181,113 +122,100 @@
         </div>
       </div>
     </div>
+
+    <script>
+      // Esta función maneja el inicio de sesión
+      const handleLogin = async (event) => {
+        event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+        const correo = document.getElementById("inp-correo").value;
+        const password = document.getElementById("inp-password").value;
+
+        const requestBody = {
+          correo: correo,
+          password: password,
+        };
+
+        try {
+          const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Inicio de sesión exitoso
+            console.log("Inicio de sesión exitoso:", data);
+            localStorage.setItem("token", data.token);
+            // Redireccionar a la página de inicio después del inicio de sesión exitoso
+            window.location.href = "../Inicio/index.html";
+          } else {
+            // Error en el inicio de sesión
+            console.error("Error en el inicio de sesión:", data.message);
+          }
+        } catch (error) {
+          console.error("Error en la solicitud:", error);
+        }
+      };
+
+      // Esta función maneja el registro de usuarios
+      const handleRegister = async (event) => {
+        event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+        const nombreCliente = document.getElementById("inp-nombre").value;
+        const dui = document.getElementById("inp-dui").value;
+        const nit = document.getElementById("inp-nit").value;
+        const nrc = document.getElementById("inp-nrc").value;
+        const telefono = document.getElementById("inp-telefono").value;
+        const direccion = document.getElementById("inp-Direccion").value;
+        const correo = document.getElementById("inp-email").value;
+        const password = document.getElementById("inp-contra").value;
+
+        const requestBody = {
+          nombreCliente: nombreCliente,
+          dui: dui,
+          nit: nit,
+          nrc: nrc,
+          telefono: telefono,
+          direccion: direccion,
+          correo: correo,
+          idCategoriaCliente: 1,
+          idTipoCliente: 1,
+          passwordHash: password,
+        };
+
+        try {
+          const response = await fetch("https://localhost:3000/cliente", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Registro exitoso
+            console.log("Registro exitoso:", data);
+            // Redireccionar a la página de inicio después del registro exitoso
+            window.location.href = "../Inicio/index.html";
+          } else {
+            // Error en el registro
+            console.error("Error en el registro:", data.message);
+          }
+        } catch (error) {
+          console.error("Error en la solicitud:", error);
+        }
+      };
+
+      // Asociar funciones a eventos
+      document.getElementById("form-login", handleLogin);
+      document.getElementById("form-register", handleRegister);
+    </script>
   </body>
 </html>
-
-<script>
-  import dotenv from "dotenv";
-  if (process.env.NODE_ENV !== "production") {
-    dotenv.config();
-  }
-
-  //Aqui se empieza a consumir la api para el inicio de sesion de clientes con su email y para vendedores y admins con su usuario y extrallendo su token
-  const handleLogin = async () => {
-    const correo = document.getElementById("inp-correo").value;
-    const usuario = document.getElementById("inp-usuario").value;
-    const password = document.getElementById("inp-password").value;
-
-    let requestBody = {};
-
-    if (correo) {
-      requestBody = {
-        correo: correo,
-        password: password,
-      };
-    } else if (usuario) {
-      requestBody = {
-        usuario: usuario,
-        password: password,
-      };
-    } else {
-      // Manejo del caso en que ni el correo ni el usuario estén presentes
-      console.error(
-        "Error: Debes proporcionar un correo o un usuario para iniciar sesión."
-      );
-      return;
-    }
-
-    try {
-      const response = await fetch(`${process.env.API_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Inicio de sesión exitoso
-        console.log("Inicio de sesión exitoso:", data);
-        // Guardar el token en el almacenamiento local
-        localStorage.setItem("token", data.token);
-        window.location.href = "../Inicio/index.html";
-      } else {
-        // Error en el inicio de sesión
-        console.error("Error en el inicio de sesión:", data.message);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-    }
-  };
-
-  //Aqui se empieza a consumir la api para el registro de clientes con su email y para vendedores y admins con su usuario y extrallendo su token
-
-  const handleRegister = async () => {
-    const nombreCliente = document.getElementById("inp-nombre").value;
-    const dui = document.getElementById("inp-dui").value;
-    const nit = document.getElementById("inp-nit").value;
-    const nrc = document.getElementById("inp-nrc").value;
-    const telefono = document.getElementById("inp-telefono").value;
-    const direccion = document.getElementById("inp-Direccion").value;
-    const correo = document.getElementById("inp-email").value;
-    const password = document.getElementById("inp-contra").value;
-
-    const requestBody = {
-      nombreCliente: nombreCliente,
-      dui: dui,
-      nit: nit,
-      nrc: nrc,
-      telefono: telefono,
-      direccion: direccion,
-      correo: correo,
-      idCategoriaCliente: 1,
-      idTipoCliente: 1,
-      passwordHash: password,
-    };
-
-    try {
-      const response = await fetch(`${process.env.API_URL}/cliente`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Registro exitoso
-        console.log("Registro exitoso:", data);
-        window.location.href = "../Inicio/index.html";
-      } else {
-        // Error en el registro
-        console.error("Error en el registro:", data.message);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-    }
-  };
-</script>
