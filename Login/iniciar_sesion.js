@@ -57,10 +57,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const data = await response.json();
             const { token } = data;
 
-            // Almacenar el token en localStorage
             localStorage.setItem('jwt', token);
 
-            // Redirigir a la página principal después de iniciar sesión
             Swal.fire({
                 icon: 'success',
                 title: 'Inicio de sesión exitoso',
