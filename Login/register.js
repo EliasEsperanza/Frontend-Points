@@ -3,13 +3,14 @@ const formu = document.getElementById("form-register");
 formu.addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const nombre = nombreINP.value;
-    const email = emailINP.value;
-    const contra = contraINP.value;
-    const dui = duiINP.value;
-    const nrc = nrcINP.value;
-    const telefono = TelINP.value;
-    const direccion = direccionINP.value;
+    const nombre = document.getElementById("inp-nombre").value;
+    const email = document.getElementById("inp-email").value;
+    const contra = document.getElementById("inp-contra").value;
+    const dui = document.getElementById("inp-dui").value;
+    const nrc = document.getElementById("inp-nrc").value;
+    const nit = document.getElementById("inp-nit").value;
+    const telefono = document.getElementById("inp-telefono").value;
+    const direccion = document.getElementById("inp-Direccion").value;
   
     try {
         const response = await fetch('http://localhost:3000/cliente', {
@@ -20,7 +21,7 @@ formu.addEventListener("submit", async function(event) {
             body: JSON.stringify({
                 nombreCliente: nombre,
                 dui: dui,
-                nit: '',
+                nit: nit,
                 nrc: nrc,
                 telefono: telefono,
                 direccion: direccion,
