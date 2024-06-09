@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const correo = document.getElementById("inp-correo").value;
         const password = document.getElementById("inp-password").value;
-
+        
         // Validar que ningún campo esté vacío
         if (correo.trim() === '' || password.trim() === '') {
             Swal.fire({
