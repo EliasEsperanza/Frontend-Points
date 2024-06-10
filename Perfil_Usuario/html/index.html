@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="/RamitaPrincipal/js/navbar.js" defer></script>
-    <title>Document</title>
+    <title>Perfil de usuario</title>
 </head>
 <body>
     <!--Parte del navbar-->
@@ -44,42 +44,42 @@
             <div class="Textos">
                 <div class="name">
                     <p>Tu nombre de usuario:</p>
-                    <p class="txt-estl">Angel Medrano</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="email">
                     <p>Tu email:</p>
-                    <p class="txt-estl">angel@gmail.com</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="password">
                     <p>Tu password:</p>
-                    <p class="txt-estl">increible123</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="dui">
                     <p>Tu DUI:</p>
-                    <p class="txt-estl">06816167-4</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="nit">
                     <p>Tu NIT:</p>
-                    <p class="txt-estl">1345-554-56764</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="nrc">
                     <p>Tu nrc:</p>
-                    <p class="txt-estl">134567-2456-1345</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="tel">
                     <p>Tu numero de telefono:</p>
-                    <p class="txt-estl">75548239</p>
+                    <p class="txt-estl"></p>
                 </div>
 
                 <div class="direccion">
                     <p>Tu direccion:</p>
-                    <p class="txt-estl">San Miguel</p>
+                    <p class="txt-estl"></p>
                 </div>
             </div>
 
@@ -142,14 +142,55 @@
        
     </footer>
 
-
-
     <!--APIS-->
     <script>
-        try{
-            const response = await fetch('https://backend-points-production.up.railway.app/cliente');
-        } catch(except){
+        document.addEventListener('DOMContentLoaded', async () => {
+            const idCliente = localStorage.getItem('idCliente');
+            console.log('idCliente:', idCliente);
 
+            if(idCliente){            
+                try {
+                    
+                    const token = localStorage.getItem('jwt');
+                    if (!token) {
+                        console.error('No token found, redirecting to login...');
+                        window.location.href = '/Login/index.html';
+                        return;
+                    }
+
+                    const response = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch user data');
+                    }
+
+                    const data = await response.json();
+                    console.log(data);
+
+                    populateUserProfile(data);
+
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+        
+
+        function populateUserProfile(user) {
+            document.querySelector('.txt-estl.name').textContent = user.nombreCliente;
+            document.querySelector('.txt-estl.email').textContent = user.correo;
+            document.querySelector('.txt-estl.password').textContent = user.passwordHash;
+            document.querySelector('.txt-estl.dui').textContent = user.dui;
+            document.querySelector('.txt-estl.nit').textContent = user.nit;
+            document.querySelector('.txt-estl.nrc').textContent = user.nrc;
+            document.querySelector('.txt-estl.tel').textContent = user.telefono;
+            document.querySelector('.txt-estl.direccion').textContent = user.direccion;
         }
     </script>
 </body>
