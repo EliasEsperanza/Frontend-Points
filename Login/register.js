@@ -78,7 +78,7 @@ formu.addEventListener("submit", async function(event) {
 
     /*Consumir las apis*/ 
     try {
-        const response = await fetch('http://localhost:3000/cliente', {
+        const response = await fetch('https://backend-points-production.up.railway.app/cliente', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
