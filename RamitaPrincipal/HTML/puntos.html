@@ -36,14 +36,13 @@
         <h1 class="title"><span>Puntos</span> Usuario</h1>
         <div class="row">
             <div class="infoP">
-                <div><span>nombre usuario: </span><h3></h3></div>
-            <div><span>Dui: </span><h3></h3></div>
-            <div><span>ultimo canje:</span><h3>$50.00</h3></div>
-            <div><span>Fecha de ultimo canje:</span><h3>27/10/58</h3></div>
+                <div class="Contenedor-Name"><span>nombre usuario: </span><h3 id="Nombre-Usuario"></h3></div>
+                <div class="Contenedor-dUI"><span>Dui: </span><h3 id="Nombre-Dui"></h3></div>
+                <div><span>ultimo canje:</span><h3>$50.00</h3></div>
+                <div><span>Fecha de ultimo canje:</span><h3>27/10/58</h3></div>
             </div>
 
             <div class="Informacion">
-
                 <div class="box">
                     <span>Nivel</span>
                     <h3>Plata</h3>
@@ -64,7 +63,6 @@
                     <h3>$20</h3>
                     <p>Dolares disponibles</p>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -72,28 +70,27 @@
     <section class="historial">
         <h1 class="title"><span>Historial</span> Usuario</h1>
         <div class="Box-Container">
-            
             <div class="box">
-            <div class="Titulo-Historial">Historial Acumulación</div>
-            <div class="box-color">
-            <h3><i class="fa-solid fa-dollar-sign"></i>Dolares Acumulados</h3>
-            <h3 class="fecha">Junio-Julio</h3>
-            </div>
-            <ul>
-                <li>Sucursal: <span>Oriente</span></li>
-                <li>Numero Factura: <span>0001</span></li>
-                <li>Entrada de: <span>100 puntos</span></li>
-                <li>Conversion a dolares: <span>10</span> </li>
-                <li>Fecha: <span>04/04/2024 10:00:34</span></li>
-            </ul>
+                <div class="Titulo-Historial">Historial Acumulación</div>
+                <div class="box-color">
+                    <h3><i class="fa-solid fa-dollar-sign"></i>Dolares Acumulados</h3>
+                    <h3 class="fecha">Junio-Julio</h3>
+                </div>
+                <ul>
+                    <li>Sucursal: <span>Oriente</span></li>
+                    <li>Numero Factura: <span>0001</span></li>
+                    <li>Entrada de: <span>100 puntos</span></li>
+                    <li>Conversion a dolares: <span>10</span> </li>
+                    <li>Fecha: <span>04/04/2024 10:00:34</span></li>
+                </ul>
             </div>
 
             <div class="box">
                 <div class="Titulo-Historial">Historial Canjeados</div>
                 <div class="box-color">
-                <h3><i class="fa-solid fa-bag-shopping"></i>Dolares Canjeados</h3>
-                <h3 class="fecha">Junio-Julio</h3>
-            </div>
+                    <h3><i class="fa-solid fa-bag-shopping"></i>Dolares Canjeados</h3>
+                    <h3 class="fecha">Junio-Julio</h3>
+                </div>
                 <ul>
                     <li>Sucursal: <span>Oriente</span></li>
                     <li>Puntos canjeados: <span>100 puntos</span></li>
@@ -101,12 +98,10 @@
                     <li>Premio canjeado: <span>Clavos</span></li>
                     <li>Fecha: <span>05/04/2024 10:34:01</span></li>
                 </ul>
-                </div>
+            </div>
         </div>
     </section>
-    
 </main>
-
 
 
 
@@ -157,7 +152,8 @@
         <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
    
 </footer>
-</body>
+</body><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/RamitaPrincipal/js/puntos.js" defer ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/RamitaPrincipal/js/navbar.js"></script>
 </html>

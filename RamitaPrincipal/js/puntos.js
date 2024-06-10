@@ -1,20 +1,22 @@
 document.addEventListener("DOMContentLoaded", async function() {
     const idCliente = localStorage.getItem('idCliente');
+    console.log('idCliente:', idCliente);
 
     if (idCliente) {
         try {
             const response = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`);
-
+            console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
+            
             if (!response.ok) {
-                throw new Error('FALLO AL OBTENER EL ID');
+                throw new Error('Fallo al obtener el ID');
             }
 
             const data = await response.json();
 
             // Assuming data.data contains the required user information
             const user = data.data;
-            document.querySelector(".infoP h3:nth-of-type(1)").innerText = user.nombreCliente;
-            document.querySelector(".infoP h3:nth-of-type(2)").innerText = user.dui;
+            document.getElementById("Nombre-Usuario").innerText = user.nombreCliente;
+            document.getElementById("Nombre-Dui").innerText = user.dui;
             // Set other fields as necessary
 
         } catch (error) {
