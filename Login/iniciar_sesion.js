@@ -59,6 +59,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
             localStorage.setItem('jwt', token);
 
+            const {idCliente}= data;
+            localStorage.setItem('idCliente', idCliente);
+
             Swal.fire({
                 icon: 'success',
                 title: 'Inicio de sesión exitoso',
