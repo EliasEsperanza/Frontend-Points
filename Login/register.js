@@ -1,6 +1,6 @@
 const formu = document.getElementById("form-register");
 
-formu.addEventListener("submit", async function(event) {
+formu.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const nombre = document.getElementById("inp-nombre").value.trim();
@@ -19,7 +19,7 @@ formu.addEventListener("submit", async function(event) {
             title: 'Campos vacíos',
             text: 'No se pueden agregar campos vacíos. Por favor, complete todos los campos.'
         });
-        return; 
+        return;
     }
 
     // Validar el formato del correo electrónico
@@ -76,7 +76,7 @@ formu.addEventListener("submit", async function(event) {
         return;
     }
 
-    /*Consumir las apis*/ 
+    /*Consumir las apis*/
     try {
         const response = await fetch('https://backend-points-production.up.railway.app/cliente', {
             method: 'POST',
@@ -99,7 +99,8 @@ formu.addEventListener("submit", async function(event) {
         });
 
         if (!response.ok) {
-            throw new Error('Error al registrar el cliente');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al registrar el cliente');
         }
 
         const data = await response.json();
@@ -124,7 +125,7 @@ formu.addEventListener("submit", async function(event) {
         Swal.fire({
             icon: 'error',
             title: 'Error al registrar el cliente',
-            text: 'Ha ocurrido un error al intentar registrar el cliente. Por favor, inténtelo de nuevo más tarde.'
+            text: `Ha ocurrido un error al intentar registrar el cliente. Por favor, inténtelo de nuevo más tarde. Detalle: ${error.message}`
         });
     }
 });
