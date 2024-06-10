@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function() {
     const idCliente = localStorage.getItem('idCliente');
-    console.log('idCliente:', idCliente);
+    console.log('idCliente from localStorage:', idCliente);
 
     if (idCliente) {
         try {
