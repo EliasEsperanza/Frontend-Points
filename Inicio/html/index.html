@@ -1,263 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Establece una conexión anticipada a Google Fonts para mejorar el rendimiento -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <!-- Establece una conexión anticipada al dominio de Google Fonts para cargar las fuentes -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Enlace a Google Fonts para cargar la fuente 'Montserrat' con varios pesos (300, 400, 500, 600, 700) -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/Inicio/estilos/content.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/Inicio/estilos/content.css" />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
     <script src="/Inicio/js/navbar.js" defer></script>
     <script src="/Inicio/js/map.js" defer></script>
     <script src="/Inicio/js/carrucel.js" defer></script>
-    
+
     <title>Inicio</title>
-</head>
-<body>
+  </head>
+  <body>
     <!--Parte de los navbar-->
     <header>
-        <div class="logo-container">
-            <img src="/Inicio/Logo.jpg" class="imgLogo" alt="">
-            <a href="#" class="Nombre">Ferreteria El Roble</a>
-        </div>
-        <ul class="links" id="navbar-links">
-            <li><a href="#inicioP">Inicio</a></li>
-            <li id="lista"><a href="/Login/index.html">Iniciar Sesion</a></li>
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-        <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+      <div class="logo-container">
+        <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+      </div>
+      <ul class="links" id="navbar-links">
+        <li><a href="#inicioP">Inicio</a></li>
+        <li id="lista"><a href="/Login/index.html">Iniciar Sesion</a></li>
+      </ul>
+      <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
     </header>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                
-                // Verificar si hay un token en el localStorage
-                const token = localStorage.getItem('jwt');
-                console.log(token);
-                const idCliente= localStorage.getItem('idCliente');
-                console.log(idCliente);
-                if (token) {
-                    // Si hay un token, modificar el navbar
-                    modifyNavbarForAuthenticatedUser();
-                }
-        
-            } catch (error) {
-                console.error('Error:', error);
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          console.log(token);
+          const idUsuario = localStorage.getItem("idUsuario");
+          console.log(idUsuario);
+
+          const response = await fetch(
+            `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-        });
-        
-        function modifyNavbarForAuthenticatedUser() {
-            const navbarLinks = document.getElementById('navbar-links');
-            const loginLink = document.getElementById('login-link');
-            const listaIniciar = document.getElementById('lista'); // Asegúrate de que este id coincide
-        
-            // Eliminar el enlace de iniciar sesión
-            if (listaIniciar) {
-                listaIniciar.remove();
-            }
-        
-            // Eliminar el enlace de iniciar sesión
-            if (loginLink) {
-                loginLink.remove();
-            }
-        
-            // Agregar nuevos enlaces para usuarios autenticados
-            const newLinks = [
-                { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-                { href: "/Perfil_Usuario/html/index.html", text: "Tu Perfil" },
-                { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" }
-            ];
-        
-            newLinks.forEach(link => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = link.href;
-                a.textContent = link.text;
-                li.appendChild(a);
-                navbarLinks.appendChild(li);
-            });
+          );
+
+          const data = await response.json();
+
+          // Verificar si la respuesta contiene datos
+          if (!data || !data.data) {
+            throw new Error("La respuesta de la API no contiene datos válidos");
+          }
+
+          const idCliente = data.data.idCliente;
+          console.log(idCliente);
+          localStorage.setItem("idCliente", idCliente);
+
+          if (token) {
+            // Si hay un token, modificar el navbar
+            modifyNavbarForAuthenticatedUser();
+          }
+        } catch (error) {
+          console.error("Error:", error);
         }
-        
+      });
+
+      function modifyNavbarForAuthenticatedUser() {
+        const navbarLinks = document.getElementById("navbar-links");
+        const loginLink = document.getElementById("login-link");
+        const listaIniciar = document.getElementById("lista"); // Asegúrate de que este id coincide
+
+        // Eliminar el enlace de iniciar sesión
+        if (listaIniciar) {
+          listaIniciar.remove();
+        }
+
+        // Eliminar el enlace de iniciar sesión
+        if (loginLink) {
+          loginLink.remove();
+        }
+
+        // Agregar nuevos enlaces para usuarios autenticados
+        const newLinks = [
+          { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Tu Perfil" },
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+        ];
+
+        newLinks.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+      }
     </script>
 
     <div class="content" id="inicioP">
-        <div class="Presentacion">
-            <h1>Se parte de nuestro programa</h1>
-            <h1>Cliente fidelidad</h1>
-            <p>Aquí, nuestro enfoque está en recompensarte por ser parte de nuestra comunidad. Con cada interacción, 
-                acumularás puntos que podrás canjear por descuentos especiales y beneficios exclusivos. Nuestra plataforma 
-                está diseñada para hacer tu experiencia más gratificante y personalizada. ¡Únete a nosotros, acumula 
-                puntos y disfruta de las recompensas en Ferretería El Roble!</p>
-        </div>
+      <div class="Presentacion">
+        <h1>Se parte de nuestro programa</h1>
+        <h1>Cliente fidelidad</h1>
+        <p>
+          Aquí, nuestro enfoque está en recompensarte por ser parte de nuestra
+          comunidad. Con cada interacción, acumularás puntos que podrás canjear
+          por descuentos especiales y beneficios exclusivos. Nuestra plataforma
+          está diseñada para hacer tu experiencia más gratificante y
+          personalizada. ¡Únete a nosotros, acumula puntos y disfruta de las
+          recompensas en Ferretería El Roble!
+        </p>
+      </div>
 
-        <div class="ImagenPresentacion">
-            <img id="clienteFiel" src="/Inicio/clientefiel.png" alt="">
-        </div>
+      <div class="ImagenPresentacion">
+        <img id="clienteFiel" src="/Inicio/clientefiel.png" alt="" />
+      </div>
     </div>
 
-     <!--Parte de la app explicando los pasos a seguir para el sistem de puntos-->
+    <!--Parte de la app explicando los pasos a seguir para el sistem de puntos-->
     <div class="Content-Pasos" id="Pasos">
-        <div class="titulo">
-            <h1>¿Como funciona?</h1>
-            <p>Te dejamos una guia de pasos a seguir para entender mejor como funciona nuestro sistema de puntos.</p>
-        </div>
+      <div class="titulo">
+        <h1>¿Como funciona?</h1>
+        <p>
+          Te dejamos una guia de pasos a seguir para entender mejor como
+          funciona nuestro sistema de puntos.
+        </p>
+      </div>
 
-        <div class="Pasos">
-            <ol>
-                <li>Regístrate en nuestro sistema de puntos proporcionando tu información básica en la tienda.</li>
-                
-                <li>Acumula puntos por cada compra que realices en nuestra ferretería.</li>
-                <li>Consulta tu saldo de puntos en nuestra página web o en la tienda.</li>
-                <li>Canjea tus puntos por premios o descuentos en productos seleccionados.</li>
-                <li>Disfruta de los beneficios y sigue acumulando puntos para más recompensas.</li>
-            </ol>
-        </div>
+      <div class="Pasos">
+        <ol>
+          <li>
+            Regístrate en nuestro sistema de puntos proporcionando tu
+            información básica en la tienda.
+          </li>
+
+          <li>
+            Acumula puntos por cada compra que realices en nuestra ferretería.
+          </li>
+          <li>
+            Consulta tu saldo de puntos en nuestra página web o en la tienda.
+          </li>
+          <li>
+            Canjea tus puntos por premios o descuentos en productos
+            seleccionados.
+          </li>
+          <li>
+            Disfruta de los beneficios y sigue acumulando puntos para más
+            recompensas.
+          </li>
+        </ol>
+      </div>
     </div>
 
-     <!--Tabla explicando los niveles de usuario-->
+    <!--Tabla explicando los niveles de usuario-->
     <div class="tbl-niveles-usuario" id="Niveles">
-        <table>
-            <tbody>
-                <tr>
-                    <th>Tipos</th>
-                    <th>Desde compras</th>
-                    <th>Desde</th>
-                </tr>
+      <table>
+        <tbody>
+          <tr>
+            <th>Tipos</th>
+            <th>Desde compras</th>
+            <th>Desde</th>
+          </tr>
 
-                <tr>
-                    <td>Nivel bronce</td>
-                    <td>$10</td>
-                    <td>100-199 puntos</td>
-                </tr>
+          <tr>
+            <td>Nivel bronce</td>
+            <td>$10</td>
+            <td>100-199 puntos</td>
+          </tr>
 
-                <tr>
-                    <td>Nivel plata</td>
-                    <td>$15</td>
-                    <td>200-299 puntos</td>
-                </tr>
+          <tr>
+            <td>Nivel plata</td>
+            <td>$15</td>
+            <td>200-299 puntos</td>
+          </tr>
 
-                <tr>
-                    <td>Nivel oro</td>
-                    <td>$20</td>
-                    <td>300-399 puntos</td>
-                </tr>
+          <tr>
+            <td>Nivel oro</td>
+            <td>$20</td>
+            <td>300-399 puntos</td>
+          </tr>
 
-                <tr>
-                    <td>Nivel premiun</td>
-                    <td>$25</td>
-                    <td>400-499 puntos</td>
-                </tr>
-            </tbody>
-        </table>
+          <tr>
+            <td>Nivel premiun</td>
+            <td>$25</td>
+            <td>400-499 puntos</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!--Parte de las promociones-->
     <div class="Promociones" id="Promociones">
-        <div class="titulo"><h1>Novedades y promociones </h1></div>
-        <div class="content-text">
-            <p>
-                Queremos que tengas lo mejor y con la más alta calidad, por eso te mostramos las diferentes promociones que tenemos solo por tiempo limitado.
-                Visítanos en nuestra página de facebook para enterarte más de lo que ofrecemos para ti
-            </p>
-        </div>
+      <div class="titulo"><h1>Novedades y promociones</h1></div>
+      <div class="content-text">
+        <p>
+          Queremos que tengas lo mejor y con la más alta calidad, por eso te
+          mostramos las diferentes promociones que tenemos solo por tiempo
+          limitado. Visítanos en nuestra página de facebook para enterarte más
+          de lo que ofrecemos para ti
+        </p>
+      </div>
 
-        <div class="Imagen">
-            <div class="slider">
-                <img src="/Inicio/Img_Carrucel/compres3.jpg" alt="Imagen 1">
-                <img src="/Inicio/Img_Carrucel/compres2.jpg" alt="Imagen 2">
-                <img src="/Inicio/Img_Carrucel/compres.jpg" alt="Imagen 3">
-                <img src="/Inicio/Img_Carrucel/foco_vintaje.jpg" alt="Imagen 4">
-                <img src="/Inicio/Img_Carrucel/estufa.jpg" alt="Imagen 5">
-            </div>
-            <div class="buttons">
-                <button id="prev">❮</button>
-                <button id="next">❯</button>
-            </div>
+      <div class="Imagen">
+        <div class="slider">
+          <img src="/Inicio/Img_Carrucel/compres3.jpg" alt="Imagen 1" />
+          <img src="/Inicio/Img_Carrucel/compres2.jpg" alt="Imagen 2" />
+          <img src="/Inicio/Img_Carrucel/compres.jpg" alt="Imagen 3" />
+          <img src="/Inicio/Img_Carrucel/foco_vintaje.jpg" alt="Imagen 4" />
+          <img src="/Inicio/Img_Carrucel/estufa.jpg" alt="Imagen 5" />
         </div>
+        <div class="buttons">
+          <button id="prev">❮</button>
+          <button id="next">❯</button>
+        </div>
+      </div>
     </div>
 
     <!--Ubicacion-->
     <div class="ubicacion" id="Ubicacion">
-        <div class="titulo">
-            <h1>Nuestras sucursales</h1>
-        </div>
+      <div class="titulo">
+        <h1>Nuestras sucursales</h1>
+      </div>
 
-        <div class="botones">
-            <input type="submit" class="btn" id="inp1" value="Sucursal 1"> 
-            <input type="submit" class="btn" id="inp2" value="Sucursal 2"> 
-            <input type="submit" class="btn" id="inp3" value="Sucursal 3">
-        </div>
+      <div class="botones">
+        <input type="submit" class="btn" id="inp1" value="Sucursal 1" />
+        <input type="submit" class="btn" id="inp2" value="Sucursal 2" />
+        <input type="submit" class="btn" id="inp3" value="Sucursal 3" />
+      </div>
 
-        <div class="Imagenes">
-            <iframe class="iframe-1" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31037.414896919327!2d-88.22442229498152!3d13.493998499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7b2be2d05b78d3%3A0x713a43c26671f3ca!2sFERRETERIA%20EL%20ROBLE%20SUCURSAL%201!5e0!3m2!1ses-419!2ssv!4v1717298908852!5m2!1ses-419!2ssv" 
-            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-           
+      <div class="Imagenes">
+        <iframe
+          class="iframe-1"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31037.414896919327!2d-88.22442229498152!3d13.493998499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7b2be2d05b78d3%3A0x713a43c26671f3ca!2sFERRETERIA%20EL%20ROBLE%20SUCURSAL%201!5e0!3m2!1ses-419!2ssv!4v1717298908852!5m2!1ses-419!2ssv"
+          width="100%"
+          height="300"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
 
-            <iframe class="iframe-2" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31037.414896919327!2d-88.22442229498152!3d13.493998499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7b2bdacb3fc357%3A0x43140f9c9d0edfb2!2sFERRETERIA%20EL%20ROBLE!5e0!3m2!1ses-419!2ssv!4v1717298284618!5m2!1ses-419!2ssv" 
-            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          
-            
-            <iframe class="iframe-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31042.6939505172!2d-88.19494838916016!3d13.453327700000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7ad5469344e873%3A0xc32834ab16fa8e37!2sFerreter%C3%ADa%20El%20Roble!5e0!3m2!1ses-419!2ssv!4v1717298954749!5m2!1ses-419!2ssv" 
-            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-           
-        </div>
+        <iframe
+          class="iframe-2"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31037.414896919327!2d-88.22442229498152!3d13.493998499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7b2bdacb3fc357%3A0x43140f9c9d0edfb2!2sFERRETERIA%20EL%20ROBLE!5e0!3m2!1ses-419!2ssv!4v1717298284618!5m2!1ses-419!2ssv"
+          width="100%"
+          height="300"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
+        <iframe
+          class="iframe-3"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31042.6939505172!2d-88.19494838916016!3d13.453327700000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7ad5469344e873%3A0xc32834ab16fa8e37!2sFerreter%C3%ADa%20El%20Roble!5e0!3m2!1ses-419!2ssv!4v1717298954749!5m2!1ses-419!2ssv"
+          width="100%"
+          height="300"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
     </div>
-    
 
     <!--Esta seria la parte del Footer-->
     <footer>
-        <div class="row">
-            <div class="col">
-                <img src="/Inicio/Logo.jpg" class="logo">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem rerum vel ipsa mollitia reprehenderit velit! Aspernatur quibusdam exercitationem delectus iure id cum laboriosam aliquid eveniet! Architecto laborum optio voluptate temporibus.</p>
-            </div>
-            <div class="col">
-                <h3>Contactos <div class="underline"><span></span></div></h3>
-                <p>Tel: 4555555</p>
-                <p>Correo: nose@gmail.com</p>
-                <p class="email-id">direccion: nose tampoco</p>
-                <p>mas datos para poner</p>
-                <p>quiero dormir</p>
-            </div>
-            <div class="col">
-                <h3>Links<div class="underline"><span></span></div></h3>
-                <ul>
-                    <li>Inicio</li>
-                    <li>Iniciar Sesion</li>
-                    <li>Politicas</li>
-                    <li>Beneficios</li>
-                    <li>NOSE</li>
-                    <li>NOSEX2</li>
-                </ul>
-            </div>
-            <div class="col">
-                <h3>Comentarios <div class="underline"><span></span></div></h3>
-                <form >
-                    <i class="fa-regular fa-envelope"></i>
-                    <input type="email" placeholder="Escriba su comentario" required>
-                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
-
-                </form>
-                <div class="social-icons">
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-twitter"></i>
-                    <i class="fa-brands fa-whatsapp"></i>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col">
+          <img src="/Inicio/Logo.jpg" class="logo" />
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
+            rerum vel ipsa mollitia reprehenderit velit! Aspernatur quibusdam
+            exercitationem delectus iure id cum laboriosam aliquid eveniet!
+            Architecto laborum optio voluptate temporibus.
+          </p>
         </div>
-            <hr>
-            <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
-       
+        <div class="col">
+          <h3>
+            Contactos
+            <div class="underline"><span></span></div>
+          </h3>
+          <p>Tel: 4555555</p>
+          <p>Correo: nose@gmail.com</p>
+          <p class="email-id">direccion: nose tampoco</p>
+          <p>mas datos para poner</p>
+          <p>quiero dormir</p>
+        </div>
+        <div class="col">
+          <h3>
+            Links
+            <div class="underline"><span></span></div>
+          </h3>
+          <ul>
+            <li>Inicio</li>
+            <li>Iniciar Sesion</li>
+            <li>Politicas</li>
+            <li>Beneficios</li>
+            <li>NOSE</li>
+            <li>NOSEX2</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>
+            Comentarios
+            <div class="underline"><span></span></div>
+          </h3>
+          <form>
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" placeholder="Escriba su comentario" required />
+            <button type="submit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          <div class="social-icons">
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <p class="copyright">
+        Universidad de El salvador © 2024 - ALL Rights Reserved
+      </p>
     </footer>
-    
-</body>
+  </body>
 </html>
