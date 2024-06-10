@@ -43,6 +43,8 @@
                 // Verificar si hay un token en el localStorage
                 const token = localStorage.getItem('jwt');
                 console.log(token);
+                const idCliente= localStorage.getItem('idCliente');
+                console.log(idCliente);
                 if (token) {
                     // Si hay un token, modificar el navbar
                     modifyNavbarForAuthenticatedUser();
