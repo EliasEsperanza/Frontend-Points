@@ -55,11 +55,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             const data = await response.json();
-            const { token } = data;
+            const { token, idCliente } = data;
 
             localStorage.setItem('jwt', token);
-
-            const {idCliente}= data;
             localStorage.setItem('idCliente', idCliente);
 
             Swal.fire({
