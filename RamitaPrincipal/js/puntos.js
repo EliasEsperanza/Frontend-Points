@@ -156,6 +156,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                     document.getElementById("Nombre-Premio").innerText = "null";
                     document.getElementById("Fecha-Premio-Canjeado").innerText = "null";
                 }
+
+                
             } else {
                 throw new Error('Datos de usuario no disponibles');
             }
