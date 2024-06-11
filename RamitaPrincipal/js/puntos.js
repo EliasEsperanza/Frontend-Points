@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             let varid =0;
             for (let index = 0; index < user2.length; index++) {
                 if(user2[index].idCliente == client.idCliente){
-                     varid = user2[index].idUsuario;
+                    varid = user2[index].idUsuario;
                 }
                 
             }
@@ -110,19 +110,52 @@ document.addEventListener("DOMContentLoaded", async function() {
     
                 }
                 else{
-                    var UltimaVenta ={
-                        "idVenta": 5,
-                    "idSucursal": 1,
-                    "idPeriodo": 3,
-                    "idCliente": 1,
-                    "puntosGanados": 2,
-                    "totalVenta": "10.00",
-                    "numeroFactura": "-------",
-                    "fechaVenta": "04/04/2024 10:00:34"
-                    }
+                    document.getElementById("Sucursal-Historial-Acumulacion").innerText = "null" ;
+                    document.getElementById("Numero-Factura").innerText = "null";
+                    document.getElementById("Puntos-Entrada").innerText = "null";
+                    document.getElementById("Conversion-puntos-dolares").innerText = "null";
+                    document.getElementById("Fecha").innerText = "null";
                 }
                 
 
+                const canjeResponse = await await fetch('https://backend-points-production.up.railway.app/canjes');
+                const canjedata = await canjeResponse.json();
+                const canje = canjedata.data;
+                let canjes = [];
+
+                if (canje){
+                    for (let index = 0; index < canje.length; index++) {
+                        if (canje[index].idCliente == user.idCliente) {
+                            canjes.push(canje[index]);
+                        }
+                    }
+
+                    var UltimoCanje;
+
+                    for (let index = 0; index < canje.length; index++) {
+                        UltimoCanje = canje[index];
+                    }
+
+                    const sucursalResponse = await fetch(`https://backend-points-production.up.railway.app/sucursal/${UltimoCanje.idSucursal}`);
+                    const sucursaldata = await sucursalResponse.json();
+                    const sucursal = sucursaldata.data;
+
+                    const premioResponse = await fetch(`https://backend-points-production.up.railway.app/sucursal/${UltimoCanje.idPremio}`);
+                    const premiodata = await premioResponse.json();
+                    const premio = premiodata.data;
+
+                    document.getElementById("Sucursal-Historial-Canjeados").innerText = sucursal.nombreSucursal ;
+                    document.getElementById("Puntos-Canjeados").innerText = canje.puntosCanjeados;
+                    document.getElementById("Conversio-Dolares-Canjeados").innerText = canje.puntosCanjeados*5;
+                    document.getElementById("Nombre-Premio").innerText = premio.nombrePremio;
+                    document.getElementById("Fecha-Premio-Canjeado").innerText = canje.Canje;
+                }else{
+                    document.getElementById("Sucursal-Historial-Canjeados").innerText = "null" ;
+                    document.getElementById("Puntos-Canjeados").innerText = "null";
+                    document.getElementById("Conversio-Dolares-Canjeados").innerText = "null";
+                    document.getElementById("Nombre-Premio").innerText = "null";
+                    document.getElementById("Fecha-Premio-Canjeado").innerText = "null";
+                }
             } else {
                 throw new Error('Datos de usuario no disponibles');
             }
