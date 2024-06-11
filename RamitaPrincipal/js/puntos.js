@@ -9,23 +9,32 @@ document.addEventListener("DOMContentLoaded", async function() {
             console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
             
             if (!clientResponse.ok) {
-                throw new Error('Fallo al obtener el ID');
+                throw new Error('Fallo al obtener el ID del cliente');
             }
 
             const clientData = await clientResponse.json();
+            console.log('Datos del cliente:', clientData);
+
             const client = clientData.data;
             document.getElementById("Nombre-Usuario").innerText = client.nombreCliente;
             document.getElementById("Nombre-Dui").innerText = client.dui;
 
-            // Fetch user points and level
-            const userResponse = await fetch(`https://backend-points-production.up.railway.app/usuarios/${idCliente}`);
-            console.log('API URL:', `https://backend-points-production.up.railway.app/usuarios/${idCliente}`);
+            // Fetch user points and level using idUsuario
+            const idUsuario = client.idUsuario; // Verifica que client tenga idUsuario
+            if (!idUsuario) {
+                throw new Error('ID de usuario no encontrado en los datos del cliente');
+            }
+
+            const userResponse = await fetch(`https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
+            console.log('API URL:', `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
             
             if (!userResponse.ok) {
-                throw new Error('Fallo al obtener el ID');
+                throw new Error('Fallo al obtener el ID del usuario');
             }
 
             const userData = await userResponse.json();
+            console.log('Datos del usuario:', userData);
+
             const user = userData.data;
 
             if (user) {
@@ -42,6 +51,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 }
 
                 const levelData = await levelResponse.json();
+                console.log('Datos de niveles:', levelData);
+
                 const levels = levelData.data;
                 const userLevel = levels.find(level => level.idNivel === idNivel);
                 const nivelDescripcion = userLevel ? userLevel.descripcion : 'Nivel desconocido';
