@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const correo = document.getElementById("inp-correo").value;
         const password = document.getElementById("inp-password").value;
-
+        
         // Validar que ningún campo esté vacío
         if (correo.trim() === '' || password.trim() === '') {
             Swal.fire({
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/login', {
+            const response = await fetch('https://backend-points-production.up.railway.app/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,12 +55,11 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             const data = await response.json();
-            const { token } = data;
+            const { token, idUsuario } = data;
 
-            // Almacenar el token en localStorage
             localStorage.setItem('jwt', token);
+            localStorage.setItem('idUsuario', idUsuario);
 
-            // Redirigir a la página principal después de iniciar sesión
             Swal.fire({
                 icon: 'success',
                 title: 'Inicio de sesión exitoso',

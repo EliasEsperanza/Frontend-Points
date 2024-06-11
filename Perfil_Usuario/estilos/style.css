@@ -1,11 +1,20 @@
-
-.Content-perfil{
+.Contenido .Content-perfil{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     border: 1px solid black;
     width: 700px;
-    margin: 10px;
-    margin-top: 100px;
     position: relative;
     margin-left: 25%;
+    margin-top: 100px;
+}
+
+.Contenido .Content-perfil img{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    margin: 20px;
 }
 
 .Content-perfil .titulo{
@@ -13,159 +22,144 @@
     justify-content: space-around;
     gap: 10px;
     padding: 10px;
-   
     color: white;
-    width: 100%;
+    width: 95%;
     background-color: #239b56;
 }
 
-.Content-perfil .titulo p {
-    margin: 10px;
-    font-size: 3vh;
+.Content-perfil .Textos{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: repeat(4, 1fr); 
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin-top: 20px;
+    align-content: center;
+    font-size: 18px;
+    gap: 20px;
 }
 
-.Content-perfil .parrafos{
-    display: flex;
-    justify-content: space-around;
-    gap: 70px;
-    background-color: rgb(167, 156, 156);
-    height: 300px;
-}
-
-.Content-perfil .parrafos p {
-    margin: 20px;
+.txt-estl{
+    background-color: rgb(173, 169, 169);
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .Content-perfil .botones {
     display: flex;
-    justify-content: space-around;
-    gap: 40px;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
     padding: 10px;
 }
 
 .Content-perfil .botones input {
-    width: 150px;
+    width: 100%;
     height: 40px;
     border-radius: 10px;
     border: none;
+    font-size: 18px;
 }
 
 .btn-agregar input{
     background-color: #239b56;
     color: white;
+    width: 100%;
 }
 
 .btn-editar input {
     background-color: brown;
     color: white;
+    width: 100%;
 }
 
 /*Media Querys*/
 
 /* Pantallas móviles (hasta 599px) */
 @media (max-width: 599px) {
-    .Content-perfil {
+    .Contenido .Content-perfil {
         width: 90%;
-        height: auto;
         margin-left: 5%;
         margin-right: 5%;
+        margin-bottom: 50px;
     }
-    .Content-perfil .titulo p {
-        font-size: 2.5vh;
+
+    .Content-perfil .titulo h1 {
+        font-size: 3.5vh;
     }
-    .Content-perfil .parrafos {
+
+    .Content-perfil .Textos {
         display: flex;
-        gap: 20px;
-        height: auto;
+        flex-direction: column;
+        width: 100%;
     }
-    .Content-perfil .parrafos p {
-        margin: 10px;
+
+    .Content-perfil .Textos .txt-estl {
+        width: 350px;
     }
+    
     .Content-perfil .botones {
         display: flex;
-        gap: 20px;
+        flex-direction: column;
+        gap: 10px;
     }
+
     .Content-perfil .botones input {
-        width: 100px;
-        margin: 0;
+        width: 100%;
     }
 }
 
 /* Pantallas tablet (600px a 899px) */
 @media (min-width: 600px) and (max-width: 899px) {
-    .Contenido{
-       height: 120vh;
-    }
-
-    .Content-perfil {
+    .Contenido .Content-perfil {
         width: 80%;
-        height: auto;
         margin-left: 10%;
         margin-right: 10%;
-        position: relative;
-        top: 25vh;
+        margin-top: 25vh;
+        margin-bottom: 50px;
     }
+
     .Content-perfil .titulo p {
         font-size: 2.8vh;
     }
+
     .Content-perfil .parrafos {
         display: flex;
         gap: 20px;
     }
+
     .Content-perfil .parrafos p {
         margin: 15px;
     }
+
     .Content-perfil .botones {
         display: flex;
-        gap: 30px;
+        flex-direction: column;
+        gap: 10px;
     }
+
     .Content-perfil .botones input {
-        width: 150px;
+        width: 100%;
     }
 }
 
 /* Pantallas de escritorio (900px a 1199px) */
 @media (min-width: 900px) and (max-width: 1199px) {
-    .Contenido{
-        height: 120vh;
-    }
-
-    .Content-perfil {
+    .Contenido .Content-perfil {
         width: 70%;
-        height: auto;
         margin-left: 15%;
         margin-right: 15%;
-        position: relative;
-        top: 25vh;
-    }
-    .Content-perfil .titulo p {
-        font-size: 3vh;
-    }
-    .Content-perfil .parrafos {
-        gap: 50px;
-        height: auto;
-    }
-    .Content-perfil .parrafos p {
-        margin: 20px;
-    }
-    .Content-perfil .botones {
-        gap: 40px;
-    }
-    .Content-perfil .botones input {
-        width: 150px;
+        margin-bottom: 50px;
     }
 }
 
 /* Pantallas grandes (1200px en adelante) */
 @media (min-width: 1200px) {
-    .Contenido{
-        height: 120vh;
-    }
-
-    .Content-perfil {
+    .Contenido .Content-perfil {
         width: 700px;
-        height: auto;
-        position: relative;
-        top: 25vh;
+        margin-bottom: 50px;
     }
 }
