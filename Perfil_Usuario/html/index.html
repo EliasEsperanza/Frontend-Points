@@ -17,12 +17,12 @@
             <a href="#" class="Nombre">Ferreteria El Roble</a>
         </div>
         <ul class="links">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Iniciar Sesion</a></li>
-            <li><a href="#">Politicas</a></li>
-            <li><a href="#">Como Funciona</a></li>
-            <li><a href="#">Ejemplo</a></li>
-            <li><a href="#">Nose</a></li>
+            <li><a href="/Inicio/html/index.html">Inicio</a></li>
+                <li><a href="#">cerrar Sesion</a></li>
+                <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
+                <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
+                <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
+                <li><a href="/RamitaPrincipal/HTML/beneficios.html">Beneficios</a></li>
         </ul>
         <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
         <div class="close_btn"><i class="fa-solid fa-x"></i></div>
@@ -44,43 +44,43 @@
             <div class="Textos">
                 <div class="name">
                     <p>Tu nombre de usuario:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl name1"></p> <!-- Agregué la clase "name" aquí -->
                 </div>
-
+                
                 <div class="email">
                     <p>Tu email:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl email1"></p> <!-- Agregué la clase "email" aquí -->
                 </div>
-
+                
                 <div class="password">
                     <p>Tu password:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl password1"></p> <!-- Agregué la clase "password" aquí -->
                 </div>
-
+                
                 <div class="dui">
                     <p>Tu DUI:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl dui1"></p> <!-- Agregué la clase "dui" aquí -->
                 </div>
-
+                
                 <div class="nit">
                     <p>Tu NIT:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl nit1"></p> <!-- Agregué la clase "nit" aquí -->
                 </div>
-
+                
                 <div class="nrc">
                     <p>Tu nrc:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl nrc1"></p> <!-- Agregué la clase "nrc" aquí -->
                 </div>
-
+                
                 <div class="tel">
                     <p>Tu numero de telefono:</p>
-                    <p class="txt-estl"></p>
+                    <p class="txt-estl tel1"></p> <!-- Agregué la clase "tel" aquí -->
                 </div>
-
+                
                 <div class="direccion">
                     <p>Tu direccion:</p>
-                    <p class="txt-estl"></p>
-                </div>
+                    <p class="txt-estl direccion1"></p> <!-- Agregué la clase "direccion" aquí -->
+                </div>                
             </div>
 
             <div class="botones">
@@ -147,17 +147,16 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const idCliente = localStorage.getItem('idCliente');
             console.log('idCliente:', idCliente);
-
-            if(idCliente){            
+        
+            if (idCliente) {
                 try {
-                    
                     const token = localStorage.getItem('jwt');
                     if (!token) {
-                        console.error('No token found, redirecting to login...');
+                        console.error('No se encontró el token, redirigiendo al inicio de sesión...');
                         window.location.href = '/Login/index.html';
                         return;
                     }
-
+        
                     const response = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`, {
                         method: 'GET',
                         headers: {
@@ -165,33 +164,42 @@
                             'Content-Type': 'application/json'
                         }
                     });
-
+        
                     if (!response.ok) {
-                        throw new Error('Failed to fetch user data');
+                        throw new Error('Error al obtener los datos del usuario');
                     }
-
-                    const data = await response.json();
-                    console.log(data);
-
-                    populateUserProfile(data);
-
+        
+                    const user = await response.json();
+                    console.log('Datos del usuario:', user);
+        
+                    populateUserProfile(user);
+        
                 } catch (error) {
                     console.error('Error:', error);
                 }
             }
         });
         
-
         function populateUserProfile(user) {
-            document.querySelector('.txt-estl.name').textContent = user.nombreCliente;
-            document.querySelector('.txt-estl.email').textContent = user.correo;
-            document.querySelector('.txt-estl.password').textContent = user.passwordHash;
-            document.querySelector('.txt-estl.dui').textContent = user.dui;
-            document.querySelector('.txt-estl.nit').textContent = user.nit;
-            document.querySelector('.txt-estl.nrc').textContent = user.nrc;
-            document.querySelector('.txt-estl.tel').textContent = user.telefono;
-            document.querySelector('.txt-estl.direccion').textContent = user.direccion;
+            const nameElement = document.querySelector('.txt-estl.name1');
+            const emailElement = document.querySelector('.txt-estl.email1');
+            const passwordElement = document.querySelector('.txt-estl.password1');
+            const duiElement = document.querySelector('.txt-estl.dui1');
+            const nitElement = document.querySelector('.txt-estl.nit1');
+            const nrcElement = document.querySelector('.txt-estl.nrc1');
+            const telElement = document.querySelector('.txt-estl.tel1');
+            const direccionElement = document.querySelector('.txt-estl.direccion1');
+        
+            nameElement.textContent = user.nombreCliente;
+            emailElement.textContent = user.correo;
+            passwordElement.textContent = user.passwordHash;
+            duiElement.textContent = user.dui;
+            nitElement.textContent = user.nit;
+            nrcElement.textContent = user.nrc;
+            telElement.textContent = user.telefono;
+            direccionElement.textContent = user.direccion;
         }
+         
     </script>
 </body>
 </html>
