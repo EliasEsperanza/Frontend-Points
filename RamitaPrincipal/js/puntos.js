@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 
             const data = await response.json();
 
-            // Assuming data.data contains the required user information
+     
             const user = data.data;
             document.getElementById("Nombre-Usuario").innerText = user.nombreCliente;
             document.getElementById("Nombre-Dui").innerText = user.dui;
-            // Set other fields as necessary
+
 
         } catch (error) {
             console.error('Error:', error);
