@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     if (idCliente) {
         try {
             // Fetch client data
+            
             const clientResponse = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`);
             console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
             
@@ -20,7 +21,20 @@ document.addEventListener("DOMContentLoaded", async function() {
             document.getElementById("Nombre-Dui").innerText = client.dui;
 
             // Fetch user points and level using idUsuario
-            const idUsuario = client.idUsuario; // Verifica que client tenga idUsuario
+             // Verifica que client tenga idUsuario
+            
+
+            const userResponse2 = await fetch(`https://backend-points-production.up.railway.app/usuarios`);
+            const userDataV = await userResponse2.json();
+            const user2 = userDataV.data;
+            let varid =0;
+            for (let index = 0; index < user2.length; index++) {
+                if(user2[index].idCliente == client.idCliente){
+                     varid = user2[index].idUsuario;
+                }
+                
+            }
+            const idUsuario = varid;
             if (!idUsuario) {
                 throw new Error('ID de usuario no encontrado en los datos del cliente');
             }
@@ -59,6 +73,56 @@ document.addEventListener("DOMContentLoaded", async function() {
 
                 // Set the level description
                 document.getElementById("Nivel-Usuario").innerText = nivelDescripcion;
+                const dolares = user.puntos*2;
+
+
+                document.getElementById("Puntos-Dinero-Usuario").innerText = dolares;
+
+                ///Toca sacar las ventas referente a ese usuario y los canje referente a ese usuario
+
+                const ventasResponse = await fetch('https://backend-points-production.up.railway.app/ventas');
+                const ventdata = await ventasResponse.json();
+                const venta = ventdata.data;
+                let ventas = [];
+                if(venta){
+                    for (let index = 0; index < venta.length; index++) {
+                        if (venta[index].idCliente == user.idCliente) {
+                            ventas.push(venta[index]);
+                        }
+                    }
+                    
+                    var UltimaVenta;
+    
+                    for (let index = 0; index < ventas.length; index++) {
+                        UltimaVenta = ventas[index];
+                        
+                    }
+
+                    const sucursalResponse = await fetch(`https://backend-points-production.up.railway.app/sucursal/${UltimaVenta.idSucursal}`);
+                    const sucursaldata = await sucursalResponse.json();
+                    const sucursal = sucursaldata.data;
+                    
+                    document.getElementById("Sucursal-Historial-Acumulacion").innerText =sucursal.nombreSucursal ;
+                    document.getElementById("Numero-Factura").innerText = UltimaVenta.numeroFactura;
+                    document.getElementById("Puntos-Entrada").innerText = UltimaVenta.puntos;
+                    document.getElementById("Conversion-puntos-dolares").innerText = UltimaVenta.puntos*5;
+                    document.getElementById("Fecha").innerText = UltimaVenta.fechaVenta;
+    
+                }
+                else{
+                    var UltimaVenta ={
+                        "idVenta": 5,
+                    "idSucursal": 1,
+                    "idPeriodo": 3,
+                    "idCliente": 1,
+                    "puntosGanados": 2,
+                    "totalVenta": "10.00",
+                    "numeroFactura": "-------",
+                    "fechaVenta": "04/04/2024 10:00:34"
+                    }
+                }
+                
+
             } else {
                 throw new Error('Datos de usuario no disponibles');
             }
