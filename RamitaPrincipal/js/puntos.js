@@ -4,20 +4,53 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     if (idCliente) {
         try {
-            const response = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`);
+            // Fetch client data
+            const clientResponse = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`);
             console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
             
-            if (!response.ok) {
+            if (!clientResponse.ok) {
                 throw new Error('Fallo al obtener el ID');
             }
 
-            const data = await response.json();
+            const clientData = await clientResponse.json();
+            const client = clientData.data;
+            document.getElementById("Nombre-Usuario").innerText = client.nombreCliente;
+            document.getElementById("Nombre-Dui").innerText = client.dui;
 
-            // Assuming data.data contains the required user information
-            const user = data.data;
-            document.getElementById("Nombre-Usuario").innerText = user.nombreCliente;
-            document.getElementById("Nombre-Dui").innerText = user.dui;
-            // Set other fields as necessary
+            // Fetch user points and level
+            const userResponse = await fetch(`https://backend-points-production.up.railway.app/usuarios/${idCliente}`);
+            console.log('API URL:', `https://backend-points-production.up.railway.app/usuarios/${idCliente}`);
+            
+            if (!userResponse.ok) {
+                throw new Error('Fallo al obtener el ID');
+            }
+
+            const userData = await userResponse.json();
+            const user = userData.data;
+
+            if (user) {
+                const puntosUsuario = user.puntos;
+                const idNivel = user.idNivel;
+
+                // Set the points
+                document.getElementById("Puntos-Usuario").innerText = puntosUsuario;
+
+                // Fetch the level description
+                const levelResponse = await fetch(`https://backend-points-production.up.railway.app/niveles`);
+                if (!levelResponse.ok) {
+                    throw new Error('Fallo al obtener los niveles');
+                }
+
+                const levelData = await levelResponse.json();
+                const levels = levelData.data;
+                const userLevel = levels.find(level => level.idNivel === idNivel);
+                const nivelDescripcion = userLevel ? userLevel.descripcion : 'Nivel desconocido';
+
+                // Set the level description
+                document.getElementById("Nivel-Usuario").innerText = nivelDescripcion;
+            } else {
+                throw new Error('Datos de usuario no disponibles');
+            }
 
         } catch (error) {
             console.error('Error:', error);
