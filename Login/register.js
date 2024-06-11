@@ -117,7 +117,14 @@ formu.addEventListener("submit", async function (event) {
             showConfirmButton: false,
             timer: 1500
         }).then(() => {
-            window.location.href = "/Inicio/html/index.html";
+           // Seleccionar los contenedores de los formularios de registro e inicio de sesión
+           const registerFormContainer = document.querySelector('.container-form.register');
+           const loginFormContainer = document.querySelector('.container-form.login');
+
+           // Ocultar el formulario de registro
+           registerFormContainer.classList.add('hide');
+           // Mostrar el formulario de inicio de sesión
+           loginFormContainer.classList.remove('hide');
         });
 
     } catch (error) {
