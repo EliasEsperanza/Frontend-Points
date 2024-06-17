@@ -57,8 +57,11 @@
           const token = localStorage.getItem("jwt");
           console.log(token);
           const idUsuario = localStorage.getItem("idUsuario");
-          console.log(idUsuario);
-
+          const idVendedor = localStorage.getItem("idVendedor");
+          const idAdmin = localStorage.getItem("idAdmin");
+          console.log("idUsuario:",idUsuario);
+          console.log("idVendedor:",idVendedor)
+          console.log("idAdmin",idAdmin);
           const response = await fetch(
             `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
             {
