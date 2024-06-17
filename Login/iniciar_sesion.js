@@ -71,10 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (var1 == "admin") {
                     
 
-                    localStorage.setItem('idAdmin', data.idUsuarioAdmin);
+                    localStorage.setItem('idUsuarioAdmin', data.idUsuarioAdmin);
                 }
                 else{
-                    localStorage.setItem('idVendedor', data.idUsuarioVendedor);
+                    localStorage.setItem('idUsuarioVendedor', data.idUsuarioVendedor);
                 }
                 
 
