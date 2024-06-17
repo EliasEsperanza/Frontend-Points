@@ -36,50 +36,29 @@
         <h1 class="title"><span>Buscar</span> Usuario</h1>
         <div class="box-buscador">
             <h1 class="text-input">Ingrese el dui del usario a buscar</h1>
-            <form action="">
-                <input type="text" name="inputBuscar" placeholder="ejemplo: 06557586-6">
+            <form id="searchForm">
+                <input type="text" name="inputBuscar" id="inputBuscar" placeholder="ejemplo: 06557586-6">
                 <input type="submit" name="inputEnviar" value="buscar">
             </form>
         </div>
 
-        <table>
-            <tr id="header-table">
-                <th>Nombre</th>
-                <th>Dui</th>
-                <th>Puntos</th>
-                <th>Nivel</th>
-                <th>Premio</th>
-                <th>Estado</th>
-                <th>Canjear</th>
-            </tr>
-
-            <tr>
-                <td data-label="Nombre">Meybell</td>
-                <td data-label="Dui">06557586-6</td>
-                <td data-label="Puntos">50</td>
-                <td data-label="Nivel">Bronce</td>
-                <td data-label="Premio">
-                    <select id="selectPremio1"></select>
-                </td>
-                <td data-label="Estado">Disponible</td>
-                <td data-label="Canjear"><button class="btn-canjear">Canjear</button></td>
-            </tr>
-            <tr>
-                <td data-label="Nombre">Pablo</td>
-                <td data-label="Dui">06557586-6</td>
-                <td data-label="Puntos">10</td>
-                <td data-label="Nivel">Bronce</td>
-                <td data-label="Premio">
-                    <select id="selectPremio1"></select>
-                </td>
-                <td data-label="Estado">Vacio</td>
-                <td data-label="Canjear"><button class="btn-canjear">Canjear</button></td>
-            </tr>
+        <table id="resultsTable">
+            <thead>
+                <tr id="header-table">
+                    <th>Nombre</th>
+                    <th>Dui</th>
+                    <th>Puntos</th>
+                    <th>Nivel</th>
+                    <th>Premio</th>
+                    <th>Estado</th>
+                    <th>Canjear</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Result rows will be inserted here -->
+            </tbody>
         </table>
-
-
 </section>
-
 
 </main>
 <!-----------------------SECCION FOOTER-------------------------------->
