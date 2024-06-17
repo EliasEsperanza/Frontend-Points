@@ -11,34 +11,34 @@
 </head>
 <body>
 
-    <!-----------------------SECCION NAVBAR MENU-------------------------------->
-    <header>
-        <div class="logo-container">
-            <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="">
-            <a href="#" class="Nombre">Ferreteria El Roble</a>
-        </div>
-        <ul class="links">
-            <li><a href="/Inicio/html/index.html">Inicio</a></li>
-            <li><a href="#" id="logout">cerrar Sesion</a></li>
-            <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-            <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-            <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
-            <li><a href="#BeneficiosP">Beneficios</a></li>
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-         <div class="close_btn"><i class="fa-solid fa-x"></i></div>
-    </header>
-    <h1 class="title"><span>Enviar</span> Correo</h1>
-<main>
+<header>
+    <div class="logo-container">
+        <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="">
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+    </div>
+    <ul class="links">
+        <li><a href="/Inicio/html/index.html">Inicio</a></li>
+        <li><a href="#" id="logout">Cerrar Sesión</a></li>
+        <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
+        <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
+        <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
+        <li><a href="#BeneficiosP">Beneficios</a></li>
+    </ul>
+    <div class="toggle_btn"><i class="fas fa-bars"></i></div>
+    <div class="close_btn"><i class="fas fa-times"></i></div>
+</header>
 
+<h1 class="title"><span>Enviar</span> Correo</h1>
+
+<main>
     <section class="formulario-Correo">
         <div class="container-formC">
-            <div class="title-form">Enviar Correos</div>
-            <form action="#" method="POST" id="formulario-correo">
+            <div class="title-form">Enviar Correo</div>
+            <form id="formulario-correo">
                 <div class="user-details">
                     <div class="input-box half-width">
                         <span class="details">Para:</span>
-                        <input type="email" name="destinatario" id="destinatario" placeholder="Ejemplo: maria@example.com" required>
+                        <input type="email" name="email" id="email" placeholder="Ejemplo: maria@example.com" required>
                     </div>
                     <div class="input-box half-width">
                         <span class="details">Asunto:</span>
@@ -48,45 +48,35 @@
                         <span class="details">Mensaje:</span>
                         <textarea name="mensaje" id="mensaje" rows="6" placeholder="Escribe tu mensaje..." required></textarea>
                     </div>
-                    <div class="input-box full-width">
-                        <span class="details">Adjuntar archivo:</span>
-                        <input type="file" name="adjunto" id="adjunto">
-                        <small>Adjunta un archivo (opcional)</small>
-                    </div>
                 </div>
             </form>
             <div class="enviar-Form-btn">
-                <button id="enviar-btn" form="formulario-correo">Enviar</button>
+                <button id="enviar-btn" type="button">Enviar</button>
             </div>
         </div>
-
     </section>
-
 </main>
 
-<!-----------------------SECCION FOOTER-------------------------------->
 <footer>
     <div class="row">
         <div class="col">
             <img src="/RamitaPrincipal/img/Logo.jpg" class="logo">
-            <p>Como ferretería el roble, proveemos soluciones materiales y herramientas para la
-                construcción, civil y pequeña industria, surtido completo y permanente a los clientes con
-                un servicio oportuno. </p>
+            <p>Como ferretería el roble, proveemos soluciones materiales y herramientas para la construcción, civil y pequeña industria, surtido completo y permanente a los clientes con un servicio oportuno.</p>
         </div>
         <div class="col">
             <h3>Contactos <div class="underline"><span></span></div></h3>
             <p>Tel: 7220 6538</p>
             <p>Correo: ferreteriaelroble01@gmail.com</p>
-            <p class="email-id">direccion: Carretera Panamericana km 138, colonia Maquilishuat, canton El Sitio, #66 San Miguel, San Miguel, El Salvador</p>
+            <p class="email-id">Dirección: Carretera Panamericana km 138, colonia Maquilishuat, cantón El Sitio, #66 San Miguel, San Miguel, El Salvador</p>
             <p>Horarios:</p>
-            <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
-            <p>Sabado: 7:00 am - 12:00 MD</p>
+            <p>Lunes a Viernes: 7:00 am - 5:00 pm</p>
+            <p>Sábado: 7:00 am - 12:00 MD</p>
         </div>
         <div class="col">
             <h3>Links<div class="underline"><span></span></div></h3>
             <ul>
                 <li><a href="/Inicio/html/index.html">Inicio</a></li>
-                <li><a href="/Login/index.html">Iniciar Sesion</a></li>
+                <li><a href="/Login/index.html">Iniciar Sesión</a></li>
                 <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
                 <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
                 <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
@@ -95,27 +85,52 @@
         </div>
         <div class="col">
             <h3>Comentarios <div class="underline"><span></span></div></h3>
-            <form >
-                <i class="fa-regular fa-envelope"></i>
+            <form>
+                <i class="far fa-envelope"></i>
                 <input type="email" placeholder="Escriba su correo y lo atenderemos" required>
-                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
-
+                <button type="submit"><i class="fas fa-arrow-right"></i></button>
             </form>
             <div class="social-icons">
-                <a href="https://www.facebook.com/LaferreteriaRoble"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/LaferreteriaRoble"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información." target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </div>
-        <hr>
-        <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
-   
+    <hr>
+    <p class="copyright">Universidad de El Salvador © 2024 - Todos los derechos reservados</p>
 </footer>
-    
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/RamitaPrincipal/js/navbar.js"></script>
 <script src="/Login/log_out.js" defer></script>
+
+<script>
+    document.getElementById('enviar-btn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value;
+        const asunto = document.getElementById('asunto').value;
+        const mensaje = document.getElementById('mensaje').value;
+
+        if (email.trim() === '' || asunto.trim() === '' || mensaje.trim() === '') {
+            console.error('Por favor completa todos los campos.');
+            return;
+        }
+
+        try {
+            const response = await axios.post('https://backend-points-production.up.railway.app/send', {
+                email: email,
+                asunto: asunto,
+                mensaje: mensaje
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error al enviar el correo:', error);
+        }
+    });
+</script>
+
 </body>
 </html>
+
+
 
