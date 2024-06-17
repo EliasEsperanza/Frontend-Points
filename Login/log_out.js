@@ -42,7 +42,7 @@ enlace.addEventListener("click", async function(){
                 })
             });
 
-            localStorage.removeItem("idCliente");
+            localStorage.removeItem("idUsuario");
             localStorage.removeItem("jwt");
             console.log("destruyo los items...");
             location.replace("/Inicio/html/index.html");
