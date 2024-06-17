@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font: 'Popins', sans-serif;
+}
+.title {
+    padding-top: 8rem;
+    text-align: center;
+    margin: 0 6rem;
+    font-size: 4rem;
+    border-bottom: .1rem solid #FFBC0F;
+    color: #239B56;
+    margin-bottom: 20px;
+}
+
+.title span {
+    color: #136335;
+}
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-Form-Nivel{
+    background-color: #fff;
+    width: 80%;
+    min-width: 420px;
+    padding: 35px 50px;
+    transform: translate(-50%,10%);
+    position: relative;
+    left: 50%;
+    top: 50%;
+    border-radius: 10px;
+    box-shadow: 10px 15px 13px rgba(0, 0,0, 0.15);
+    margin-bottom: 50px;
+}
+.container-Form-Premio{
+    background-color: #fff;
+    width: 95%;
+    min-width: 420px;
+    padding: 35px 50px;
+    transform: translate(-50%,10%);
+    position: relative;
+    left: 50%;
+    top: 50%;
+    border-radius: 10px;
+    box-shadow: 10px 15px 13px rgba(0, 0,0, 0.15);
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+
+
+.titulo-form-Nivel{
+    font-size: 30px;
+    text-align: center;
+    color: #136335;
+}
+
+.titulo-form-Premio{
+    font-size: 30px;
+    text-align: center;
+    color: #136335;
+}
+
+
+
+
+form{
+    width: 80%;
+    position: relative;
+    margin: 30px auto 0 auto;
+    border: none; 
+}
+
+.row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+}
+
+
+
+label{
+    color: black;
+    font-size: 18px;
+    
+}
+form input, form select{
+    width: 90%;
+    font-weight: 400;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 2px solid #239B56;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+form input:focus{
+    outline: none;
+    border-color: #136335;
+}
+
+ .Contenedor-boton {
+    text-align: center;  
+  }
+button{
+    width: 50%;
+    border: none;
+    padding: 10px 20px;
+    background: #FFBC0F;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 16px;
+    margin-left: 10px;
+
+}
