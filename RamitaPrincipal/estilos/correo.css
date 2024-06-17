@@ -1,0 +1,160 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    padding-top: 8rem;
+    text-align: center;
+    margin: 0 6rem;
+    font-size: 4rem;
+    border-bottom: .1rem solid #FFBC0F;
+    color: #239B56;
+}
+
+.title span {
+    color: #136335;
+}
+
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formulario-Correo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0;
+    outline: none;
+}
+
+.container-formC {
+    max-width: 700px;
+    width: 100%;
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+    margin-top: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    outline: none;
+}
+
+.container-formC .title-form {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+}
+
+.container-formC .title-form::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: #239B56;
+}
+
+.container-formC form .user-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+    outline: none;
+}
+
+form .user-details .input-box {
+    margin-bottom: 15px;
+}
+
+form .user-details .input-box.half-width {
+    width: calc(50% - 10px);
+}
+
+form .user-details .input-box.full-width {
+    width: 100%;
+}
+
+.user-details .input-box .details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.user-details .input-box input,
+.user-details .input-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.user-details .input-box input:focus,
+.user-details .input-box input:valid,
+.user-details .input-box textarea:focus,
+.user-details .input-box textarea:valid {
+    border-color: #239B56;
+}
+.user-details .input-box.half-width:nth-child(1) input,
+.user-details .input-box.half-width:nth-child(2) input,
+.user-details .input-box.full-width input[type="file"] {
+    color: #000; /* Color de texto negro */
+}
+#enviar-btn {
+    width: 100%;
+    padding: 10px 10px;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #FFBC0F, #239B56);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    
+
+}
+
+#enviar-btn:hover {
+    background: linear-gradient(-135deg, #FFBC0F, #239B56);
+}
+
+@media (max-width: 584px) {
+    .container-formC {
+        max-width: 100%;
+    }
+
+    form .user-details .input-box {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .container-formC form .user-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .user-details::-webkit-scrollbar {
+        width: 0;
+    }
+
+    #enviar-btn {
+        justify-content: center;
+    }
+}
