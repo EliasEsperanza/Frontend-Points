@@ -7,14 +7,14 @@ document.addEventListener("DOMContentLoaded", async function() {
             // Fetch client data
             
             const clientResponse = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`);
-            console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
+            //console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
             
             if (!clientResponse.ok) {
                 throw new Error('Fallo al obtener el ID del cliente');
             }
 
             const clientData = await clientResponse.json();
-            console.log('Datos del cliente:', clientData);
+            //console.log('Datos del cliente:', clientData);
 
             const client = clientData.data;
             document.getElementById("Nombre-Usuario").innerText = client.nombreCliente;
@@ -40,14 +40,14 @@ document.addEventListener("DOMContentLoaded", async function() {
             }
 
             const userResponse = await fetch(`https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
-            console.log('API URL:', `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
+            //console.log('API URL:', `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
             
             if (!userResponse.ok) {
                 throw new Error('Fallo al obtener el ID del usuario');
             }
 
             const userData = await userResponse.json();
-            console.log('Datos del usuario:', userData);
+            //console.log('Datos del usuario:', userData);
 
             const user = userData.data;
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 }
 
                 const levelData = await levelResponse.json();
-                console.log('Datos de niveles:', levelData);
+                //console.log('Datos de niveles:', levelData);
 
                 const levels = levelData.data;
                 const userLevel = levels.find(level => level.idNivel === idNivel);
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
                 // Set the level description
                 document.getElementById("Nivel-Usuario").innerText = nivelDescripcion;
-                const dolares = user.puntos*2;
+                const dolares = user.puntos*5;
 
 
                 document.getElementById("Puntos-Dinero-Usuario").innerText = dolares;
@@ -81,31 +81,35 @@ document.addEventListener("DOMContentLoaded", async function() {
                 ///Toca sacar las ventas referente a ese usuario y los canje referente a ese usuario
 
                 const ventasResponse = await fetch('https://backend-points-production.up.railway.app/ventas');
-                const ventdata = await ventasResponse.json();
-                const venta = ventdata.data;
-                let ventas = [];
-                if(venta){
-                    for (let index = 0; index < venta.length; index++) {
-                        if (venta[index].idCliente == user.idCliente) {
-                            ventas.push(venta[index]);
+                const ventadata = await ventasResponse.json();
+                const ventas = ventadata.map((ventas) => ventas);
+
+                console.log(ventadata, " ", ventas);
+                
+                if(ventas) {
+                    let venta =[];
+                    console.log(ventas);
+                    for (let index = 0; index < ventas.length; index++) {
+                        if (ventas[index].idCliente == user.idCliente) {
+                            venta.push(ventas[index]);
                         }
                     }
                     
-                    var UltimaVenta;
+                    var UltimaVenta = {};
     
-                    for (let index = 0; index < ventas.length; index++) {
-                        UltimaVenta = ventas[index];
+                    for (let index = 0; index < venta.length; index++) {
+                        UltimaVenta = venta[index];
                         
                     }
-
+                    console.log(UltimaVenta);
                     const sucursalResponse = await fetch(`https://backend-points-production.up.railway.app/sucursal/${UltimaVenta.idSucursal}`);
                     const sucursaldata = await sucursalResponse.json();
-                    const sucursal = sucursaldata.data;
                     
-                    document.getElementById("Sucursal-Historial-Acumulacion").innerText =sucursal.nombreSucursal ;
+                    
+                    document.getElementById("Sucursal-Historial-Acumulacion").innerText =sucursaldata.nombreSucursal ;
                     document.getElementById("Numero-Factura").innerText = UltimaVenta.numeroFactura;
-                    document.getElementById("Puntos-Entrada").innerText = UltimaVenta.puntos;
-                    document.getElementById("Conversion-puntos-dolares").innerText = UltimaVenta.puntos*5;
+                    document.getElementById("Puntos-Entrada").innerText = UltimaVenta.puntosGanados;
+                    document.getElementById("Conversion-puntos-dolares").innerText = UltimaVenta.puntosGanados*5;
                     document.getElementById("Fecha").innerText = UltimaVenta.fechaVenta;
     
                 }
@@ -123,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 const canje = canjedata.data;
                 let canjes = [];
 
-                if (canje){
+                if (canje && canje.length > 0){
                     for (let index = 0; index < canje.length; index++) {
                         if (canje[index].idCliente == user.idCliente) {
                             canjes.push(canje[index]);
@@ -166,8 +170,8 @@ document.addEventListener("DOMContentLoaded", async function() {
             console.error('Error:', error);
             Swal.fire({
                 icon: 'error',
-                title: 'Error al obtener datos del usuario',
-                text: 'Ha ocurrido un error al intentar obtener los datos del usuario. Por favor, intente nuevamente.'
+                title: 'Error',
+                text: `Ha ocurrido un error ${error}`
             });
         }
     } else {
