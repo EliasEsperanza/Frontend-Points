@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buscar</title>
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css" />
+    <link rel="stylesheet" href="/Frontend-Points/RamitaPrincipal/estilos/navbarAdmin.css">
     <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
     <link
       rel="stylesheet"
@@ -16,28 +16,28 @@
     <!-----------------------SECCION NAVBAR MENU-------------------------------->
     <header>
       <div class="logo-container">
-        <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="" />
-        <a href="#" class="Nombre">Ferreteria El Roble</a>
+          <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="">
+          <a href="#" class="Nombre">Ferreteria El Roble</a>
       </div>
       <ul class="links">
-        <li><a href="/Inicio/html/index.html">Inicio</a></li>
+        <li><a href="/Frontend-Points/Inicio/html/index.html">Inicio</a></li>
         <li><a href="#" id="logout">cerrar Sesion</a></li>
         <li>
-          <a href="/Perfil_Usuario/html/index.html">Perfil</a>
+          <a href="/Frontend-Points/Perfil_Usuario/html/index.html">Perfil</a>
         </li>
         <li>
-          <a href="/RamitaPrincipal/HTML/premios.html"
+          <a href="/Frontend-Points/RamitaPrincipal/HTML/premios.html"
             >Premios</a
           >
         </li>
         <li>
-          <a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a>
+          <a href="/Frontend-Points/RamitaPrincipal/HTML/puntos.html">Puntos</a>
         </li>
-        <li><a href="/RamitaPrincipal/HTML/beneficios.html">Beneficios</a></li>
+        <li><a href="#BeneficiosP">Beneficios</a></li>
       </ul>
       <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
-    </header>
+       <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+  </header>
 
     <main>
       <section class="Buscador" id="Buscador">
@@ -45,10 +45,14 @@
         <div class="box-buscador">
           <h1 class="text-input">Ingrese el dui del usario a buscar</h1>
           <form id="buscar-form">
-            <input type="text" name="inputBuscar" placeholder="ejemplo: 06557586-6">
-            <input type="submit" name="inputEnviar" value="buscar">
-        </form>
-        
+            <input
+              type="text"
+              name="inputBuscar"
+              id="inputBuscar"
+              placeholder="ejemplo: 06557586-6"
+            />
+            <input type="submit" name="inputEnviar" value="buscar" />
+          </form>
         </div>
 
         <table>
@@ -138,110 +142,201 @@
         Universidad de El salvador © 2024 - ALL Rights Reserved
       </p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const baseUrl = 'https://backend-points-production.up.railway.app';
-            const table = document.querySelector('table');
-        
-            // Función para obtener los usuarios y llenar la tabla al cargar la página
-            function loadUsers() {
-                fetch(`${baseUrl}/usuarios`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const usuarios = data.data;
-                        usuarios.forEach(usuario => {
-                            fetch(`${baseUrl}/cliente/${usuario.idCliente}`)
-                                .then(response => response.json())
-                                .then(clienteData => {
-                                    const cliente = clienteData.data;
-                                    fetch(`${baseUrl}/niveles/${usuario.idNivel}`)
-                                        .then(response => response.json())
-                                        .then(nivelData => {
-                                            const nivel = nivelData.data;
-                                            addRowToTable(cliente, usuario.puntos, nivel);
-                                        });
-                                });
-                        });
-                    })
-                    .catch(error => console.error('Error fetching data:', error));
-            }
-        
-            // Función para añadir una fila a la tabla
-            function addRowToTable(cliente, puntos, nivel) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td data-label="Nombre">${cliente.nombreCliente}</td>
-                    <td data-label="Dui">${cliente.dui}</td>
-                    <td data-label="Puntos">${puntos}</td>
-                    <td data-label="Nivel">${nivel.descripcion}</td>
-                    <td data-label="Premio"><select id="selectPremio${cliente.idCliente}"></select></td>
-                    <td data-label="Estado">${puntos > 0 ? 'Disponible' : 'Vacio'}</td>
-                    <td data-label="Canjear"><button class="btn-canjear">Canjear</button></td>
-                `;
-                table.appendChild(row);
-        
-                // Cargar premios para el nivel
-                fetch(`${baseUrl}/premio/nivel/${nivel.idNivel}`)
-                    .then(response => response.json())
-                    .then(premios => {
-                        const selectPremio = row.querySelector(`#selectPremio${cliente.idCliente}`);
-                        premios.forEach(premio => {
-                            const option = document.createElement('option');
-                            option.value = premio.idPremio;
-                            option.textContent = premio.nombrePremio;
-                            selectPremio.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching premios:', error));
-            }
-        
-            // Cargar usuarios al iniciar
-            loadUsers();
-        
-            // Manejar la búsqueda por DUI
-            const buscarForm = document.getElementById('buscar-form');
-            buscarForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const dui = buscarForm.inputBuscar.value.trim();
-                
-                if (dui === '') {
-                    // Si el campo de búsqueda está vacío, cargar todos los usuarios
-                    table.querySelectorAll('tr:not(#header-table)').forEach(row => row.remove());
-                    loadUsers();
-                } else {
-                    // Búsqueda por DUI
-                    fetch(`${baseUrl}/cliente/dui/${dui}`)
-                        .then(response => response.json())
-                        .then(clienteData => {
-                            const cliente = clienteData.data;
-        
-                            fetch(`${baseUrl}/usuarios`)
-                                .then(response => response.json())
-                                .then(usuariosData => {
-                                    const usuario = usuariosData.data.find(u => u.idCliente === cliente.idCliente);
-                                    
-                                    if (usuario) {
-                                        fetch(`${baseUrl}/niveles/${usuario.idNivel}`)
-                                            .then(response => response.json())
-                                            .then(nivelData => {
-                                                const nivel = nivelData.data;
-                                                // Limpiar la tabla antes de añadir el resultado
-                                                table.querySelectorAll('tr:not(#header-table)').forEach(row => row.remove());
-                                                addRowToTable(cliente, usuario.puntos, nivel);
-                                            });
-                                    } else {
-                                        alert('Usuario no encontrado');
-                                    }
-                                });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching client by DUI:', error);
-                            alert('Cliente no encontrado');
-                        });
-                }
+      document.addEventListener("DOMContentLoaded", function () {
+        const baseUrl = "https://backend-points-production.up.railway.app";
+
+        // Función para obtener todos los usuarios
+        function obtenerUsuarios() {
+          axios
+            .get(`${baseUrl}/usuarios`)
+            .then((response) => {
+              const usuarios = response.data.data;
+              mostrarUsuarios(usuarios);
+            })
+            .catch((error) => console.error("Error fetching usuarios:", error));
+        }
+
+        // Función para buscar un cliente por DUI
+        function buscarClientePorDui(dui) {
+          return axios
+            .get(`${baseUrl}/cliente/dui/${dui}`)
+            .then((response) => response.data.data)
+            .catch((error) => {
+              console.error("Error fetching cliente por DUI:", error);
+              throw error;
             });
+        }
+
+        // Función para obtener los premios por nivel
+        function obtenerPremiosPorNivel(idNivel) {
+          return axios
+            .get(`${baseUrl}/premio/nivel/${idNivel}`)
+            .then((response) => response.data)
+            .catch((error) => {
+              console.error("Error fetching premios por nivel:", error);
+              throw error;
+            });
+        }
+
+        // Función para realizar un canje de premio
+        function realizarCanje(idUsuario, idPremio) {
+          axios
+            .post(`${baseUrl}/admin/canje/premio`, {
+              idPremio: idPremio,
+              idUsuario: idUsuario,
+            })
+            .then((response) => {
+              alert(response.data.message);
+              // Actualizar los puntos del cliente después del canje
+              actualizarPuntosCliente(response.data.data.idCliente);
+            })
+            .catch((error) => console.error("Error realizando canje:", error));
+        }
+
+        // Función para actualizar los puntos del cliente después del canje
+        function actualizarPuntosCliente(idCliente) {
+          axios
+            .get(`${baseUrl}/cliente/ventas/${idCliente}`)
+            .then((response) => {
+              alert("Puntos actualizados correctamente.");
+              obtenerUsuarios();
+            })
+            .catch((error) =>
+              console.error("Error actualizando puntos del cliente:", error)
+            );
+        }
+
+        // Función para mostrar usuarios en la tabla
+        function mostrarUsuarios(usuarios) {
+          const table = document.querySelector("table");
+          table
+            .querySelectorAll("tr:not(#header-table)")
+            .forEach((row) => row.remove());
+
+          usuarios.forEach((usuario) => {
+            axios
+              .get(`${baseUrl}/cliente/${usuario.idCliente}`)
+              .then((response) => {
+                const cliente = response.data.data;
+                axios
+                  .get(`${baseUrl}/niveles/${usuario.idNivel}`)
+                  .then((response) => {
+                    const nivel = response.data.data;
+                    addRowToTable(
+                      cliente,
+                      usuario.puntos,
+                      nivel,
+                      usuario.idUsuario
+                    );
+                  });
+              });
+          });
+        }
+
+        // Función para añadir una fila a la tabla
+        function addRowToTable(cliente, puntos, nivel, idUsuario) {
+          const table = document.querySelector("table");
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+        <td data-label="Nombre">${cliente.nombreCliente}</td>
+        <td data-label="Dui">${cliente.dui}</td>
+        <td data-label="Puntos">${puntos}</td>
+        <td data-label="Nivel">${nivel.descripcion}</td>
+        <td data-label="Premio">
+            <select id="selectPremio-${idUsuario}"></select>
+        </td>
+        <td data-label="Estado">Disponible</td>
+        <td data-label="Canjear"><button class="btn-canjear" data-id="${idUsuario}">Canjear</button></td>
+    `;
+
+          table.appendChild(row);
+
+          // Cargar premios para este cliente
+          cargarPremios(idUsuario, nivel.idNivel);
+        }
+
+        // Función para cargar los premios en el select
+        function cargarPremios(idUsuario, idNivel) {
+          const select = document.getElementById(`selectPremio-${idUsuario}`);
+          obtenerPremiosPorNivel(idNivel)
+            .then((data) => {
+              data.forEach((premio) => {
+                const option = document.createElement("option");
+                option.value = premio.idPremio;
+                option.textContent = premio.nombrePremio;
+                select.appendChild(option);
+              });
+            })
+            .catch((error) => console.error("Error cargando premios:", error));
+        }
+
+        // Event listener para el formulario de búsqueda por DUI
+        const buscarForm = document.getElementById("buscar-form");
+        if (buscarForm) {
+          buscarForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const inputDui = document.getElementById("inputBuscar");
+            let dui = inputDui ? inputDui.value.trim() : "";
+
+            // Si el DUI está vacío, cargar todos los usuarios
+            if (dui === "") {
+              obtenerUsuarios();
+            } else {
+              // Si hay un DUI, buscar ese cliente específico
+              buscarClientePorDui(dui)
+                .then((cliente) => {
+                  axios
+                    .get(`${baseUrl}/usuarios`)
+                    .then((response) => {
+                      const usuarios = response.data.data.filter(
+                        (usuario) => usuario.idCliente === cliente.idCliente
+                      );
+                      if (usuarios.length === 0) {
+                        alert(
+                          "No se encontró ningún usuario con el DUI proporcionado."
+                        );
+                      } else {
+                        mostrarUsuarios(usuarios);
+                      }
+                    })
+                    .catch((error) =>
+                      console.error("Error fetching usuarios:", error)
+                    );
+                })
+                .catch((error) => {
+                  console.error("Error buscando cliente por DUI:", error);
+                  alert("Cliente no encontrado.");
+                });
+            }
+          });
+        }
+
+        // Event listener para el botón de canje
+        document.addEventListener("click", function (event) {
+          if (event.target.classList.contains("btn-canjear")) {
+            const idUsuario = event.target.getAttribute("data-id");
+            const selectPremio = document.getElementById(
+              `selectPremio-${idUsuario}`
+            );
+            const idPremio = selectPremio.value;
+
+            if (!idPremio) {
+              alert("Selecciona un premio para canjear.");
+              return;
+            }
+
+            realizarCanje(idUsuario, idPremio);
+          }
         });
-        </script>
+
+        // Cargar todos los usuarios al cargar la página
+        obtenerUsuarios();
+      });
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/Frontend-Points/RamitaPrincipal/js/navbar.js"></script>
     <script src="/Frontend-Points/Login/log_out.js" defer></script>
