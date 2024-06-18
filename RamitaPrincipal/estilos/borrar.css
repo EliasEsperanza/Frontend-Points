@@ -192,7 +192,7 @@ tr:hover{
         align-items: center; /* Center inputs horizontally */
     }
 
-    table, thead, tbody, th, td, tr {
+    table, thead, body, th, td, tr {
         display: block;
     }
     
@@ -241,11 +241,11 @@ tr:hover{
     .box-borrar-user input[type="submit"] {
         left: 0;
     }
-    #header-table th {
+    #heade-table th {
         background-color: #136335 !important;
         color: #fff !important;
     }
-    #header-table th{
+    #heade-table th{
         background-color: #136335;
         color: #fff;
     }
@@ -274,7 +274,7 @@ table {
     .text-input {
         font-size: 16px;
     }
-    table, thead, tbody, th, td, tr {
+    table, thead, body, th, td, tr {
         display: block;
     }
 
@@ -303,7 +303,7 @@ table {
     .box-borrar-user input[type="submit"] {
         left: 0;
     }
-    #header-table th {
+    #heade-table th {
         background-color: #136335 !important;
         color: #fff !important;
     }
