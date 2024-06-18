@@ -1,121 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Borrar Usuario</title>
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbarAdmin.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/borrar.css">
-</head>
-<body>
-     <!-----------------------SECCION NAVBAR MENU-------------------------------->
-     <header>
-        <div class="logo-container">
-            <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="">
-            <a href="#" class="Nombre">Ferreteria El Roble</a>
-        </div>
-        <ul class="links">
-            <li><a href="/Inicio/html/index.html">Inicio</a></li>
-            <li><a href="#" id="logout">cerrar Sesion</a></li>
-            <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-            <li><a href="/RamitaPrincipal/HTML/form-Premios.html">Crear Nivel</a></li>
-            <li><a href="/RamitaPrincipal/HTML/buscarPremios.html">Buscar</a></li>
-            <li><a href="#Borrar-Use">Borrar</a></li>
-            <li><a href="/RamitaPrincipal/HTML/Correo.html">Correo</a></li>
-            <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-         <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbarAdmin.css" />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/borrar.css" />
+  </head>
+  <body>
+    <!-----------------------SECCION NAVBAR MENU-------------------------------->
+    <header>
+      <div class="logo-container">
+        <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+      </div>
+      <ul class="links" id="navbar-links"></ul>
+      <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
     </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          const idUsuario = localStorage.getItem("idUsuario");
+          const idVendedor = localStorage.getItem("idUsuarioVendedor");
+          const idAdmin = localStorage.getItem("idUsuarioAdmin");
+          console.log("idUsuarioCliente:", idUsuario);
+          console.log("idUsuarioVendedor:", idVendedor);
+          console.log("idUsuarioAdmin:", idAdmin);
+
+          if (idUsuario) {
+            const response = await fetch(
+              `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            const data = await response.json();
+
+            // Verificar si la respuesta contiene datos
+            if (!data || !data.data) {
+              throw new Error(
+                "La respuesta de la API no contiene datos válidos"
+              );
+            }
+
+            const idCliente = data.data.idCliente;
+            console.log(idCliente);
+            localStorage.setItem("idCliente", idCliente);
+          }
+
+          // Modificar el navbar según si hay un token o no
+          modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+
+      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+        const navbarLinks = document.getElementById("navbar-links");
+        const loginLink = document.getElementById("login-link");
+        const listaIniciar = document.getElementById("lista");
+
+        // Eliminar el enlace de iniciar sesión
+        if (listaIniciar) {
+          listaIniciar.remove();
+        }
+
+        // Eliminar el enlace de iniciar sesión
+        if (loginLink) {
+          loginLink.remove();
+        }
+
+        // Enlaces comunes para todos los usuarios autenticados
+        const commonLinks = [
+          { href: "/Inicio/html/index.html", text: "Inicio" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
+          { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+          { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
+        ];
+
+        // Enlaces específicos para clientes
+        const clienteLinks = [];
+
+        // Enlaces específicos para vendedores
+        const vendedorLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
+
+        // Enlaces específicos para administradores
+        const adminLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
+
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesion" },
+        ];
+
+        // Si el usuario no está autenticado
+        if (!token) {
+          guestLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+
+          return; // Termina la ejecución si no hay token
+        }
+
+        // Agregar enlaces específicos según el rol
+        if (idVendedor) {
+          vendedorLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        if (idAdmin) {
+          adminLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        // Agregar enlaces específicos para clientes si no es vendedor ni admin
+        if (!idVendedor && !idAdmin) {
+          commonLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            if (link.id) a.id = link.id;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+      }
+    </script>
 
     <main>
-   
-            <section class="Borrar-User" id="Borrar-Use">
-                <h1 class="title"><span>Borrar</span> Usuario</h1>
-                <div class="box-borrar-user">
-                  <h1 class="text-input">Ingrese el dui del usario a borrar</h1>
-                  <form id="borrar-form">
-                    <input
-                      type="text"
-                      name="inputBuscar"
-                      id="inputBuscar"
-                      placeholder="ejemplo: 06557586-6"
-                    />
-                    <input type="submit" name="inputEnviar" value="buscar" />
-                  </form>
-                </div>
-        
-                <table>
-                  <tr id="heade-table">
-                    <th>Nombre</th>
-                    <th>Dui</th>
-                    <th>telefono</th>
-                    <th>direccion</th>
-                    <th>correo</th>
-                    <th>puntos</th>
-                    <th>nivel</th>
-                    <th>borrar</th>
-                  </tr>
-                </table>
-              </section>
-            </main>
-     
-    
-<!-----------------------SECCION FOOTER-------------------------------->
-<footer>
-    <div class="row">
-        <div class="col">
-            <img src="/RamitaPrincipal/img/Logo.jpg" class="logo">
-            <p>Como ferretería el roble, proveemos soluciones materiales y herramientas para la
-                construcción, civil y pequeña industria, surtido completo y permanente a los clientes con
-                un servicio oportuno. </p>
+      <section class="Borrar-User" id="Borrar-Use">
+        <h1 class="title"><span>Borrar</span> Usuario</h1>
+        <div class="box-borrar-user">
+          <h1 class="text-input">Ingrese el dui del usario a borrar</h1>
+          <form id="borrar-form">
+            <input
+              type="text"
+              name="inputBuscar"
+              id="inputBuscar"
+              placeholder="ejemplo: 06557586-6"
+            />
+            <input type="submit" name="inputEnviar" value="buscar" />
+          </form>
         </div>
-        <div class="col">
-            <h3>Contactos <div class="underline"><span></span></div></h3>
-            <p>Tel: 7220 6538</p>
-            <p>Correo: ferreteriaelroble01@gmail.com</p>
-            <p class="email-id">direccion: Carretera Panamericana km 138, colonia Maquilishuat, canton El Sitio, #66 San Miguel, San Miguel, El Salvador</p>
-            <p>Horarios:</p>
-            <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
-            <p>Sabado: 7:00 am - 12:00 MD</p>
-        </div>
-        <div class="col">
-            <h3>Links<div class="underline"><span></span></div></h3>
-            <ul>
-                <li><a href="/Inicio/html/index.html">Inicio</a></li>
-                <li><a href="/Login/index.html">Iniciar Sesion</a></li>
-                <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-                <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-                <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
-                <li><a href="#BeneficiosP">Beneficios</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <h3>Comentarios <div class="underline"><span></span></div></h3>
-            <form >
-                <i class="fa-regular fa-envelope"></i>
-                <input type="email" placeholder="Escriba su correo y lo atenderemos" required>
-                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
 
-            </form>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/LaferreteriaRoble"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-        </div>
-    </div>
-        <hr>
-        <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
-   
-</footer>
-    
+        <table>
+          <tr id="heade-table">
+            <th>Nombre</th>
+            <th>Dui</th>
+            <th>telefono</th>
+            <th>direccion</th>
+            <th>correo</th>
+            <th>puntos</th>
+            <th>nivel</th>
+            <th>borrar</th>
+          </tr>
+        </table>
+      </section>
+    </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/RamitaPrincipal/js/navbar.js"></script>
-<script src="/Login/log_out.js" defer></script>
-</body>
+    <!-----------------------SECCION FOOTER-------------------------------->
+    <footer>
+      <div class="row">
+        <div class="col">
+          <img src="/RamitaPrincipal/img/Logo.jpg" class="logo" />
+          <p>
+            Como ferretería el roble, proveemos soluciones materiales y
+            herramientas para la construcción, civil y pequeña industria,
+            surtido completo y permanente a los clientes con un servicio
+            oportuno.
+          </p>
+        </div>
+        <div class="col">
+          <h3>
+            Contactos
+            <div class="underline"><span></span></div>
+          </h3>
+          <p>Tel: 7220 6538</p>
+          <p>Correo: ferreteriaelroble01@gmail.com</p>
+          <p class="email-id">
+            direccion: Carretera Panamericana km 138, colonia Maquilishuat,
+            canton El Sitio, #66 San Miguel, San Miguel, El Salvador
+          </p>
+          <p>Horarios:</p>
+          <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
+          <p>Sabado: 7:00 am - 12:00 MD</p>
+        </div>
+        <div class="col">
+          <h3>
+            Links
+            <div class="underline"><span></span></div>
+          </h3>
+          <ul>
+            <li><a href="/Inicio/html/index.html">Inicio</a></li>
+            <li><a href="/Login/index.html">Iniciar Sesion</a></li>
+            <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
+            <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
+            <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
+            <li><a href="#BeneficiosP">Beneficios</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>
+            Comentarios
+            <div class="underline"><span></span></div>
+          </h3>
+          <form>
+            <i class="fa-regular fa-envelope"></i>
+            <input
+              type="email"
+              placeholder="Escriba su correo y lo atenderemos"
+              required
+            />
+            <button type="submit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/LaferreteriaRoble"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información."
+              target="_blank"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <p class="copyright">
+        Universidad de El salvador © 2024 - ALL Rights Reserved
+      </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/RamitaPrincipal/js/navbar.js"></script>
+    <script src="/Login/log_out.js" defer></script>
+  </body>
 </html>
-
-

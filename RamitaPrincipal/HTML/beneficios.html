@@ -1,169 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Puntos</title>
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/beneficios.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css" />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/beneficios.css" />
+  </head>
+  <body>
     <!-----------------------SECCION NAVBAR MENU-------------------------------->
     <header>
-        <div class="logo-container">
-            <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="">
-            <a href="#" class="Nombre">Ferreteria El Roble</a>
+      <div class="logo-container">
+        <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+      </div>
+      <ul class="links" id="navbar-links"></ul>
+      <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+    </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          const idUsuario = localStorage.getItem("idUsuario");
+          const idVendedor = localStorage.getItem("idUsuarioVendedor");
+          const idAdmin = localStorage.getItem("idUsuarioAdmin");
+          console.log("idUsuarioCliente:", idUsuario);
+          console.log("idUsuarioVendedor:", idVendedor);
+          console.log("idUsuarioAdmin:", idAdmin);
+
+          if (idUsuario) {
+            const response = await fetch(
+              `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            const data = await response.json();
+
+            // Verificar si la respuesta contiene datos
+            if (!data || !data.data) {
+              throw new Error(
+                "La respuesta de la API no contiene datos válidos"
+              );
+            }
+
+            const idCliente = data.data.idCliente;
+            console.log(idCliente);
+            localStorage.setItem("idCliente", idCliente);
+          }
+
+          // Modificar el navbar según si hay un token o no
+          modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+
+      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+        const navbarLinks = document.getElementById("navbar-links");
+        const loginLink = document.getElementById("login-link");
+        const listaIniciar = document.getElementById("lista");
+
+        // Eliminar el enlace de iniciar sesión
+        if (listaIniciar) {
+          listaIniciar.remove();
+        }
+
+        // Eliminar el enlace de iniciar sesión
+        if (loginLink) {
+          loginLink.remove();
+        }
+
+        // Enlaces comunes para todos los usuarios autenticados
+        const commonLinks = [
+          { href: "/Inicio/html/index.html", text: "Inicio" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
+          { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+          { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
+        ];
+
+        // Enlaces específicos para clientes
+        const clienteLinks = [];
+
+        // Enlaces específicos para vendedores
+        const vendedorLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
+
+        // Enlaces específicos para administradores
+        const adminLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
+
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesion" },
+        ];
+
+        // Si el usuario no está autenticado
+        if (!token) {
+          guestLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+
+          return; // Termina la ejecución si no hay token
+        }
+
+        // Agregar enlaces específicos según el rol
+        if (idVendedor) {
+          vendedorLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        if (idAdmin) {
+          adminLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        // Agregar enlaces específicos para clientes si no es vendedor ni admin
+        if (!idVendedor && !idAdmin) {
+          commonLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            if (link.id) a.id = link.id;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+      }
+    </script>
+
+    <main>
+      <!-------------------------SECCION BENEFICIOS--------------------------------------->
+      <section class="Beneficios" id="BeneficiosP">
+        <h1 class="title"><span>Beneficios</span> Usuario</h1>
+        <div class="boxB-container">
+          <div class="box">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Sistema de Puntos </span>
+            <h3>Como funciona?</h3>
+            <p>
+              Nuestro programa de fidelidad te permite acumular puntos por cada
+              dólar que gastes. Por cada dólar consumido, acumulas 0.2 puntos.
+              Estos puntos se utilizarán para desbloquear niveles y, a su vez,
+              desbloquear premios dentro de cada nivel
+            </p>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <span>Conversion</span>
+            <h3>Dolares a puntos</h3>
+            <p>
+              Si pagas en una factura $50, acumularás 10 puntos. (A razón de 0.2
+              puntos por dólar: 50 x 0.2 = 10 puntos)
+            </p>
+          </div>
+
+          <div class="box">
+            <i class="fa-solid fa-gifts"></i>
+            <span>Premios en Cada Nivel</span>
+            <h3>Premios exclusivos</h3>
+            <p>
+              Dentro de cada nivel desbloqueado, hay una variedad de premios
+              exclusivos disponibles. Los puntos acumulados se pueden utilizar
+              para reclamar estos premios, y el costo en puntos variará según el
+              valor del premio. Es decir, dependiendo del nivel en el que te
+              encuentres, podrás usar tus puntos para obtener premios que
+              corresponden a ese nivel específico.
+            </p>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-comments-dollar"></i>
+            <span>Conversion</span>
+            <h3>Puntos a Dolares</h3>
+            <p>
+              Si tienes 10 puntos, equivalen a $50. (A razón de $5 por punto: 10
+              x 5 = $50)
+            </p>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Desbloqueo de Niveles</span>
+            <h3>Tipos de Niveles</h3>
+            <p>
+              medida que acumulas puntos, puedes utilizarlos para desbloquear
+              diferentes niveles en nuestro programa de fidelidad. Habrá cuatro
+              categorías de niveles de puntos de usuario: (*Nivel Bronce, *Nivel
+              Plata, *Nivel Oro y *Nivel Premium)
+            </p>
+            <p>
+              Cada nivel requiere que tus puntos acumulados estén dentro de un
+              rango específico para ser desbloqueado. A medida que acumulas más
+              puntos, puedes avanzar a niveles superiores, lo que te permite
+              acceder a una gama más amplia de premios.
+            </p>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Caducidad de Puntos</span>
+            <h3>Límite de tiempo trimestral</h3>
+            <p>
+              Los puntos acumulados tienen un límite de tiempo y caducarán en
+              periodos de 3 meses. Por ejemplo, si un usuario ingresa a la
+              aplicación en el periodo de enero a marzo, los puntos acumulados
+              en ese lapso caducarán al finalizar dicho periodo. Además, al
+              finalizar cada periodo de 3 meses, el sistema de niveles se
+              reiniciará y los puntos comenzarán nuevamente desde cero. Esto
+              significa que es importante utilizar los puntos dentro del periodo
+              correspondiente para maximizar los beneficios del programa de
+              fidelidad.
+            </p>
+          </div>
         </div>
-        <ul class="links">
+      </section>
+    </main>
+
+    <!-----------------------SECCION FOOTER-------------------------------->
+    <footer>
+      <div class="row">
+        <div class="col">
+          <img src="/RamitaPrincipal/img/Logo.jpg" class="logo" />
+          <p>
+            Como ferretería el roble, proveemos soluciones materiales y
+            herramientas para la construcción, civil y pequeña industria,
+            surtido completo y permanente a los clientes con un servicio
+            oportuno.
+          </p>
+        </div>
+        <div class="col">
+          <h3>
+            Contactos
+            <div class="underline"><span></span></div>
+          </h3>
+          <p>Tel: 7220 6538</p>
+          <p>Correo: ferreteriaelroble01@gmail.com</p>
+          <p class="email-id">
+            direccion: Carretera Panamericana km 138, colonia Maquilishuat,
+            canton El Sitio, #66 San Miguel, San Miguel, El Salvador
+          </p>
+          <p>Horarios:</p>
+          <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
+          <p>Sabado: 7:00 am - 12:00 MD</p>
+        </div>
+        <div class="col">
+          <h3>
+            Links
+            <div class="underline"><span></span></div>
+          </h3>
+          <ul>
             <li><a href="/Inicio/html/index.html">Inicio</a></li>
-            <li><a href="#" id="logout">cerrar Sesion</a></li>
+            <li><a href="/Login/index.html">Iniciar Sesion</a></li>
             <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
             <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
             <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
             <li><a href="#BeneficiosP">Beneficios</a></li>
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-         <div class="close_btn"><i class="fa-solid fa-x"></i></div>
-    </header>
-
-
-<main>
-  
-    <!-------------------------SECCION BENEFICIOS--------------------------------------->
-    <section class="Beneficios" id="BeneficiosP" >
-        <h1 class="title"><span>Beneficios</span> Usuario</h1>
-        <div class="boxB-container">
-
-            <div class="box">
-                <i class="fa-solid fa-circle-info"></i>
-                    <span>Sistema de Puntos </span>
-                    <h3>Como funciona?</h3>
-                    <p>Nuestro programa de fidelidad te permite acumular 
-                        puntos por cada dólar que gastes. Por cada dólar
-                         consumido, acumulas 0.2 puntos. Estos puntos se
-                          utilizarán para desbloquear niveles y, a su vez,
-                           desbloquear premios dentro de cada nivel</p>
-            </div>
-            <div class="box">
-                <i class="fa-solid fa-hand-holding-dollar"></i>
-                    <span>Conversion</span>
-                    <h3>Dolares a puntos</h3>
-                    <p>Si pagas en una factura $50, acumularás 10 puntos. 
-                        (A razón de 0.2 puntos por dólar: 50 x 0.2 = 10 puntos)</p>
-            </div>
-
-
-            <div class="box">
-                <i class="fa-solid fa-gifts"></i>
-                    <span>Premios en Cada Nivel</span>
-                    <h3>Premios exclusivos</h3>
-                    <p>Dentro de cada nivel desbloqueado, hay una variedad de 
-                        premios exclusivos disponibles. Los puntos acumulados 
-                        se pueden utilizar para reclamar estos premios, y el 
-                        costo en puntos variará según el valor del premio. Es 
-                        decir, dependiendo del nivel en el que te encuentres, 
-                        podrás usar tus puntos para obtener premios que corresponden 
-                        a ese nivel específico.</p>
-            </div>
-            <div class="box">
-                <i class="fa-solid fa-comments-dollar"></i>
-                    <span>Conversion</span>
-                    <h3>Puntos a Dolares</h3>
-                    <p>Si tienes 10 puntos, equivalen a $50. (A razón de $5 por punto: 10 x 5 = $50)</p>
-            </div>
-            <div class="box">
-                <i class="fa-solid fa-layer-group"></i>
-                    <span>Desbloqueo de Niveles</span>
-                    <h3>Tipos de Niveles</h3>
-                    <p> medida que acumulas puntos, puedes utilizarlos
-                        para desbloquear diferentes niveles en nuestro 
-                        programa de fidelidad. Habrá cuatro categorías 
-                        de niveles de puntos de usuario:
-                    (*Nivel Bronce,
-                    *Nivel Plata,
-                    *Nivel Oro y
-                    *Nivel Premium)
-                    </p>
-                    <p>Cada nivel requiere que tus puntos acumulados 
-                        estén dentro de un rango específico para ser 
-                        desbloqueado. A medida que acumulas más puntos, 
-                        puedes avanzar a niveles superiores, lo que te 
-                        permite acceder a una gama más amplia de premios. </p>
-            </div>
-            <div class="box">
-                <i class="fa-solid fa-calendar-days"></i>
-                    <span>Caducidad de Puntos</span>
-                    <h3>Límite de tiempo trimestral</h3>
-                    <p>Los puntos acumulados tienen un límite de tiempo y 
-                        caducarán en periodos de 3 meses. Por ejemplo, 
-                        si un usuario ingresa a la aplicación en el periodo 
-                        de enero a marzo, los puntos acumulados en ese lapso 
-                        caducarán al finalizar dicho periodo. Además, 
-                        al finalizar cada periodo de 3 meses, el sistema 
-                        de niveles se reiniciará y los puntos comenzarán 
-                        nuevamente desde cero. Esto significa que es importante 
-                        utilizar los puntos dentro del periodo correspondiente 
-                        para maximizar los beneficios del programa de fidelidad.</p>
-            </div>
-
-        </div>
-    </section>
-</main>
-
-
-
-
-<!-----------------------SECCION FOOTER-------------------------------->
-<footer>
-    <div class="row">
-        <div class="col">
-            <img src="/RamitaPrincipal/img/Logo.jpg" class="logo">
-            <p>Como ferretería el roble, proveemos soluciones materiales y herramientas para la
-                construcción, civil y pequeña industria, surtido completo y permanente a los clientes con
-                un servicio oportuno. </p>
+          </ul>
         </div>
         <div class="col">
-            <h3>Contactos <div class="underline"><span></span></div></h3>
-            <p>Tel: 7220 6538</p>
-            <p>Correo: ferreteriaelroble01@gmail.com</p>
-            <p class="email-id">direccion: Carretera Panamericana km 138, colonia Maquilishuat, canton El Sitio, #66 San Miguel, San Miguel, El Salvador</p>
-            <p>Horarios:</p>
-            <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
-            <p>Sabado: 7:00 am - 12:00 MD</p>
+          <h3>
+            Comentarios
+            <div class="underline"><span></span></div>
+          </h3>
+          <form>
+            <i class="fa-regular fa-envelope"></i>
+            <input
+              type="email"
+              placeholder="Escriba su correo y lo atenderemos"
+              required
+            />
+            <button type="submit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/LaferreteriaRoble"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información."
+              target="_blank"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
+          </div>
         </div>
-        <div class="col">
-            <h3>Links<div class="underline"><span></span></div></h3>
-            <ul>
-                <li><a href="/Inicio/html/index.html">Inicio</a></li>
-                <li><a href="/Login/index.html">Iniciar Sesion</a></li>
-                <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-                <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-                <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
-                <li><a href="#BeneficiosP">Beneficios</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <h3>Comentarios <div class="underline"><span></span></div></h3>
-            <form >
-                <i class="fa-regular fa-envelope"></i>
-                <input type="email" placeholder="Escriba su correo y lo atenderemos" required>
-                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
-
-            </form>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/LaferreteriaRoble"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-        </div>
-    </div>
-        <hr>
-        <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
-   
-</footer>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/RamitaPrincipal/js/navbar.js"></script>
-<script src="/Login/log_out.js" defer></script>
+      </div>
+      <hr />
+      <p class="copyright">
+        Universidad de El salvador © 2024 - ALL Rights Reserved
+      </p>
+    </footer>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/RamitaPrincipal/js/navbar.js"></script>
+  <script src="/Login/log_out.js" defer></script>
 </html>
