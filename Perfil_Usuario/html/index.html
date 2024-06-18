@@ -14,23 +14,142 @@
   </head>
   <body>
     <!--Parte del navbar-->
-    <header>
-        <div class="logo-container">
-            <img src="/Perfil_Usuario/Logo.jpg" class="imgLogo" alt="">
-            <a href="#" class="Nombre">Ferreteria El Roble</a>
-        </div>
-        <ul class="links">
-            <li><a href="/Inicio/html/index.html">Inicio</a></li>
-                <li><a href="#" id="logout">cerrar Sesion</a></li>
-                <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-                <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-                <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
-                <li><a href="/RamitaPrincipal/HTML/beneficios.html">Beneficios</a></li>
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-        <div class="close_btn"><i class="fa-solid fa-x"></i></div>
-    </header>
-
+   <header>
+    <div class="logo-container">
+      <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+      <a href="#" class="Nombre">Ferreteria El Roble</a>
+    </div>
+    <ul class="links" id="navbar-links">
+ 
+    </ul>
+    <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+    <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+  </header>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        // Verificar si hay un token en el localStorage
+        const token = localStorage.getItem("jwt");
+        const idUsuario = localStorage.getItem("idUsuario");
+        const idVendedor = localStorage.getItem("idUsuarioVendedor");
+        const idAdmin = localStorage.getItem("idUsuarioAdmin");
+        console.log("idUsuarioCliente:", idUsuario);
+        console.log("idUsuarioVendedor:", idVendedor);
+        console.log("idUsuarioAdmin:", idAdmin);
+    
+        // Modificar el navbar según si hay un token o no
+        modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    });
+    
+    function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+      const navbarLinks = document.getElementById("navbar-links");
+    
+      // Limpiar lista actual
+      navbarLinks.innerHTML = '';
+    
+      // Enlaces comunes para todos los usuarios autenticados
+      const commonLinks = [
+        { href: "/Frontend-Points/Inicio/html/index.html", text: "Inicio" },
+        { href: "#", id: "logout", text: "Cerrar Sesión" },
+        { href: "/Frontend-Points/Perfil_Usuario/html/index.html", text: "Perfil" },
+      ];
+    
+      // Enlaces específicos para clientes
+      const clienteLinks = [
+        { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+        { href: "/RamitaPrincipal/HTML/puntos.html", text: "Puntos" },
+        { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" }
+      ];
+    
+      // Enlaces específicos para vendedores
+      const vendedorLinks = [
+        { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
+        { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+        { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+        { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+        { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+      ];
+    
+      // Enlaces específicos para administradores
+      const adminLinks = [
+      { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
+      { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+      { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+      { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+      { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+      ];
+    
+      // Si el usuario no está autenticado
+      if (!token) {
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesión" }
+        ];
+    
+        guestLinks.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+    
+        return; // Termina la ejecución si no hay token
+      }
+    
+      // Agregar enlaces comunes
+      commonLinks.forEach((link) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = link.href;
+        a.textContent = link.text;
+        if (link.id) a.id = link.id;
+        li.appendChild(a);
+        navbarLinks.appendChild(li);
+      });
+    
+      // Agregar enlaces específicos según el rol
+      if (idVendedor) {
+        vendedorLinks.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+      }
+    
+      if (idAdmin) {
+        adminLinks.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+      }
+    
+      // Agregar enlaces específicos para clientes si no es vendedor ni admin
+      if (!idVendedor && !idAdmin) {
+        clienteLinks.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+      }
+    }
+    
+  
+  </script>
+    
     <main>
       <!--Contenido del perfil de usuario-->
       <div class="Contenido">
