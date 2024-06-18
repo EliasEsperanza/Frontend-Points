@@ -1,43 +1,12 @@
 document.addEventListener("DOMContentLoaded", async function(){
-    const idCliente = localStorage.getItem("idCliente");
+    const idCliente = localStorage.getItem("idUsuario");
 
     if (idCliente) {
         try {
         // Fetch client data
             
-        const clientResponse = await fetch(`https://backend-points-production.up.railway.app/cliente/${idCliente}`);
-        console.log('API URL:', `https://backend-points-production.up.railway.app/cliente/${idCliente}`);
         
-        if (!clientResponse.ok) {
-            throw new Error('Fallo al obtener el ID del cliente');
-        }
-
-        const clientData = await clientResponse.json();
-        console.log('Datos del cliente:', clientData);
-
-        const client = clientData.data;
-        //document.getElementById("Nombre-Usuario").innerText = client.nombreCliente;
-        //document.getElementById("Nombre-Dui").innerText = client.dui;
-
-        // Fetch user points and level using idUsuario
-         // Verifica que client tenga idUsuario
-    
-        const userResponse2 = await fetch(`https://backend-points-production.up.railway.app/usuarios`);
-        const userDataV = await userResponse2.json();
-        const user2 = userDataV.data;
-        let varid =0;
-        for (let index = 0; index < user2.length; index++) {
-            if(user2[index].idCliente == client.idCliente){
-                varid = user2[index].idUsuario;
-            }
-            
-        }
-        const idUsuario = varid;
-        if (!idUsuario) {
-            throw new Error('ID de usuario no encontrado en los datos del cliente');
-        }
-
-        const userResponse = await fetch(`https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
+        const userResponse = await fetch(`https://backend-points-production.up.railway.app/usuarios/${idCliente}`);
         //console.log('API URL:', `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`);
         
         if (!userResponse.ok) {

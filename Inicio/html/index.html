@@ -29,6 +29,7 @@
     <script src="/Inicio/js/carrucel.js" defer></script>
 
     <title>Inicio</title>
+    
   </head>
 
   <body>
@@ -49,7 +50,7 @@
       document.addEventListener("DOMContentLoaded", async () => {
           try {
               // Verificar si hay un token en el localStorage
-              const token = localStorage.getItem("jwt");
+              const token = localStorage.getItem('jwt');
               const idUsuario = localStorage.getItem("idUsuario");
               const idVendedor = localStorage.getItem("idUsuarioVendedor");
               const idAdmin = localStorage.getItem("idUsuarioAdmin");
@@ -59,7 +60,7 @@
 
               if (idUsuario) {
                   const response = await fetch(
-                      'https://backend-points-production.up.railway.app/usuarios/${idUsuario}',
+                      `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
                       {
                           method: "GET",
                           headers: {
@@ -81,17 +82,18 @@
               }
 
               // Modificar el navbar según si hay un token o no
-              modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+              modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin,idUsuario);
           } catch (error) {
               console.error("Error:", error);
           }
       });
 
-      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin, idUsuario){
           const navbarLinks = document.getElementById("navbar-links");
           const loginLink = document.getElementById("login-link");
           const listaIniciar = document.getElementById("lista"); // Asegúrate de que este id coincide
 
+          //console.log(`${token} , ${idVendedor} , ${idAdmin} , ${idUsuario}`)
           // Eliminar el enlace de iniciar sesión
           if (listaIniciar) {
               listaIniciar.remove();
@@ -151,15 +153,7 @@
           }
 
           // Agregar enlaces comunes
-          commonLinks.forEach((link) => {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = link.href;
-              a.textContent = link.text;
-              if (link.id) a.id = link.id;
-              li.appendChild(a);
-              navbarLinks.appendChild(li);
-          });
+          
 
           // Agregar enlaces específicos según el rol
           if (idVendedor) {
@@ -172,7 +166,6 @@
                   navbarLinks.appendChild(li);
               });
           }
-
           if (idAdmin) {
               adminLinks.forEach((link) => {
                   const li = document.createElement("li");
@@ -183,9 +176,7 @@
                   navbarLinks.appendChild(li);
               });
           }
-
-          // Agregar enlaces específicos para clientes si no es vendedor ni admin
-          if (!idVendedor && !idAdmin) {
+          if (idUsuario) {
               clienteLinks.forEach((link) => {
                   const li = document.createElement("li");
                   const a = document.createElement("a");
@@ -195,9 +186,18 @@
                   navbarLinks.appendChild(li);
               });
           }
+          commonLinks.forEach((link) => {
+              const li = document.createElement("li");
+              const a = document.createElement("a");
+              a.href = link.href;
+              a.textContent = link.text;
+              if (link.id){ a.id = link.id};
+              li.appendChild(a);
+              navbarLinks.appendChild(li);
+          });
       }
     </script>
-
+    
     <div class="content" id="inicioP">
       <div class="Presentacion">
         <h1>Se parte de nuestro programa</h1>
@@ -427,6 +427,7 @@
         Universidad de El salvador © 2024 - ALL Rights Reserved
       </p>
     </footer>
+    <script src="/Login/log_out.js" defer></script>
   </body>
-  <script src="/Login/log_out.js" defer></script>
+  
 </html>
