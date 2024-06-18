@@ -96,14 +96,48 @@
         loginLink.remove();
       }
 
-      // Agregar nuevos enlaces para usuarios autenticados
-      const newLinks = [
-        { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-        { href: "/Perfil_Usuario/html/index.html", text: "Tu Perfil" },
-        { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
-      ];
-
-      newLinks.forEach((link) => {
+      const commonLinks = [
+      { href: "/Frontend-Points/Inicio/html/index.html", text: "Inicio" },
+      { href: "#", id: "logout", text: "Cerrar Sesión" },
+      { href: "/Frontend-Points/Perfil_Usuario/html/index.html", text: "Perfil" },
+    ];
+  
+    // Enlaces específicos para clientes
+    const clienteLinks = [
+      { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+      { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+    ];
+  
+    // Enlaces específicos para vendedores
+    const vendedorLinks = [
+      { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
+      { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+      { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+      { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+    ];
+  
+    // Enlaces específicos para administradores
+    const adminLinks = [
+      { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
+      { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+      { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+      { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+    ];
+  
+    // Agregar enlaces comunes
+    commonLinks.forEach((link) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = link.href;
+      a.textContent = link.text;
+      if (link.id) a.id = link.id;
+      li.appendChild(a);
+      navbarLinks.appendChild(li);
+    });
+  
+    // Agregar enlaces específicos según el rol
+    if (idVendedor) {
+      vendedorLinks.forEach((link) => {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = link.href;
@@ -112,6 +146,18 @@
         navbarLinks.appendChild(li);
       });
     }
+  
+    if (idAdmin) {
+      adminLinks.forEach((link) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = link.href;
+        a.textContent = link.text;
+        li.appendChild(a);
+        navbarLinks.appendChild(li);
+      });
+    }
+  }
   </script>
 
   <div class="content" id="inicioP">
