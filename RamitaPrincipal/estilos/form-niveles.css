@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-*{
+* ,
+*::before,
+*::after {
     margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font: 'Popins', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
 }
+
 .title {
     padding-top: 8rem;
     text-align: center;
@@ -19,86 +22,81 @@
 .title span {
     color: #136335;
 }
-body, html {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+
+body{
+height: 100vh;
+
+
 }
 
-main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .container-Form-Nivel{
     background-color: #fff;
-    width: 80%;
-    min-width: 420px;
+    width:80%;
+    min-width: 360px;
     padding: 35px 50px;
-    transform: translate(-50%,10%);
     position: relative;
-    left: 50%;
-    top: 50%;
+    left: 10%;
+    top: 0%;
+    max-width: 600px;
+    transform: translateX(-50%,-50%);
     border-radius: 10px;
-    box-shadow: 10px 15px 13px rgba(0, 0,0, 0.15);
+    box-shadow: 10px 15px 13px rgba(0, 0, 0, 0.15);
     margin-bottom: 50px;
+    overflow: hidden; 
 }
-.container-Form-Premio{
+.container-Form-Premio {
     background-color: #fff;
-    width: 95%;
-    min-width: 420px;
+    width:85%;
+    min-width: 360px;
+    max-width: 600px;
     padding: 35px 50px;
-    transform: translate(-50%,10%);
     position: relative;
-    left: 50%;
-    top: 50%;
+    left: 7%;
+    top: 0%;
+    transform: translateX(-50%,-50%);
     border-radius: 10px;
-    box-shadow: 10px 15px 13px rgba(0, 0,0, 0.15);
+    box-shadow: 10px 15px 13px rgba(0, 0, 0, 0.15);
     margin-bottom: 70px;
-    margin-top: 50px;
+    margin-top: 100px;
+    overflow: hidden; 
 }
 
-
-
-.titulo-form-Nivel{
+.titulo-form-Nivel, .titulo-form-Premio {
     font-size: 30px;
     text-align: center;
     color: #136335;
 }
 
-.titulo-form-Premio{
-    font-size: 30px;
-    text-align: center;
-    color: #136335;
-}
-
-
-
-
-.container-Form-Nivel form, .container-Form-Premio form{
+.container-Form-Nivel form, .container-Form-Premio form {
     width: 80%;
     position: relative;
     margin: 30px auto 0 auto;
-    border: none; 
+    border: none;
 }
 
-.container-Form-Nivel .row, .container-Form-Premio .row{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+.container-Form-Nivel .row, .container-Form-Premio .row {
+   width: 100%;
+   display: grid;
+   grid-template-columns: repeat(auto-fit,
+   minmax(300px, 1fr));
+   grid-gap:20px 30px;
+   margin-bottom: 20px;
 }
 
+.column {
+    flex: 1;
+    min-width: 300px;
+    margin-bottom: 15px;
+}
 
-
-.container-Form-Nivel label, .container-Form-Premio label{
+.container-Form-Nivel label, .container-Form-Premio label {
     color: black;
-    font-size: 18px;
-    
+    font-size: 16px;
 }
-.container-Form-Nivel form  input,.container-Form-Premio form select,
-.container-Form-Premio form input{
+
+.container-Form-Nivel form input, .container-Form-Premio form select, .container-Form-Premio form input {
     width: 90%;
     font-weight: 400;
     padding: 8px 10px;
@@ -108,15 +106,13 @@ main {
     margin-bottom: 15px;
 }
 
-.container-Form-Nivel form input:focus, .container-Form-Premio form input:focus{
+.container-Form-Nivel form input:focus, .container-Form-Premio form input:focus {
     outline: none;
     border-color: #136335;
 }
 
- .Contenedor-boton {
-    text-align: center;  
-  }
-  .btn-F{
+
+.btn-F {
     width: 50%;
     border: none;
     padding: 10px 20px;
@@ -124,13 +120,65 @@ main {
     color: #fff;
     border-radius: 3px;
     font-size: 16px;
-    margin-left: 10px;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out; /
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-F:hover {
+    background: #eba902;
+    transform: scale(1.02);
 }
 
 
-.btn-F:hover{
-    background: #eba902;
-    transform: scale(1.02);
+@media screen and (max-width: 970px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .container-Form-Nivel, .container-Form-Premio {
+        width: 70%;
+        max-width: 100%;
+        margin: 0 auto 50px; /* Centrar horizontalmente y agregar margen inferior */
+        left: auto;
+        transform: none;
+    }
+
+    .titulo-form-Nivel, .titulo-form-Premio {
+        font-size: 20px;
+        text-align: center;
+        color: #136335;
+    }
+
+    .container-Form-Nivel label, .container-Form-Premio label {
+        color: black;
+        font-size: 15px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .column {
+        flex: 1 1 100%;
+        margin-left: 0;
+    }
+
+  
+}
+
+@media screen and (max-width: 600px) {
+    .container-Form-Nivel,
+    .container-Form-Premio {
+        width: 50%;
+        padding: 0px; /* Reducir el padding en pantallas pequeñas */
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .container-Form-Nivel,
+    .container-Form-Premio {
+        width: calc(50% - 5px);
+        padding: 5px; 
+        margin: 20px auto 60px; 
+    }
 }

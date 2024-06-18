@@ -30,95 +30,76 @@
 
     <h1 class="title"><span>Crear</span> Niveles y Premios</h1>
 
-    <main>
-    <section class="Formulario-Niveles">
-        <div class="container-Form-Nivel">
-            <h1 class="titulo-form-Nivel">Formulario para crear Niveles</h1>
-            <form action="">
-                <div class="row">
-                    <div class="column">
-                        <label for="nombreNivel">Nombre del Nivel:</label>
-                        <input type="text" id="NombreNivel" placeholder="Escriba el nombre del nivel">
+   
+   <main>
+     <section class="Form-Nivele-Container">
+            <div class="container-Form-Nivel">
+                <h1 class="titulo-form-Nivel">Formulario para crear Niveles</h1>
+                <form>
+                    <div class="row">
+                        <div class="column">
+                            <label for="nombreNivel">Nombre del Nivel:</label>
+                            <input type="text" id="NombreNivel" placeholder="Escriba el nombre del nivel">
+                        </div>
+                        <div class="column">
+                            <label for="nombreNivel">Elija el icono para el nivel</label>
+                            <input type="file" name="adjunto" id="adjunto">
+                        </div>
+                      
+                            <div class="column">
+                                <label for="PuntosInicio">Puntos de inicio del nivel</label>
+                                <input type="text" id="PuntosInicio" placeholder="Escriba los puntos de inicio">
+                            </div>
+                            <div class="column">
+                                <label for="PuntosFin">Puntos de Fin del nivel</label>
+                                <input type="text" id="PuntosFin" placeholder="Escriba los puntos de final de nivel">
+                     
                     </div>
+                    <button class="btn-F">Crear Nivel</button>
+                </form>  
+            </div>
 
-                    <div class="column">
-                        <label for="nombreNivel">Elija el icono para el nivel</label>
-                        <input type="file" name="adjunto" id="adjunto">
-                    </div>
+        </section>
+        <section>
+            <div class="container-Form-Premio">
+                <h1 class="titulo-form-Premio">Formulario para crear Premio</h1>
+                <form>
+                    <div class="row">
+                        <div class="column">
+                            <label for="nombrePremio">Nombre del premio:</label>
+                            <input type="text" id="NombrePremio" placeholder="Escriba el nombre del Premio">
+                        </div>
+                        <div class="column">
+                            <label for="nombreNivelPremio">Elija el nivel donde se agregará el premio</label>
+                            <select id="NombrenivelPremio" name="NombrenivelPremio"></select>
+                        </div>
+                        <div class="column">
+                            <label for="PuntosPremio">Seleccione la imagen del premio</label>
+                            <input type="file" name="adjunto" id="adjunto">
+                        </div>
+                   
 
                     
-                </div>
-
-                <div class="row">
-                    <div class="column">
-                        <label for="PuntosInicio">Puntos de inicio de el nivel</label>
-                        <input type="text" id="PuntosInicio" placeholder="Escriba los puntos de inicio">
-                    </div>
-                <div class="column">
-                    <label for="PuntosFin">Puntos de Fin de el nivel</label>
-                    <input type="text" id="PuntosFin" placeholder="Escriba los puntos de final de nivel">
-                </div>
-            </div>
-          
-
-            </form>
-            <div class="Contenedor-boton">
-                <button>Crear Nivel</button>
-            </div>
-         
-            
-        </div>
-
-        <div class="container-Form-Premio">
-            <h1 class="titulo-form-Premio">Formulario para crear Premio</h1>
-            <form action="">
-                <div class="row">
-                    <div class="column">
-                        <label for="nombrePremio">Nombre de el premio:</label>
-                        <input type="text" id="NombrePremio" placeholder="Escriba el nombre de el Premio">
-                    </div>
-
-                    <div class="column">
-                        <label for="nombreNivelPremio">Elija el nivel donde se agregara el premio</label>
-                        <select id="NombrenivelPremio" name="NombrenivelPremio"></select>
-                    </div>
-                    <div class="column">
-                        <label for="PuntosPremio">Seleccione la imagen de el premio</label>
-                        <input type="file" name="adjunto" id="adjunto">
-                    </div>
-                    
-                </div>
-
-                <div class="row">
-                    <div class="column">
-                        <label for="PuntosPremio">Escriba cuantos puntos valdra el premio</label>
-                        <input type="text" id="PuntosPremio" placeholder="valor en puntos">
-                    </div>
-                <div class="column">
-                    <label for="PuntosFin">Escriba el estado del premio</label>
-                    <input type="text" id="PuntosFin" placeholder="ejemplo(disponible)">
-                </div>
-                <div class="column">
-                    <label for="descripPremio">Escriba la descripcion del premio</label>
-                    <input type="text" id="descripPremio" placeholder="descripcion detallada">
+                        <div class="column">
+                            <label for="PuntosPremio">Escriba cuántos puntos valdrá el premio</label>
+                            <input type="text" id="PuntosPremio" placeholder="valor en puntos">
+                        </div>
+                        <div class="column">
+                            <label for="PuntosFin">Escriba el estado del premio</label>
+                            <input type="text" id="PuntosFin" placeholder="ejemplo(disponible)">
+                        </div>
+                        <div class="column">
+                            <label for="descripPremio">Escriba la descripción del premio</label>
+                            <input type="text" id="descripPremio" placeholder="descripción detallada">
+                        </div>
+                  
+                </form>
+                <div class="Contenedor-boton">
+                    <button class="btn-F">Crear Premio</button>
                 </div>
             </div>
-    
-          
-
-            </form>
-            <div class="Contenedor-boton">
-                <button>Crear Nivel</button>
-            </div>
-         
-            
-        </div>
-    </section>
-
-    
-
+        </section>
     </main>
-
 
     
 <!-----------------------SECCION FOOTER-------------------------------->
