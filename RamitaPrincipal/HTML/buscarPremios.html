@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buscar</title>
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbarAdmin.css">
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbarAdmin.css" />
     <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
     <link
       rel="stylesheet"
@@ -14,175 +14,166 @@
   </head>
   <body>
     <!-----------------------SECCION NAVBAR MENU-------------------------------->
-<!--Parte del navbar-->
-<header>
-  <div class="logo-container">
-    <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
-    <a href="#" class="Nombre">Ferreteria El Roble</a>
-  </div>
-  <ul class="links" id="navbar-links">
+    <!--Parte del navbar-->
+    <header>
+      <div class="logo-container">
+        <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+      </div>
+      <ul class="links" id="navbar-links"></ul>
+      <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+    </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          const idUsuario = localStorage.getItem("idUsuario");
+          const idVendedor = localStorage.getItem("idUsuarioVendedor");
+          const idAdmin = localStorage.getItem("idUsuarioAdmin");
 
-  </ul>
-  <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-  <div class="close_btn"><i class="fa-solid fa-x"></i></div>
-</header>
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      // Verificar si hay un token en el localStorage
-      const token = localStorage.getItem("jwt");
-      const idUsuario = localStorage.getItem("idUsuario");
-      const idVendedor = localStorage.getItem("idUsuarioVendedor");
-      const idAdmin = localStorage.getItem("idUsuarioAdmin");
-      console.log("idUsuarioCliente:", idUsuario);
-      console.log("idUsuarioVendedor:", idVendedor);
-      console.log("idUsuarioAdmin:", idAdmin);
-
-      if (idUsuario) {
-        const response = await fetch(
-          `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+          if (token && (idUsuario || idVendedor || idAdmin)) {
+            modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+          } else {
+            modifyNavbarForAuthenticatedUser(null, null, null); // No hay usuario autenticado
           }
-        );
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
 
-        const data = await response.json();
+      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+        const navbarLinks = document.getElementById("navbar-links");
 
-        // Verificar si la respuesta contiene datos
-        if (!data || !data.data) {
-          throw new Error(
-            "La respuesta de la API no contiene datos válidos"
-          );
+        // Limpiar el contenido anterior del navbar
+        navbarLinks.innerHTML = "";
+
+        // Enlaces comunes para todos los usuarios autenticados
+        const commonLinks = [
+          { href: "/Inicio/html/index.html", text: "Inicio" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
+          { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+          { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
+        ];
+
+        // Enlaces específicos para vendedores
+        const vendedorLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+        ];
+
+        // Enlaces específicos para administradores
+        const adminLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+        ];
+
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesión" },
+        ];
+
+        // Determinar los enlaces según el tipo de usuario
+        let links = [];
+
+        if (idVendedor) {
+          links = [
+            ...vendedorLinks,
+            { href: "#", id: "logout", text: "Cerrar Sesión" },
+          ];
+        } else if (idAdmin) {
+          links = [
+            ...adminLinks,
+            { href: "#", id: "logout", text: "Cerrar Sesión" },
+          ];
+        } else if (token && idUsuario) {
+          links = [
+            ...commonLinks,
+            { href: "#", id: "logout", text: "Cerrar Sesión" },
+          ];
+        } else {
+          links = guestLinks;
         }
 
-        const idCliente = data.data.idCliente;
-        console.log(idCliente);
-        localStorage.setItem("idCliente", idCliente);
+        // Crear elementos de lista y añadir al navbar
+        links.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          if (link.id) a.id = link.id;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+
+        // Agregar listener de evento de click al botón "Cerrar Sesión"
+        const logoutButton = document.getElementById("logout");
+        if (logoutButton) {
+          logoutButton.addEventListener("click", async function (event) {
+            event.preventDefault(); // Evitar comportamiento por defecto
+
+            try {
+              let endpoint = "";
+              let bodyData = {};
+
+              if (idUsuario) {
+                endpoint =
+                  "https://backend-points-production.up.railway.app/logout";
+                bodyData = {
+                  idUsuario: idUsuario,
+                  userType: "cliente",
+                };
+                localStorage.removeItem("idUsuario");
+              } else if (idVendedor) {
+                endpoint =
+                  "https://backend-points-production.up.railway.app/logout";
+                bodyData = {
+                  idUsuarioVendedor: idVendedor,
+                  userType: "vendedor",
+                };
+                localStorage.removeItem("idUsuarioVendedor");
+              } else if (idAdmin) {
+                endpoint =
+                  "https://backend-points-production.up.railway.app/logout";
+                bodyData = {
+                  idUsuarioAdmin: idAdmin,
+                  userType: "admin",
+                };
+                localStorage.removeItem("idUsuarioAdmin");
+              } else {
+                console.log("No se encuentra logueado de ninguna manera");
+                return;
+              }
+
+              const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(bodyData),
+              });
+
+              localStorage.removeItem("jwt");
+              console.log("Se han eliminado los items del localStorage.");
+              location.replace("/Inicio/html/index.html");
+            } catch (error) {
+              console.error("Error al realizar el logout:", error);
+            }
+          });
+        }
       }
-
-      // Modificar el navbar según si hay un token o no
-      modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  });
-
-  function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
-    const navbarLinks = document.getElementById("navbar-links");
-    const loginLink = document.getElementById("login-link");
-    const listaIniciar = document.getElementById("lista");
-
-    // Eliminar el enlace de iniciar sesión
-    if (listaIniciar) {
-      listaIniciar.remove();
-    }
-
-    // Eliminar el enlace de iniciar sesión
-    if (loginLink) {
-      loginLink.remove();
-    }
-
-    // Enlaces comunes para todos los usuarios autenticados
-    const commonLinks = [
-      { href: "/Inicio/html/index.html", text: "Inicio" },
-      { href: "#", id: "logout", text: "Cerrar Sesión" },
-      { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
-      { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-      { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
-      { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
-      
-    ];
-
-    // Enlaces específicos para clientes
-    const clienteLinks = [
-     
-    ];
-
-    // Enlaces específicos para vendedores
-    const vendedorLinks = [
-      {
-        href: "/RamitaPrincipal/HTML/form-Premios.html",
-        text: "Crear Nivel",
-      },
-      { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
-
-      { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
-      { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
-      { href: "#", id: "logout", text: "Cerrar Sesión" },
-    ];
-
-    // Enlaces específicos para administradores
-    const adminLinks = [
-      {
-        href: "/RamitaPrincipal/HTML/form-Premios.html",
-        text: "Crear Nivel",
-      },
-      { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
-      { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
-      { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
-      { href: "#", id: "logout", text: "Cerrar Sesión" },
-    ];
-
-    const guestLinks = [
-      { href: "/Login/index.html", text: "Iniciar Sesion" },
-    ];
-
-    // Si el usuario no está autenticado
-    if (!token) {
-      guestLinks.forEach((link) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = link.href;
-        a.textContent = link.text;
-        li.appendChild(a);
-        navbarLinks.appendChild(li);
-      });
-
-      return; // Termina la ejecución si no hay token
-    }
-
-    // Agregar enlaces específicos según el rol
-    if (idVendedor) {
-      vendedorLinks.forEach((link) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = link.href;
-        a.textContent = link.text;
-        li.appendChild(a);
-        navbarLinks.appendChild(li);
-      });
-    }
-
-    if (idAdmin) {
-      adminLinks.forEach((link) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = link.href;
-        a.textContent = link.text;
-        li.appendChild(a);
-        navbarLinks.appendChild(li);
-      });
-    }
-
-    // Agregar enlaces específicos para clientes si no es vendedor ni admin
-    if (!idVendedor && !idAdmin) {
-      commonLinks.forEach((link) => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = link.href;
-      a.textContent = link.text;
-      if (link.id) a.id = link.id;
-      li.appendChild(a);
-      navbarLinks.appendChild(li);
-    });
-    }
-
-    
-  }
-</script>
+    </script>
 
     <main>
       <section class="Buscador" id="Buscador">
