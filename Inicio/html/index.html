@@ -38,7 +38,6 @@
         <a href="#" class="Nombre">Ferreteria El Roble</a>
       </div>
       <ul class="links" id="navbar-links">
-  
         <li id="lista"><a href="/Login/index.html">Iniciar Sesion</a></li>
       </ul>
       <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
@@ -59,7 +58,7 @@
 
               if (idUsuario) {
                   const response = await fetch(
-                      https://backend-points-production.up.railway.app/usuarios/${idUsuario},
+                      'https://backend-points-production.up.railway.app/usuarios/${idUsuario}',
                       {
                           method: "GET",
                           headers: {
@@ -104,9 +103,9 @@
 
           // Enlaces comunes para todos los usuarios autenticados
           const commonLinks = [
-              { href: "/Frontend-Points/Inicio/html/index.html", text: "Inicio" },
+              { href: "/Inicio/html/index.html", text: "Inicio" },
               { href: "#", id: "logout", text: "Cerrar Sesión" },
-              { href: "/Frontend-Points/Perfil_Usuario/html/index.html", text: "Perfil" },
+              { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
           ];
 
           // Enlaces específicos para clientes
@@ -119,7 +118,8 @@
           // Enlaces específicos para vendedores
           const vendedorLinks = [
               { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
-              { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+              { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+
               { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
               { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
           ];
@@ -196,8 +196,8 @@
               });
           }
       }
-  </script>
 
+    </script>
     <div class="content" id="inicioP">
       <div class="Presentacion">
         <h1>Se parte de nuestro programa</h1>
@@ -291,6 +291,7 @@
 
     <!--Parte de las promociones-->
     <div class="Promociones" id="Promociones">
+
       <div class="titulo"><h1>Novedades y promociones</h1></div>
       <div class="content-text">
         <p>
@@ -426,4 +427,7 @@
       </p>
     </footer>
   </body>
+
+  <script src="/Login/log_out.js" defer></script>
+
 </html>
