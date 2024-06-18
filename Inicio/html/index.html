@@ -46,157 +46,160 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-          try {
-              // Verificar si hay un token en el localStorage
-              const token = localStorage.getItem("jwt");
-              const idUsuario = localStorage.getItem("idUsuario");
-              const idVendedor = localStorage.getItem("idUsuarioVendedor");
-              const idAdmin = localStorage.getItem("idUsuarioAdmin");
-              console.log("idUsuarioCliente:", idUsuario);
-              console.log("idUsuarioVendedor:", idVendedor);
-              console.log("idUsuarioAdmin:", idAdmin);
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          const idUsuario = localStorage.getItem("idUsuario");
+          const idVendedor = localStorage.getItem("idUsuarioVendedor");
+          const idAdmin = localStorage.getItem("idUsuarioAdmin");
+          console.log("idUsuarioCliente:", idUsuario);
+          console.log("idUsuarioVendedor:", idVendedor);
+          console.log("idUsuarioAdmin:", idAdmin);
 
-              if (idUsuario) {
-                  const response = await fetch(
-                      'https://backend-points-production.up.railway.app/usuarios/${idUsuario}',
-                      {
-                          method: "GET",
-                          headers: {
-                              "Content-Type": "application/json",
-                          },
-                      }
-                  );
-
-                  const data = await response.json();
-
-                  // Verificar si la respuesta contiene datos
-                  if (!data || !data.data) {
-                      throw new Error("La respuesta de la API no contiene datos válidos");
-                  }
-
-                  const idCliente = data.data.idCliente;
-                  console.log(idCliente);
-                  localStorage.setItem("idCliente", idCliente);
+          if (idUsuario) {
+            const response = await fetch(
+              `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
               }
+            );
 
-              // Modificar el navbar según si hay un token o no
-              modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
-          } catch (error) {
-              console.error("Error:", error);
+            const data = await response.json();
+
+            // Verificar si la respuesta contiene datos
+            if (!data || !data.data) {
+              throw new Error(
+                "La respuesta de la API no contiene datos válidos"
+              );
+            }
+
+            const idCliente = data.data.idCliente;
+            console.log(idCliente);
+            localStorage.setItem("idCliente", idCliente);
           }
+
+          // Modificar el navbar según si hay un token o no
+          modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+        } catch (error) {
+          console.error("Error:", error);
+        }
       });
 
       function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
-          const navbarLinks = document.getElementById("navbar-links");
-          const loginLink = document.getElementById("login-link");
-          const listaIniciar = document.getElementById("lista"); // Asegúrate de que este id coincide
+        const navbarLinks = document.getElementById("navbar-links");
+        const loginLink = document.getElementById("login-link");
+        const listaIniciar = document.getElementById("lista");
 
-          // Eliminar el enlace de iniciar sesión
-          if (listaIniciar) {
-              listaIniciar.remove();
-          }
+        // Eliminar el enlace de iniciar sesión
+        if (listaIniciar) {
+          listaIniciar.remove();
+        }
 
-          // Eliminar el enlace de iniciar sesión
-          if (loginLink) {
-              loginLink.remove();
-          }
+        // Eliminar el enlace de iniciar sesión
+        if (loginLink) {
+          loginLink.remove();
+        }
 
-          // Enlaces comunes para todos los usuarios autenticados
-          const commonLinks = [
-              { href: "/Inicio/html/index.html", text: "Inicio" },
-              { href: "#", id: "logout", text: "Cerrar Sesión" },
-              { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
-          ];
+        // Enlaces comunes para todos los usuarios autenticados
+        const commonLinks = [
+          { href: "/Inicio/html/index.html", text: "Inicio" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
+          { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+          { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
+          
+        ];
 
-          // Enlaces específicos para clientes
-          const clienteLinks = [
-              { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-              { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
-              { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" }
-          ];
+        // Enlaces específicos para clientes
+        const clienteLinks = [
+         
+        ];
 
-          // Enlaces específicos para vendedores
-          const vendedorLinks = [
-              { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
-              { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+        // Enlaces específicos para vendedores
+        const vendedorLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
 
-              { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
-              { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
-          ];
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
 
-          // Enlaces específicos para administradores
-          const adminLinks = [
-              { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
-              { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
-              { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
-              { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
-          ];
+        // Enlaces específicos para administradores
+        const adminLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
 
-          // Si el usuario no está autenticado
-          if (!token) {
-              const guestLinks = [
-                  { href: "/Login/index.html", text: "Iniciar Sesion" }
-              ];
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesion" },
+        ];
 
-              guestLinks.forEach((link) => {
-                  const li = document.createElement("li");
-                  const a = document.createElement("a");
-                  a.href = link.href;
-                  a.textContent = link.text;
-                  li.appendChild(a);
-                  navbarLinks.appendChild(li);
-              });
-
-              return; // Termina la ejecución si no hay token
-          }
-
-          // Agregar enlaces comunes
-          commonLinks.forEach((link) => {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = link.href;
-              a.textContent = link.text;
-              if (link.id) a.id = link.id;
-              li.appendChild(a);
-              navbarLinks.appendChild(li);
+        // Si el usuario no está autenticado
+        if (!token) {
+          guestLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
           });
 
-          // Agregar enlaces específicos según el rol
-          if (idVendedor) {
-              vendedorLinks.forEach((link) => {
-                  const li = document.createElement("li");
-                  const a = document.createElement("a");
-                  a.href = link.href;
-                  a.textContent = link.text;
-                  li.appendChild(a);
-                  navbarLinks.appendChild(li);
-              });
-          }
+          return; // Termina la ejecución si no hay token
+        }
 
-          if (idAdmin) {
-              adminLinks.forEach((link) => {
-                  const li = document.createElement("li");
-                  const a = document.createElement("a");
-                  a.href = link.href;
-                  a.textContent = link.text;
-                  li.appendChild(a);
-                  navbarLinks.appendChild(li);
-              });
-          }
+        // Agregar enlaces específicos según el rol
+        if (idVendedor) {
+          vendedorLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
 
-          // Agregar enlaces específicos para clientes si no es vendedor ni admin
-          if (!idVendedor && !idAdmin) {
-              clienteLinks.forEach((link) => {
-                  const li = document.createElement("li");
-                  const a = document.createElement("a");
-                  a.href = link.href;
-                  a.textContent = link.text;
-                  li.appendChild(a);
-                  navbarLinks.appendChild(li);
-              });
-          }
+        if (idAdmin) {
+          adminLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        // Agregar enlaces específicos para clientes si no es vendedor ni admin
+        if (!idVendedor && !idAdmin) {
+          commonLinks.forEach((link) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.textContent = link.text;
+          if (link.id) a.id = link.id;
+          li.appendChild(a);
+          navbarLinks.appendChild(li);
+        });
+        }
+
+        
       }
-
     </script>
     <div class="content" id="inicioP">
       <div class="Presentacion">
@@ -291,7 +294,6 @@
 
     <!--Parte de las promociones-->
     <div class="Promociones" id="Promociones">
-
       <div class="titulo"><h1>Novedades y promociones</h1></div>
       <div class="content-text">
         <p>
@@ -426,8 +428,6 @@
         Universidad de El salvador © 2024 - ALL Rights Reserved
       </p>
     </footer>
+    <script src="/Login/log_out.js"></script>
   </body>
-
-  <script src="/Login/log_out.js" defer></script>
-
 </html>

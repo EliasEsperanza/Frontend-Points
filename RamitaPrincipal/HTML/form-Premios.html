@@ -1,156 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear Niveles y Premio</title>
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/form-niveles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css" />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/form-niveles.css" />
+  </head>
+  <body>
     <!-----------------------SECCION NAVBAR MENU-------------------------------->
     <header>
-        <div class="logo-container">
-            <img src="/RamitaPrincipal/img/arbol.jpg" class="imgLogo" alt="">
-            <a href="#" class="Nombre">Ferreteria El Roble</a>
-        </div>
-        <ul class="links">
-            <li><a href="/Inicio/html/index.html">Inicio</a></li>
-            <li><a href="#" id="logout">Cerrar Sesión</a></li>
-            <li><a href="#form-Nivel">Crear Nivel</a></li>
-
-            <li><a href="/RamitaPrincipal/HTML/buscarPremios.html">Buscar</a></li>
-            <li><a href="/RamitaPrincipal/HTML/borrar-U.html">Borrar</a></li>
-            <li><a href="/RamitaPrincipal/HTML/Correo.html">Correo</a></li>
-
-            <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-            <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-        <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+      <div class="logo-container">
+        <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+      </div>
+      <ul class="links" id="navbar-links"></ul>
+      <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
     </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          const idUsuario = localStorage.getItem("idUsuario");
+          const idVendedor = localStorage.getItem("idUsuarioVendedor");
+          const idAdmin = localStorage.getItem("idUsuarioAdmin");
+          console.log("idUsuarioCliente:", idUsuario);
+          console.log("idUsuarioVendedor:", idVendedor);
+          console.log("idUsuarioAdmin:", idAdmin);
 
+          if (idUsuario) {
+            const response = await fetch(
+              `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            const data = await response.json();
+
+            // Verificar si la respuesta contiene datos
+            if (!data || !data.data) {
+              throw new Error(
+                "La respuesta de la API no contiene datos válidos"
+              );
+            }
+
+            const idCliente = data.data.idCliente;
+            console.log(idCliente);
+            localStorage.setItem("idCliente", idCliente);
+          }
+
+          // Modificar el navbar según si hay un token o no
+          modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+
+      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+        const navbarLinks = document.getElementById("navbar-links");
+        const loginLink = document.getElementById("login-link");
+        const listaIniciar = document.getElementById("lista");
+
+        // Eliminar el enlace de iniciar sesión
+        if (listaIniciar) {
+          listaIniciar.remove();
+        }
+
+        // Eliminar el enlace de iniciar sesión
+        if (loginLink) {
+          loginLink.remove();
+        }
+
+        // Enlaces comunes para todos los usuarios autenticados
+        const commonLinks = [
+          { href: "/Inicio/html/index.html", text: "Inicio" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
+          { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+          { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
+        ];
+
+        // Enlaces específicos para clientes
+        const clienteLinks = [];
+
+        // Enlaces específicos para vendedores
+        const vendedorLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
+
+        // Enlaces específicos para administradores
+        const adminLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+        ];
+
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesion" },
+        ];
+
+        // Si el usuario no está autenticado
+        if (!token) {
+          guestLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+
+          return; // Termina la ejecución si no hay token
+        }
+
+        // Agregar enlaces específicos según el rol
+        if (idVendedor) {
+          vendedorLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        if (idAdmin) {
+          adminLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        // Agregar enlaces específicos para clientes si no es vendedor ni admin
+        if (!idVendedor && !idAdmin) {
+          commonLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            if (link.id) a.id = link.id;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+      }
+    </script>
     <h1 class="title"><span>Crear</span> Niveles y Premios</h1>
 
     <main>
-        <section class="Form-Nivele-Container" id="form-Nivel">
-            <div class="container-Form-Nivel">
-                <h1 class="titulo-form-Nivel">Formulario para crear Niveles</h1>
-                <form>
-                    <div class="row">
-                        <div class="column">
-                            <label for="NombreNivel">Nombre del Nivel:</label>
-                            <input type="text" id="NombreNivel" placeholder="Escriba el nombre del nivel">
-                        </div>
-                        <div class="column">
-                            <label for="adjunto">Elija el icono para el nivel</label>
-                            <input type="file" name="adjunto" id="adjunto"  accept=".png, .jpg, .jpeg">
-                        </div>
-                        <div class="column">
-                            <label for="PuntosInicio">Puntos de inicio del nivel</label>
-                            <input type="text" id="PuntosInicio" placeholder="Escriba los puntos de inicio">
-                        </div>
-                        <div class="column">
-                            <label for="PuntosFin">Puntos de Fin del nivel</label>
-                            <input type="text" id="PuntosFin" placeholder="Escriba los puntos de final de nivel">
-                        </div>
-                        <div class="row">
-                            <button class="btn-F">Crear Nivel</button>
-                        </div>
-                    </div>
-                  
-                </form>
+      <section class="Form-Nivele-Container" id="form-Nivel">
+        <div class="container-Form-Nivel">
+          <h1 class="titulo-form-Nivel">Formulario para crear Niveles</h1>
+          <form>
+            <div class="row">
+              <div class="column">
+                <label for="NombreNivel">Nombre del Nivel:</label>
+                <input
+                  type="text"
+                  id="NombreNivel"
+                  placeholder="Escriba el nombre del nivel"
+                />
+              </div>
+              <div class="column">
+                <label for="adjunto">Elija el icono para el nivel</label>
+                <input
+                  type="file"
+                  name="adjunto"
+                  id="adjunto"
+                  accept=".png, .jpg, .jpeg"
+                />
+              </div>
+              <div class="column">
+                <label for="PuntosInicio">Puntos de inicio del nivel</label>
+                <input
+                  type="text"
+                  id="PuntosInicio"
+                  placeholder="Escriba los puntos de inicio"
+                />
+              </div>
+              <div class="column">
+                <label for="PuntosFin">Puntos de Fin del nivel</label>
+                <input
+                  type="text"
+                  id="PuntosFin"
+                  placeholder="Escriba los puntos de final de nivel"
+                />
+              </div>
+              <div class="row">
+                <button class="btn-F">Crear Nivel</button>
+              </div>
             </div>
-        </section>
-        <section>
-            <div class="container-Form-Premio">
-                <h1 class="titulo-form-Premio">Formulario para crear Premio</h1>
-                <form id="formPremio">
-                    <div class="row">
-                        <div class="column">
-                            <label for="NombrePremio">Nombre del premio:</label>
-                            <input type="text" id="NombrePremio" placeholder="Escriba el nombre del Premio">
-                        </div>
-                        <div class="column">
-                            <label for="NombrenivelPremio">Elija el nivel donde se agregará el premio</label>
-                            <select id="NombrenivelPremio" name="NombrenivelPremio"></select>
-                        </div>
-                        <div class="column">
-                            <label for="adjuntoPremio">Seleccione la imagen del premio</label>
-                            <input type="file" name="adjuntoPremio" id="adjuntoPremio"  accept=".png, .jpg, .jpeg">
-                        </div>
-                        <div class="column">
-                            <label for="PuntosPremio">Escriba cuántos puntos valdrá el premio</label>
-                            <input type="text" id="PuntosPremio" placeholder="valor en puntos">
-                        </div>
-                        <div class="column">
-                            <label for="estadoPremio">Escriba el estado del premio</label>
-                            <select id="estadoPremio">
-                                <option value="0">No disponible</option>
-                                <option value="1">Disponible</option>
-                            </select>
-                        </div>
-                        <div class="column">
-                            <label for="descripPremio">Escriba la descripción del premio</label>
-                            <input type="text" id="descripPremio" placeholder="descripción detallada">
-                        </div>
-                        <div class="row">
-                            <button type="submit" class="btn-F">Crear Premio</button>
-                        </div>
-                    </div>
-
-                </form>
+          </form>
+        </div>
+      </section>
+      <section>
+        <div class="container-Form-Premio">
+          <h1 class="titulo-form-Premio">Formulario para crear Premio</h1>
+          <form id="formPremio">
+            <div class="row">
+              <div class="column">
+                <label for="NombrePremio">Nombre del premio:</label>
+                <input
+                  type="text"
+                  id="NombrePremio"
+                  placeholder="Escriba el nombre del Premio"
+                />
+              </div>
+              <div class="column">
+                <label for="NombrenivelPremio"
+                  >Elija el nivel donde se agregará el premio</label
+                >
+                <select
+                  id="NombrenivelPremio"
+                  name="NombrenivelPremio"
+                ></select>
+              </div>
+              <div class="column">
+                <label for="adjuntoPremio"
+                  >Seleccione la imagen del premio</label
+                >
+                <input
+                  type="file"
+                  name="adjuntoPremio"
+                  id="adjuntoPremio"
+                  accept=".png, .jpg, .jpeg"
+                />
+              </div>
+              <div class="column">
+                <label for="PuntosPremio"
+                  >Escriba cuántos puntos valdrá el premio</label
+                >
+                <input
+                  type="text"
+                  id="PuntosPremio"
+                  placeholder="valor en puntos"
+                />
+              </div>
+              <div class="column">
+                <label for="estadoPremio">Escriba el estado del premio</label>
+                <select id="estadoPremio">
+                  <option value="0">No disponible</option>
+                  <option value="1">Disponible</option>
+                </select>
+              </div>
+              <div class="column">
+                <label for="descripPremio"
+                  >Escriba la descripción del premio</label
+                >
+                <input
+                  type="text"
+                  id="descripPremio"
+                  placeholder="descripción detallada"
+                />
+              </div>
+              <div class="row">
+                <button type="submit" class="btn-F">Crear Premio</button>
+              </div>
             </div>
-        </section>
+          </form>
+        </div>
+      </section>
     </main>
 
     <!-----------------------SECCION FOOTER-------------------------------->
     <footer>
-        <div class="row">
-            <div class="col">
-                <img src="/RamitaPrincipal/img/Logo.jpg" class="logo">
-                <p>Como ferretería el roble, proveemos soluciones materiales y herramientas para la
-                    construcción, civil y pequeña industria, surtido completo y permanente a los clientes con
-                    un servicio oportuno.</p>
-            </div>
-            <div class="col">
-                <h3>Contactos <div class="underline"><span></span></div></h3>
-                <p>Tel: 7220 6538</p>
-                <p>Correo: ferreteriaelroble01@gmail.com</p>
-                <p class="email-id">Dirección: Carretera Panamericana km 138, colonia Maquilishuat, cantón El Sitio, #66 San Miguel, San Miguel, El Salvador</p>
-                <p>Horarios:</p>
-                <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
-                <p>Sábado: 7:00 am - 12:00 MD</p>
-            </div>
-            <div class="col">
-                <h3>Links<div class="underline"><span></span></div></h3>
-                <ul>
-                    <li><a href="/Inicio/html/index.html">Inicio</a></li>
-                    <li><a href="/Login/index.html">Iniciar Sesión</a></li>
-                    <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-                    <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
-                    <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
-                    <li><a href="#BeneficiosP">Beneficios</a></li>
-                </ul>
-            </div>
-            <div class="col">
-                <h3>Comentarios <div class="underline"><span></span></div></h3>
-                <form>
-                    <i class="fa-regular fa-envelope"></i>
-                    <input type="email" placeholder="Escriba su correo y lo atenderemos" required>
-                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
-                </form>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/LaferreteriaRoble"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col">
+          <img src="/RamitaPrincipal/img/Logo.jpg" class="logo" />
+          <p>
+            Como ferretería el roble, proveemos soluciones materiales y
+            herramientas para la construcción, civil y pequeña industria,
+            surtido completo y permanente a los clientes con un servicio
+            oportuno.
+          </p>
         </div>
-        <hr>
-        <p class="copyright">Universidad de El Salvador © 2024 - ALL Rights Reserved</p>
+        <div class="col">
+          <h3>
+            Contactos
+            <div class="underline"><span></span></div>
+          </h3>
+          <p>Tel: 7220 6538</p>
+          <p>Correo: ferreteriaelroble01@gmail.com</p>
+          <p class="email-id">
+            Dirección: Carretera Panamericana km 138, colonia Maquilishuat,
+            cantón El Sitio, #66 San Miguel, San Miguel, El Salvador
+          </p>
+          <p>Horarios:</p>
+          <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
+          <p>Sábado: 7:00 am - 12:00 MD</p>
+        </div>
+        <div class="col">
+          <h3>
+            Links
+            <div class="underline"><span></span></div>
+          </h3>
+          <ul>
+            <li><a href="/Inicio/html/index.html">Inicio</a></li>
+            <li><a href="/Login/index.html">Iniciar Sesión</a></li>
+            <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
+            <li><a href="/RamitaPrincipal/HTML/premios.html">Premios</a></li>
+            <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
+            <li><a href="#BeneficiosP">Beneficios</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>
+            Comentarios
+            <div class="underline"><span></span></div>
+          </h3>
+          <form>
+            <i class="fa-regular fa-envelope"></i>
+            <input
+              type="email"
+              placeholder="Escriba su correo y lo atenderemos"
+              required
+            />
+            <button type="submit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/LaferreteriaRoble"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información."
+              target="_blank"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <p class="copyright">
+        Universidad de El Salvador © 2024 - ALL Rights Reserved
+      </p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -158,7 +372,5 @@
     <script src="/Login/log_out.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../js/crear_premio.js"></script>
-</body>
+  </body>
 </html>
-
-

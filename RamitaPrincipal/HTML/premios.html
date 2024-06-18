@@ -1,111 +1,176 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Premios</title>
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/owl.carousel.min.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/owl.theme.green.min.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/premios.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css">
-    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="/RamitaPrincipal/estilos/owl.carousel.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/RamitaPrincipal/estilos/owl.theme.green.min.css"
+    />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/premios.css" />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/navbar.css" />
+    <link rel="stylesheet" href="/RamitaPrincipal/estilos/footer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
 
-    
-</head>
-
-<body>
-
+  <body>
     <!-----------------------SECCION NAVBAR MENU-------------------------------->
     <!--Parte del navbar-->
     <header>
-        <div class="logo-container">
-          <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
-          <a href="#" class="Nombre">Ferreteria El Roble</a>
-        </div>
-        <ul class="links" id="navbar-links">
-     
-        </ul>
-        <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
-        <div class="close_btn"><i class="fa-solid fa-x"></i></div>
-      </header>
-      <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-          try {
-            // Verificar si hay un token en el localStorage
-            const token = localStorage.getItem("jwt");
-            const idUsuario = localStorage.getItem("idUsuario");
-            const idVendedor = localStorage.getItem("idUsuarioVendedor");
-            const idAdmin = localStorage.getItem("idUsuarioAdmin");
-            console.log("idUsuarioCliente:", idUsuario);
-            console.log("idUsuarioVendedor:", idVendedor);
-            console.log("idUsuarioAdmin:", idAdmin);
-        
-            // Modificar el navbar según si hay un token o no
-            modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
-          } catch (error) {
-            console.error("Error:", error);
+      <div class="logo-container">
+        <img src="/Inicio/Logo.jpg" class="imgLogo" alt="" />
+        <a href="#" class="Nombre">Ferreteria El Roble</a>
+      </div>
+      <ul class="links" id="navbar-links"></ul>
+      <div class="toggle_btn"><i class="fa-solid fa-bars"></i></div>
+      <div class="close_btn"><i class="fa-solid fa-x"></i></div>
+    </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Verificar si hay un token en el localStorage
+          const token = localStorage.getItem("jwt");
+          const idUsuario = localStorage.getItem("idUsuario");
+          const idVendedor = localStorage.getItem("idUsuarioVendedor");
+          const idAdmin = localStorage.getItem("idUsuarioAdmin");
+          console.log("idUsuarioCliente:", idUsuario);
+          console.log("idUsuarioVendedor:", idVendedor);
+          console.log("idUsuarioAdmin:", idAdmin);
+
+          if (idUsuario) {
+            const response = await fetch(
+              `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            const data = await response.json();
+
+            // Verificar si la respuesta contiene datos
+            if (!data || !data.data) {
+              throw new Error(
+                "La respuesta de la API no contiene datos válidos"
+              );
+            }
+
+            const idCliente = data.data.idCliente;
+            console.log(idCliente);
+            localStorage.setItem("idCliente", idCliente);
           }
-        });
-        
-        function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
-          const navbarLinks = document.getElementById("navbar-links");
-        
-          // Limpiar lista actual
-          navbarLinks.innerHTML = '';
-        
-          // Enlaces comunes para todos los usuarios autenticados
-          const commonLinks = [
-            { href: "/Frontend-Points/Inicio/html/index.html", text: "Inicio" },
-            { href: "#", id: "logout", text: "Cerrar Sesión" },
-            { href: "/Frontend-Points/Perfil_Usuario/html/index.html", text: "Perfil" },
-          ];
-        
-          // Enlaces específicos para clientes
-          const clienteLinks = [
-            { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-            { href: "/RamitaPrincipal/HTML/puntos.html", text: "Puntos" },
-            { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" }
-          ];
-        
-          // Enlaces específicos para vendedores
-          const vendedorLinks = [
-            { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
-            { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
-            { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
-            { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
-            { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-          ];
-        
-          // Enlaces específicos para administradores
-          const adminLinks = [
-          { href: "/RamitaPrincipal/HTML/form-Premios.html", text: "Crear Nivel" },
-          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
-          { href: "/Frontend-Points/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
-          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+
+          // Modificar el navbar según si hay un token o no
+          modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+
+      function modifyNavbarForAuthenticatedUser(token, idVendedor, idAdmin) {
+        const navbarLinks = document.getElementById("navbar-links");
+        const loginLink = document.getElementById("login-link");
+        const listaIniciar = document.getElementById("lista");
+
+        // Eliminar el enlace de iniciar sesión
+        if (listaIniciar) {
+          listaIniciar.remove();
+        }
+
+        // Eliminar el enlace de iniciar sesión
+        if (loginLink) {
+          loginLink.remove();
+        }
+
+        // Enlaces comunes para todos los usuarios autenticados
+        const commonLinks = [
+          { href: "/Inicio/html/index.html", text: "Inicio" },
+          { href: "#", id: "logout", text: "Cerrar Sesión" },
+          { href: "/Perfil_Usuario/html/index.html", text: "Perfil" },
           { href: "/RamitaPrincipal/HTML/premios.html", text: "Premios" },
-          ];
-        
-          // Si el usuario no está autenticado
-          if (!token) {
-            const guestLinks = [
-              { href: "/Login/index.html", text: "Iniciar Sesión" }
-            ];
-        
-            guestLinks.forEach((link) => {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = link.href;
-              a.textContent = link.text;
-              li.appendChild(a);
-              navbarLinks.appendChild(li);
-            });
-        
-            return; // Termina la ejecución si no hay token
-          }
-        
-          // Agregar enlaces comunes
+          { href: "/RamitaPrincipal/HTML/puntos.html", text: "Tus Puntos" },
+          { href: "/RamitaPrincipal/HTML/beneficios.html", text: "Beneficios" },
+        ];
+
+        // Enlaces específicos para clientes
+        const clienteLinks = [];
+
+        // Enlaces específicos para vendedores
+        const vendedorLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+        ];
+
+        // Enlaces específicos para administradores
+        const adminLinks = [
+          {
+            href: "/RamitaPrincipal/HTML/form-Premios.html",
+            text: "Crear Nivel",
+          },
+          { href: "/RamitaPrincipal/HTML/borrar-U.html", text: "Borrar" },
+          { href: "/RamitaPrincipal/HTML/Correo.html", text: "Correo" },
+          { href: "/RamitaPrincipal/HTML/buscarPremios.html", text: "Buscar" },
+        ];
+
+        const guestLinks = [
+          { href: "/Login/index.html", text: "Iniciar Sesion" },
+        ];
+
+        // Si el usuario no está autenticado
+        if (!token) {
+          guestLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+
+          return; // Termina la ejecución si no hay token
+        }
+
+        // Agregar enlaces específicos según el rol
+        if (idVendedor) {
+          vendedorLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        if (idAdmin) {
+          adminLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.textContent = link.text;
+            li.appendChild(a);
+            navbarLinks.appendChild(li);
+          });
+        }
+
+        // Agregar enlaces específicos para clientes si no es vendedor ni admin
+        if (!idVendedor && !idAdmin) {
           commonLinks.forEach((link) => {
             const li = document.createElement("li");
             const a = document.createElement("a");
@@ -115,593 +180,619 @@
             li.appendChild(a);
             navbarLinks.appendChild(li);
           });
-        
-          // Agregar enlaces específicos según el rol
-          if (idVendedor) {
-            vendedorLinks.forEach((link) => {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = link.href;
-              a.textContent = link.text;
-              li.appendChild(a);
-              navbarLinks.appendChild(li);
-            });
-          }
-        
-          if (idAdmin) {
-            adminLinks.forEach((link) => {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = link.href;
-              a.textContent = link.text;
-              li.appendChild(a);
-              navbarLinks.appendChild(li);
-            });
-          }
-        
-          // Agregar enlaces específicos para clientes si no es vendedor ni admin
-          if (!idVendedor && !idAdmin) {
-            clienteLinks.forEach((link) => {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = link.href;
-              a.textContent = link.text;
-              li.appendChild(a);
-              navbarLinks.appendChild(li);
-            });
-          }
         }
-        
-      
-      </script>
-
+      }
+    </script>
 
     <!-----------------------SECCION PREMIOS-------------------------------->
     <main>
-        <section id="premio">
-            <h1 class="heading">Premios</h1>
+      <section id="premio">
+        <h1 class="heading">Premios</h1>
 
+        <!--PREMIOS DE NIVEL BRONCE-->
+        <div class="premios-container" id="bronce-container">
+          <!--NIVEL BRONCE-->
+          <div class="premio-nivel-bronce">
+            <img
+              src="/RamitaPrincipal/img/trofeo-bronce.png"
+              class="imgBronce"
+            />
+            <div class="textos-C">
+              <h2 class="titulo_premio bronce">Nivel Bronce</h2>
+              <h4 class="subtitulo_premio" id="Rpuntos-bronce">1-100 Puntos</h4>
+            </div>
+          </div>
+          <div class="premios-slider owl-carousel owl-theme">
             <!--PREMIOS DE NIVEL BRONCE-->
-            <div class="premios-container " id="bronce-container">
-
-                <!--NIVEL BRONCE-->
-                <div class="premio-nivel-bronce">
-                    <img src="/RamitaPrincipal/img/trofeo-bronce.png" class="imgBronce">
-                    <div class="textos-C">
-                        <h2 class="titulo_premio bronce">Nivel Bronce</h2>
-                        <h4 class="subtitulo_premio" id="Rpuntos-bronce">1-100 Puntos</h4>
-                    </div>
-                </div>
-                <div class="premios-slider owl-carousel owl-theme">
-
-                    <!--PREMIOS DE NIVEL BRONCE-->
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_bronce">Martillo</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_bronce">Taladro</h3>
-                            <div class="puntos">70 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_bronce">Clavos</h3>
-                            <div class="puntos">10 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_bronce">Casco de construccion</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_bronce">Motosierra</h3>
-                            <div class="puntos">120 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_bronce">Pistola</h3>
-                            <div class="puntos">180 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                </div>
-
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_bronce">Martillo</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
             </div>
 
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_bronce">Taladro</h3>
+                <div class="puntos">70 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_bronce">Clavos</h3>
+                <div class="puntos">10 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_bronce">Casco de construccion</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_bronce">Motosierra</h3>
+                <div class="puntos">120 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_bronce">Pistola</h3>
+                <div class="puntos">180 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--PREMIOS DE NIVEL PLATA-->
+        <div class="premios-container" id="plata-container">
+          <!--NIVEL PLATA-->
+          <div class="premio-nivel-plata">
+            <img
+              src="/RamitaPrincipal/img/trofeo-plata.png"
+              class="imgBronce"
+            />
+            <div class="textos-C">
+              <h2 class="titulo_premio plata">Nivel Plata</h2>
+              <h4 class="subtitulo_premio" id="Rpuntos-plata">
+                100-200 Puntos
+              </h4>
+            </div>
+          </div>
+          <div class="premios-slider owl-carousel owl-theme">
             <!--PREMIOS DE NIVEL PLATA-->
-            <div class="premios-container " id="plata-container">
-
-                <!--NIVEL PLATA-->
-                <div class="premio-nivel-plata">
-                    <img src="/RamitaPrincipal/img/trofeo-plata.png" class="imgBronce">
-                    <div class="textos-C">
-                        <h2 class="titulo_premio plata">Nivel Plata</h2>
-                        <h4 class="subtitulo_premio" id="Rpuntos-plata">100-200 Puntos</h4>
-                    </div>
-                </div>
-                <div class="premios-slider owl-carousel owl-theme">
-
-                    <!--PREMIOS DE NIVEL PLATA-->
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_plata">Martillo</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_plata">Taladro</h3>
-                            <div class="puntos">70 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_plata">Clavos</h3>
-                            <div class="puntos">10 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_plata">Casco de construccion</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_plata">Motosierra</h3>
-                            <div class="puntos">120 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_plata">Pistola</h3>
-                            <div class="puntos">180 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                </div>
-
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_plata">Martillo</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
             </div>
 
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_plata">Taladro</h3>
+                <div class="puntos">70 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_plata">Clavos</h3>
+                <div class="puntos">10 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_plata">Casco de construccion</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_plata">Motosierra</h3>
+                <div class="puntos">120 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_plata">Pistola</h3>
+                <div class="puntos">180 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--PREMIOS DE NIVEL ORO-->
+        <div class="premios-container" id="oro-container">
+          <!--NIVEL ORO-->
+          <div class="premio-nivel-oro">
+            <img src="/RamitaPrincipal/img/trofeo-oro.png" class="imgBronce" />
+            <div class="textos-C">
+              <h2 class="titulo_premio oro">Nivel Oro</h2>
+              <h4 class="subtitulo_premio" id="Rpuntos-oro">200-300 Puntos</h4>
+            </div>
+          </div>
+          <div class="premios-slider owl-carousel owl-theme">
             <!--PREMIOS DE NIVEL ORO-->
-            <div class="premios-container " id="oro-container">
-
-                <!--NIVEL ORO-->
-                <div class="premio-nivel-oro">
-                    <img src="/RamitaPrincipal/img/trofeo-oro.png" class="imgBronce">
-                    <div class="textos-C">
-                        <h2 class="titulo_premio oro">Nivel Oro</h2>
-                        <h4 class="subtitulo_premio" id="Rpuntos-oro">200-300 Puntos</h4>
-                    </div>
-                </div>
-                <div class="premios-slider owl-carousel owl-theme">
-
-                    <!--PREMIOS DE NIVEL ORO-->
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_oro">Martillo</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_oro">Taladro</h3>
-                            <div class="puntos">70 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_oro">Clavos</h3>
-                            <div class="puntos">10 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_oro">Casco de construccion</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_oro">Motosierra</h3>
-                            <div class="puntos">120 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_oro">Pistola</h3>
-                            <div class="puntos">180 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <!--PREMIOS DE NIVEL PREMIUN-->
-            <div class="premios-container " id="premium-container">
-
-                <!--NIVEL PREMIUN-->
-                <div class="premio-nivel-premiun">
-                    <img src="/RamitaPrincipal/img/trofeo-premiun.png" class="imgBronce">
-                    <div class="textos-C">
-                        <h2 class="titulo_premio premiun">Nivel Premiun</h2>
-                        <h4 class="subtitulo_premio" id="Rpuntos-premium">300-400 Puntos</h4>
-                    </div>
-                </div>
-                <div class="premios-slider owl-carousel owl-theme">
-
-                    <!--PREMIOS DE NIVEL ORO-->
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_premiun">Martillo</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_premiun">Taladro</h3>
-                            <div class="puntos">70 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_premiun">Clavos</h3>
-                            <div class="puntos">10 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_premiun">Casco de construccion</h3>
-                            <div class="puntos">30 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_premiun">Motosierra</h3>
-                            <div class="puntos">120 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></a-->
-                        </div>
-                    </div>
-                    <div class="premio-card item">
-                        <div class="image">
-                            <img src="/RamitaPrincipal/img/martillo.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <h3 class="Color_premiun">Pistola</h3>
-                            <div class="puntos">180 puntos</div>
-                        </div>
-                        <div class="info">
-                            <h4>Informacion de Producto</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Voluptate vel itaque quas laboriosam magni dolores illum veritatis,
-                            </p>
-                            <!--a href="#"><button>Reclamar</button></!--a-->
-                        </div>
-                        
-                    </div>
-
-                </div>
-
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_oro">Martillo</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
             </div>
 
-        </section>
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_oro">Taladro</h3>
+                <div class="puntos">70 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
 
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_oro">Clavos</h3>
+                <div class="puntos">10 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
 
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_oro">Casco de construccion</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_oro">Motosierra</h3>
+                <div class="puntos">120 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_oro">Pistola</h3>
+                <div class="puntos">180 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--PREMIOS DE NIVEL PREMIUN-->
+        <div class="premios-container" id="premium-container">
+          <!--NIVEL PREMIUN-->
+          <div class="premio-nivel-premiun">
+            <img
+              src="/RamitaPrincipal/img/trofeo-premiun.png"
+              class="imgBronce"
+            />
+            <div class="textos-C">
+              <h2 class="titulo_premio premiun">Nivel Premiun</h2>
+              <h4 class="subtitulo_premio" id="Rpuntos-premium">
+                300-400 Puntos
+              </h4>
+            </div>
+          </div>
+          <div class="premios-slider owl-carousel owl-theme">
+            <!--PREMIOS DE NIVEL ORO-->
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_premiun">Martillo</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_premiun">Taladro</h3>
+                <div class="puntos">70 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_premiun">Clavos</h3>
+                <div class="puntos">10 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_premiun">Casco de construccion</h3>
+                <div class="puntos">30 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_premiun">Motosierra</h3>
+                <div class="puntos">120 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></a-->
+              </div>
+            </div>
+            <div class="premio-card item">
+              <div class="image">
+                <img src="/RamitaPrincipal/img/martillo.jpg" alt="" />
+              </div>
+              <div class="content">
+                <h3 class="Color_premiun">Pistola</h3>
+                <div class="puntos">180 puntos</div>
+              </div>
+              <div class="info">
+                <h4>Informacion de Producto</h4>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate vel itaque quas laboriosam magni dolores illum
+                  veritatis,
+                </p>
+                <!--a href="#"><button>Reclamar</button></!--a-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-----------------------SECCION FOOTER-------------------------------->
     <footer>
-        <div class="row">
-            <div class="col">
-                <img src="/RamitaPrincipal/img/Logo.jpg" class="logo">
-                <p>Como ferretería el roble, proveemos soluciones materiales y herramientas para la
-                    construcción, civil y pequeña industria, surtido completo y permanente a los clientes con
-                    un servicio oportuno. </p>
-            </div>
-            <div class="col">
-                <h3>Contactos <div class="underline"><span></span></div>
-                </h3>
-                <p>Tel: 7220 6538</p>
-                <p>Correo: ferreteriaelroble01@gmail.com</p>
-                <p class="email-id">direccion: Carretera Panamericana km 138, colonia Maquilishuat, canton El Sitio, #66
-                    San Miguel, San Miguel, El Salvador</p>
-                <p>Horarios:</p>
-                <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
-                <p>Sabado: 7:00 am - 12:00 MD</p>
-            </div>
-            <div class="col">
-                <h3>Links<div class="underline"><span></span></div>
-                </h3>
-                <ul>
-                    <li><a href="/Inicio/html/index.html">Inicio</a></li>
-                    <li><a href="/Login/index.html">Iniciar Sesion</a></li>
-                    <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
-                    <li><a href="#premio">Premios</a></li>
-                    <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
-                    <li><a href="/RamitaPrincipal/HTML/beneficios.html">Beneficios</a></li>
-                </ul>
-            </div>
-            <div class="col">
-                <h3>Comentarios <div class="underline"><span></span></div>
-                </h3>
-                <form>
-                    <i class="fa-regular fa-envelope"></i>
-                    <input type="email" placeholder="Escriba su correo y lo atenderemos" required>
-                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
-
-                </form>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/LaferreteriaRoble"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información."
-                        target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col">
+          <img src="/RamitaPrincipal/img/Logo.jpg" class="logo" />
+          <p>
+            Como ferretería el roble, proveemos soluciones materiales y
+            herramientas para la construcción, civil y pequeña industria,
+            surtido completo y permanente a los clientes con un servicio
+            oportuno.
+          </p>
         </div>
-        <hr>
-        <p class="copyright">Universidad de El salvador © 2024 - ALL Rights Reserved</p>
-
+        <div class="col">
+          <h3>
+            Contactos
+            <div class="underline"><span></span></div>
+          </h3>
+          <p>Tel: 7220 6538</p>
+          <p>Correo: ferreteriaelroble01@gmail.com</p>
+          <p class="email-id">
+            direccion: Carretera Panamericana km 138, colonia Maquilishuat,
+            canton El Sitio, #66 San Miguel, San Miguel, El Salvador
+          </p>
+          <p>Horarios:</p>
+          <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
+          <p>Sabado: 7:00 am - 12:00 MD</p>
+        </div>
+        <div class="col">
+          <h3>
+            Links
+            <div class="underline"><span></span></div>
+          </h3>
+          <ul>
+            <li><a href="/Inicio/html/index.html">Inicio</a></li>
+            <li><a href="/Login/index.html">Iniciar Sesion</a></li>
+            <li><a href="/Perfil_Usuario/html/index.html">Perfil</a></li>
+            <li><a href="#premio">Premios</a></li>
+            <li><a href="/RamitaPrincipal/HTML/puntos.html">Puntos</a></li>
+            <li>
+              <a href="/RamitaPrincipal/HTML/beneficios.html">Beneficios</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>
+            Comentarios
+            <div class="underline"><span></span></div>
+          </h3>
+          <form>
+            <i class="fa-regular fa-envelope"></i>
+            <input
+              type="email"
+              placeholder="Escriba su correo y lo atenderemos"
+              required
+            />
+            <button type="submit">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/LaferreteriaRoble"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información."
+              target="_blank"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <p class="copyright">
+        Universidad de El salvador © 2024 - ALL Rights Reserved
+      </p>
     </footer>
+  </body>
 
-
-</body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/RamitaPrincipal/js/owl.carousel.min.js"></script>
-<script src="/RamitaPrincipal/js/premio-slider.js"></script>
-<script src="/RamitaPrincipal/js/premio.js" defer></script>
-<script src="/RamitaPrincipal/js/navbar.js"></script>
-<script src="/Login/log_out.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/RamitaPrincipal/js/owl.carousel.min.js"></script>
+  <script src="/RamitaPrincipal/js/premio-slider.js"></script>
+  <script src="/RamitaPrincipal/js/premio.js" defer></script>
+  <script src="/RamitaPrincipal/js/navbar.js"></script>
+  <script src="/Login/log_out.js" defer></script>
 </html>
