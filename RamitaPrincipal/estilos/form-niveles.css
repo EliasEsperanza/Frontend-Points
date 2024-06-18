@@ -39,18 +39,16 @@ height: 100vh;
     position: relative;
     left: 10%;
     top: 0%;
-    max-width: 600px;
-    transform: translateX(-50%,-50%);
+  transform: translateX(-50%,-50%);
     border-radius: 10px;
     box-shadow: 10px 15px 13px rgba(0, 0, 0, 0.15);
     margin-bottom: 50px;
-    overflow: hidden; 
+    
 }
 .container-Form-Premio {
     background-color: #fff;
     width:85%;
     min-width: 360px;
-    max-width: 600px;
     padding: 35px 50px;
     position: relative;
     left: 7%;
@@ -60,7 +58,7 @@ height: 100vh;
     box-shadow: 10px 15px 13px rgba(0, 0, 0, 0.15);
     margin-bottom: 70px;
     margin-top: 100px;
-    overflow: hidden; 
+   
 }
 
 .titulo-form-Nivel, .titulo-form-Premio {
