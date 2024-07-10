@@ -1,112 +1,246 @@
-body
-{
+header .Nombre{
+    color: #fff;
+}
+header ul li a{
+    color: #fff;
+}
+header .toggle_btn{
+    color: #fff;
 }
 
-.content
-{
-    display: grid;
-    grid-template-columns: repeat(2,400px);
-    margin-top: 100px;
-    justify-content: center;
-    align-content: center;
+section{
+    padding: 0 7%;
 }
 
-.Presentacion h1 {
-    font-size: 25px;
+.home{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    background: url('/RamitaPrincipal/img/fondo-home/f2.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding-top: 5rem;
+}
+.home .content-Inicio {
+    padding: 1rem;
+    flex: 1 1 40rem;
 }
 
-.Presentacion p
-{
-    text-align: justify;
+.home .content-Inicio h1 {
+    font-size: 3rem;
+    color: #FFBC0F;
 }
 
-.ImagenPresentacion{
-    width: 100%;
-    margin-left: 20px;
+.home .content-Inicio p {
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+.home .btn-general{
+    position: relative;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
 }
 
-#clienteFiel{
-    width: 100%;
-    border-radius: 10px;
+.home .btn-login-home{
+    border: 3px solid;
 }
 
-/*
-.Imagen img 
-{
-    margin: 15px;
-    width: 100%;
-    border-radius: 10px;
-} */
-
-/* Móvil */
-@media (max-width: 599px) {
-    .content {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .Presentacion h1 {
-        font-size: 20px;
-    }
-
-    .ImagenPresentacion {
-        margin-left: 0;
-        padding: 5px;
-    }
+.btn-general:hover{
+    background-color: #239b56;
+    box-shadow: 0 0 20px #FFBC0F;
+    font-weight: bold;
+    border-color: #FFBC0F;
 }
 
-/* Tableta */
-@media (min-width: 600px) and (max-width: 899px) {
-    .content {
-        grid-template-columns: 1fr;
-        margin-top: 75px;
-        padding: 10px;
-    }
+.home .btn-login-home span:nth-child(n){
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 3px solid;
+}
 
-    .Presentacion h1 {
-        font-size: 22px;
-    }
+.home .btn-login-home span:nth-child(1){
+    right: 10%;
+    top: -6px;
+    background-color: #fff;
+    transition: all 0.6s ease;
+}
+.home .btn-login-home span:nth-child(2){
+    left: 10%;
+    bottom: -6px;
+    background-color: #fff;
+    transition: all 0.6s ease;
+}
 
-    .ImagenPresentacion {
+.home .btn-login-home:hover span:nth-child(1){
+    right: 80%;
+    transform: rotate(90deg);
+    color: #FFBC0F;
+    background: #FFBC0F;
+}
+.home .btn-login-home:hover span:nth-child(2){
+    left: 80%;
+    transform: rotate(90deg);
+    color: #FFBC0F;
+    background: #FFBC0F;
+}
+
+.home .imagen-Inicio {
+    padding: 1rem;
+    flex: 1 1 40rem;
+    text-align: center;
+}
+
+.home .imagen-Inicio img {
+    height: auto;
+    max-width: 100%;
+    padding-top: 1rem;
+    max-height: 50vh;
+}
+
+@media (max-width: 1000px) {
+    .home {
         width: 100%;
-        padding: 10px;
-        position: relative;
-        right: 20px;
-        align-content: center;
+        flex-wrap: wrap;
+    }
+    .home .content-Inicio {
+        max-width: 100%;
+        text-align: center;
+    }
+    .home .content-Inicio h1 {
+        font-size: 2.6rem;
+    }
+    .home .content-Inicio p {
+        font-size: 1rem;
+    }
+    .home .imagen-Inicio {
+        max-width: 100%;
+    }
+    .home .imagen-Inicio img {
+        width: 80%;
+        height: auto;
+        padding-top: 1rem;
+        max-height: none;
     }
 }
 
-/* Escritorio */
-@media (min-width: 900px) and (max-width: 1199px) {
-    .content {
-        grid-template-columns: repeat(2, 400px);
-        margin-top: 100px;
-    }
 
-    .Presentacion h1 {
-        font-size: 24px;
+@media (max-width: 700px) {
+    .home .content-Inicio {
+        margin-bottom: 0;
     }
-
-    .ImagenPresentacion {
-        margin-left: 15px;
+    .home .content-Inicio h1 {
+        font-size: 2.3rem;
+    }
+    .home .content-Inicio p {
+        font-size: 1.6rem;
+    }
+    .home .imagen-Inicio {
+        padding: 0.5rem;
+        padding-left: 1.5rem;
+    }
+    .home .imagen-Inicio img {
+        width: 85%;
+        padding-top: 0.5rem;
     }
 }
 
-/* Pantallas grandes */
-@media (min-width: 1200px) {
-    .content {
-        grid-template-columns: repeat(2, 400px);
-        margin-top: 100px;
+@media (max-width: 500px) {
+    .home .content-Inicio {
+        margin-bottom: 0;
     }
-
-    .Presentacion h1 {
-        font-size: 25px;
+    .home .content-Inicio h1 {
+        font-size: 2.2rem;
     }
-
-    .ImagenPresentacion {
-        margin-left: 20px;
+    .home .content-Inicio p {
+        font-size: 1.5rem;
+    }
+    .home .imagen-Inicio {
+        padding: 0.5rem;
+        margin: 0;
+        padding-left: 1.8rem;
+    }
+    .home .imagen-Inicio img {
+        width: 80%;
+        padding-top: 0.5rem;
+    }
+    .home .btn-general{
+        padding: 12px 18px;
+        color: #fff;
+        letter-spacing: 7px;
+        font-size: 1.5rem;
     }
 }
+
+@media (max-width: 400px) {
+    .home .content-Inicio {
+        margin-bottom: 0;
+    }
+    .home .content-Inicio h1 {
+        font-size: 1.7rem;
+    }
+    .home .content-Inicio p {
+        font-size: 0.9rem;
+    }
+    .home .imagen-Inicio {
+        padding: 0;
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+    .home .imagen-Inicio img {
+        width: 95%;
+        padding-top: 0rem;
+    }
+    .home .btn-general{
+        padding: 11px 20px;
+        color: #fff;
+        letter-spacing: 5px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 300px) {
+    .home .content-Inicio {
+        margin-bottom: 0;
+    }
+    .home .content-Inicio h1 {
+        font-size: 1.8rem;
+    }
+    .home .content-Inicio p {
+        font-size: 0.9rem;
+    }
+    .home .imagen-Inicio {
+        padding: 0rem;
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+    .home .imagen-Inicio img {
+        width: 97%;
+        padding-top: 0;
+    }
+    .home .btn-general{
+        padding: 10px 16px;
+        color: #fff;
+        letter-spacing: 5px;
+        font-size: 1.5rem;
+    }
+}
+
+
+
+
+
+
 
 /*Esto seria del contenedor de los pasos a seguir*/
 .Content-Pasos
