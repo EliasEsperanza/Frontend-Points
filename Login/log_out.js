@@ -50,7 +50,7 @@ window.onload = function() {
 
                     localStorage.removeItem("jwt");
                     console.log("Se han eliminado los items del localStorage.");
-                    location.replace("/Inicio/html/index.html");
+                    location.replace("/Login/index.html");
                 } catch (error) {
                     console.error("Error al realizar el logout:", error);
                 }
