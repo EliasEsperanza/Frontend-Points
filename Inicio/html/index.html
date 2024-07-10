@@ -117,7 +117,7 @@
             ...adminLinks,
             { href: "#", id: "logout", text: "Cerrar Sesión" },
           ];
-        } else if (token && idUsuario) {
+        } else if (!idVendedor && !idAdmin) {
           links = [
             ...commonLinks,
             { href: "#", id: "logout", text: "Cerrar Sesión" },
