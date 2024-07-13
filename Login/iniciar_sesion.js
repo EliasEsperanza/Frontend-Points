@@ -137,10 +137,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 const data = await response.json();
-                const { token, idUsuario } = data;
+                const { token, idUsuario} = data;
 
                 localStorage.setItem('jwt', token);
                 localStorage.setItem('idUsuario', idUsuario);
+
 
                 Swal.fire({
                     icon: 'success',

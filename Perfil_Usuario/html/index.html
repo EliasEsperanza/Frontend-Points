@@ -325,11 +325,24 @@
     <!--APIS-->
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        const idCliente = localStorage.getItem("idCliente");
-        console.log("idCliente:", idCliente);
-
         const idUsuario = localStorage.getItem("idUsuario");
         console.log("idUsuario:", idUsuario);
+
+        const getIdCliente = await fetch(
+          `https://backend-points-production.up.railway.app/usuarios/${idUsuario}`,
+          {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+            },
+          }
+        );
+
+        const data = await getIdCliente.json();
+        localStorage.setItem("idCliente", data.data.idCliente);
+
+        const idCliente = localStorage.getItem("idCliente");
+        console.log("idCliente:", idCliente);
 
         if (idCliente) {
           try {
