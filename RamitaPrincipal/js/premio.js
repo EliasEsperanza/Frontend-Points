@@ -1,4 +1,61 @@
 document.addEventListener("DOMContentLoaded", async function(){
+    async function CrearNivelesData() {
+        const idCliente = localStorage.getItem("idUsuario");
+        if(idCliente){
+            try {
+                const NivelesResponse = await fetch(`https://backend-points-production.up.railway.app/niveles`)
+                const DataNiveles = await NivelesResponse.json();
+
+                const PremioResponse = await fetch(`https://backend-points-production.up.railway.app/premio`);
+                const DataPremio = await PremioResponse.json()
+                /*Recuerda continuar con esto: Hacer que el div donde se muestra el boton se le coloque el id del premio para que asi elias lo saque retrocediendo en elemento de padre */
+                const sectionPremio = document.getElementById('premio');
+
+                DataNiveles.forEach(element => {
+                    const divNivelContainer = document.createElement('div');
+                    divNivelContainer.classList.add('premios-container')
+                    divNivelContainer.id = 'bronce-container';
+                    const divNivel = document.createElement('div')
+                    divNivel.classList.add('premio-nivel-bronce');
+                    const imagen = document.createElement('img')
+                    imagen.classList.add('imgBronce');
+                    imagen.src = element.icono;
+                    const divNivel_textos = document.createElement('div')
+                    divNivel_textos.classList.add('textos-C');
+                    const divNivel_textos_h2 = document.createElement('h2');
+                    divNivel_textos_h2.classList.add('titulo_premio');
+                    divNivel_textos_h2.classList.add('bronce')
+                    divNivel_textos_h2.textContent = element.descripcion;
+                    const divNivel_textos_h4 = document.createElement('h4');
+                    divNivel_textos_h4.classList.add('subtitulo_premio')
+                    divNivel_textos_h4.id ='Rpuntos-bronce';
+                    divNivel_textos_h4.textContent = `${element.puntosInicio}-${element.puntosFin} Puntos`;
+                    divNivel_textos.appendChild(divNivel_textos_h2);
+                    divNivel_textos.appendChild(divNivel_textos_h4);
+                    divNivel.appendChild(imagen);
+                    divNivel.appendChild(divNivel_textos);
+                    divNivelContainer.appendChild(divNivel);
+                    /*Agregar los premio sacado para cada nivel */
+                    
+
+
+                    const divPremio = document.createElement('div');
+                    divPremio.classList.add('premio-slider','owl-carousel','owl-theme')
+                    const divCardPremio = document.createElement('div');
+                    divCardPremio.classList.add('premio-card', 'item');
+                    const divCardPremio_Imagen = document.createElement('div');
+                    divCardPremio_Imagen.classList.add('imagen');
+                    const Imagen_Premio = document.createElement('img')
+                    Imagen_Premio.src = ''
+                    /*Guarda el div de los premio(osea el divNivelCOntainer) en el sectionPremio */
+                    sectionPremio.appendChild(divNivelContainer);
+
+                });
+            } catch (error) {
+                
+            }
+        }
+    }
     const idCliente = localStorage.getItem("idUsuario");
 
     if (idCliente) {
