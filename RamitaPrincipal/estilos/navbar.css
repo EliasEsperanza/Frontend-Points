@@ -90,7 +90,7 @@ header ul li a{
     color: #00010e;
     letter-spacing: 0.125rem;
     font-weight: 500px;
-    padding: 0.625rem 0.9375rem; /*  Padding ajustado para uniformidad */
+    padding: 0.625rem 0.9375rem; 
     border-radius: 0.3125rem;
     transition:  0.3s ease-in-out; 
     white-space: nowrap;
