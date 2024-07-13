@@ -118,7 +118,7 @@
             ...adminLinks,
             { href: "#", id: "logout", text: "Cerrar Sesión" },
           ];
-        } else if (token && idUsuario) {
+        } else if (!idVendedor && !idAdmin) {
           links = [
             ...commonLinks,
             { href: "#", id: "logout", text: "Cerrar Sesión" },
@@ -195,60 +195,42 @@
         }
       }
     </script>
-
-    <div class="content" id="inicioP">
-      <div class="Presentacion">
+    
+    <section class="home" id="inicioP">
+      <div class="content-Inicio">
         <h1>Se parte de nuestro programa</h1>
         <h1>Cliente fidelidad</h1>
         <p>
-          Aquí, nuestro enfoque está en recompensarte por ser parte de nuestra
+         Nuestro enfoque está en recompensarte por ser parte de nuestra
           comunidad. Con cada interacción, acumularás puntos que podrás canjear
-          por descuentos especiales y beneficios exclusivos. Nuestra plataforma
-          está diseñada para hacer tu experiencia más gratificante y
-          personalizada. ¡Únete a nosotros, acumula puntos y disfruta de las
+          por descuentos especiales y beneficios exclusivos. ¡Únete a nosotros, acumula puntos y disfruta de las
           recompensas en Ferretería El Roble!
         </p>
+        <a href="/Login/index.html" class="btn-general btn-formulario btn-login-home">Registrate
+          <span></span>
+          <span></span>
+        </a>
       </div>
-
-      <div class="ImagenPresentacion">
-        <img id="clienteFiel" src="/Inicio/clientefiel.png" alt="" />
+    
+      <div class="imagen-Inicio">
+        <img src="/RamitaPrincipal/img/caja-herrameintas-3.png" alt="">
       </div>
-    </div>
+    </section>
 
     <!--Parte de la app explicando los pasos a seguir para el sistem de puntos-->
-    <div class="Content-Pasos" id="Pasos">
-      <div class="titulo">
-        <h1>¿Como funciona?</h1>
-        <p>
-          Te dejamos una guia de pasos a seguir para entender mejor como
-          funciona nuestro sistema de puntos.
-        </p>
+    <section class="Content-Pasos" id="Pasos">
+      <h1 class="heading-pasos">¿Como funciona?</h1>
+
+      <div class="imagen-Pasos">
+        <img src="/RamitaPrincipal/img/mecanico-haciendo-gesto-importancia.png" alt="">
       </div>
 
-      <div class="Pasos">
-        <ol>
-          <li>
-            Regístrate en nuestro sistema de puntos proporcionando tu
-            información básica en la tienda.
-          </li>
-
-          <li>
-            Acumula puntos por cada compra que realices en nuestra ferretería.
-          </li>
-          <li>
-            Consulta tu saldo de puntos en nuestra página web o en la tienda.
-          </li>
-          <li>
-            Canjea tus puntos por premios o descuentos en productos
-            seleccionados.
-          </li>
-          <li>
-            Disfruta de los beneficios y sigue acumulando puntos para más
-            recompensas.
-          </li>
-        </ol>
+      <div class="box-container-pasos"> 
+        <div class="box-pasos">
+          
+        </div>
       </div>
-    </div>
+    </section>
 
     <!--Tabla explicando los niveles de usuario-->
     <div class="tbl-niveles-usuario" id="Niveles">
@@ -362,16 +344,16 @@
       </div>
     </div>
 
-    <!--Esta seria la parte del Footer-->
+    <!-----------------------SECCION FOOTER-------------------------------->
     <footer>
       <div class="row">
         <div class="col">
-          <img src="/Inicio/Logo.jpg" class="logo" />
+          <img src="/RamitaPrincipal/img/Logo.jpg" class="logo" />
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-            rerum vel ipsa mollitia reprehenderit velit! Aspernatur quibusdam
-            exercitationem delectus iure id cum laboriosam aliquid eveniet!
-            Architecto laborum optio voluptate temporibus.
+            Como ferretería el roble, proveemos soluciones materiales y
+            herramientas para la construcción, civil y pequeña industria,
+            surtido completo y permanente a los clientes con un servicio
+            oportuno.
           </p>
         </div>
         <div class="col">
@@ -379,11 +361,15 @@
             Contactos
             <div class="underline"><span></span></div>
           </h3>
-          <p>Tel: 4555555</p>
-          <p>Correo: nose@gmail.com</p>
-          <p class="email-id">direccion: nose tampoco</p>
-          <p>mas datos para poner</p>
-          <p>quiero dormir</p>
+          <p>Tel: 7220 6538</p>
+          <p>Correo: ferreteriaelroble01@gmail.com</p>
+          <p class="email-id">
+            direccion: Carretera Panamericana km 138, colonia Maquilishuat,
+            canton El Sitio, #66 San Miguel, San Miguel, El Salvador
+          </p>
+          <p>Horarios:</p>
+          <p>Lunes a Viernes: 7:00 am - 5:00pm</p>
+          <p>Sabado: 7:00 am - 12:00 MD</p>
         </div>
         <div class="col">
           <h3>
@@ -391,12 +377,8 @@
             <div class="underline"><span></span></div>
           </h3>
           <ul>
-            <li>Inicio</li>
-            <li>Iniciar Sesion</li>
-            <li>Politicas</li>
-            <li>Beneficios</li>
-            <li>NOSE</li>
-            <li>NOSEX2</li>
+            <li><a href="/Inicio/html/index.html">Inicio</a></li>
+            <li><a href="/Login/index.html">Iniciar Sesion</a></li>
           </ul>
         </div>
         <div class="col">
@@ -406,15 +388,24 @@
           </h3>
           <form>
             <i class="fa-regular fa-envelope"></i>
-            <input type="email" placeholder="Escriba su comentario" required />
+            <input
+              type="email"
+              placeholder="Escriba su correo y lo atenderemos"
+              required
+            />
             <button type="submit">
               <i class="fa-solid fa-arrow-right"></i>
             </button>
           </form>
           <div class="social-icons">
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-whatsapp"></i>
+            <a href="https://www.facebook.com/LaferreteriaRoble"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://wa.me/+50372206538?text=Hola%2C%20me%20gustaría%20obtener%20más%20información."
+              target="_blank"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
           </div>
         </div>
       </div>
